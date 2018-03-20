@@ -14,7 +14,7 @@ public class AppsAdapterProvider {
     private LongArrayMap<AppsAdapter> mAdapters = new LongArrayMap();
     private final DataHolder mDataHolder;
     private final Launcher mLauncher;
-    private final DataListener mListener;
+    private final AppsAdapter.DataListener mListener;
 
     public static class DataHolder {
         ArrayList<ItemInfo> mAddItems = new ArrayList();
@@ -30,7 +30,7 @@ public class AppsAdapterProvider {
         ArrayList<Stub> mStubs = new ArrayList();
     }
 
-    public AppsAdapterProvider(Launcher launcher, DataListener listener, ViewType type) {
+    public AppsAdapterProvider(Launcher launcher, AppsAdapter.DataListener listener, ViewType type) {
         this.mLauncher = launcher;
         this.mListener = listener;
         this.mDataHolder = new DataHolder();

@@ -21,7 +21,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Process;
-import android.os.SemSystemProperties;
+//import android.os.SemSystemProperties;
 import android.os.SystemClock;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.NonNull;
@@ -70,8 +70,8 @@ import com.android.launcher3.util.StringFilter;
 import com.android.launcher3.util.TestHelper;
 import com.android.launcher3.util.logging.SALogging;
 import com.android.launcher3.widget.model.WidgetLoader;
-import com.samsung.android.feature.SemCscFeature;
-import com.samsung.android.knox.SemPersonaManager;
+//import com.samsung.android.feature.SemCscFeature;
+//import com.samsung.android.knox.SemPersonaManager;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
@@ -362,24 +362,25 @@ public class LauncherModel extends BroadcastReceiver implements OnAppsChangedCal
                             synchronized (LauncherModel.sBgLock) {
                                 needToRefresh = HomeLoader.checkNeedToRefreshWidget(this.mPackages, this.mUser, !this.mUser.equals(UserHandleCompat.myUserHandle()));
                             }
-                            if (!(needToRefresh || this.mOp == 3)) {
-                                PackageManager pm = context.getPackageManager();
-                                for (String pkg2222222 : this.mPackages) {
-                                    needToRefresh |= !pm.queryBroadcastReceivers(new Intent("android.appwidget.action.APPWIDGET_UPDATE").setPackage(pkg2222222), 0).isEmpty() ? 1 : 0;
-                                    if (pm.queryIntentActivities(new Intent("android.intent.action.CREATE_SHORTCUT").setPackage(pkg2222222), 0).isEmpty()) {
-                                        i = 0;
-                                    } else {
-                                        i = 1;
-                                    }
-                                    needToRefresh |= i;
-                                }
-                                PostPositionController pp = PostPositionController.getInstance(LauncherModel.this.mApp.getContext());
-                                if (pp != null && pp.isEnabled()) {
-                                    for (String pkg22222222 : this.mPackages) {
-                                        pp.addItem(pkg22222222, true);
-                                    }
-                                }
-                            }
+                            // TODO: Samsung specific code
+//                            if (!(needToRefresh || this.mOp == 3)) {
+//                                PackageManager pm = context.getPackageManager();
+//                                for (String pkg2222222 : this.mPackages) {
+//                                    needToRefresh |= !pm.queryBroadcastReceivers(new Intent("android.appwidget.action.APPWIDGET_UPDATE").setPackage(pkg2222222), 0).isEmpty() ? 1 : 0;
+//                                    if (pm.queryIntentActivities(new Intent("android.intent.action.CREATE_SHORTCUT").setPackage(pkg2222222), 0).isEmpty()) {
+//                                        i = 0;
+//                                    } else {
+//                                        i = 1;
+//                                    }
+//                                    needToRefresh |= i;
+//                                }
+//                                PostPositionController pp = PostPositionController.getInstance(LauncherModel.this.mApp.getContext());
+//                                if (pp != null && pp.isEnabled()) {
+//                                    for (String pkg22222222 : this.mPackages) {
+//                                        pp.addItem(pkg22222222, true);
+//                                    }
+//                                }
+//                            }
                             LauncherModel.this.loadWidgetsAndShortcuts(this.mPackages, this.mUser, needToRefresh);
                         }
                         LauncherModel.this.loadAllAppItemList();
@@ -1043,10 +1044,10 @@ public class LauncherModel extends BroadcastReceiver implements OnAppsChangedCal
                 }
                 prefsEditor.apply();
             }
-            if (!SemPersonaManager.isKnoxId(userId)) {
-                forceReload();
-                setHasLoaderCompletedOnce(false);
-            }
+//            if (!SemPersonaManager.isKnoxId(userId)) {
+//                forceReload();
+//                setHasLoaderCompletedOnce(false);
+//            }
         } else if (LauncherAppsCompat.ACTION_MANAGED_PROFILE_AVAILABLE.equals(action) || LauncherAppsCompat.ACTION_MANAGED_PROFILE_UNAVAILABLE.equals(action)) {
             UserHandleCompat user = UserHandleCompat.fromIntent(intent);
             if (user != null) {
@@ -1054,20 +1055,21 @@ public class LauncherModel extends BroadcastReceiver implements OnAppsChangedCal
             }
         } else if (ACTION_STK_TITLE_IS_LOADED.equals(action)) {
             Log.d(TAG, "receive ACTION_STK_TITLE_IS_LOADED");
-            boolean isFixedStkMenu = SemCscFeature.getInstance().getBoolean("CscFeature_RIL_FixedStkMenu");
-            String fixedStkTitle = SemCscFeature.getInstance().getString("CscFeature_Launcher_FixedStkTitleAs");
-            String stkTitleFromSIM = SemSystemProperties.get("gsm.STK_SETUP_MENU", null);
-            Log.d(TAG, "stkTitleFromSIM : " + stkTitleFromSIM + " fixedStkTitle : " + fixedStkTitle + " isFixedStkMenu : " + isFixedStkMenu);
-            if ((fixedStkTitle == null || fixedStkTitle.length() <= 0 || fixedStkTitle.startsWith("NoSIM%")) && stkTitleFromSIM != null && stkTitleFromSIM.length() > 0) {
-                String packageName = intent.getData().getSchemeSpecificPart();
-                if (packageName == null || packageName.length() == 0) {
-                    Log.d(TAG, "ACTION_STK_TITLE_IS_LOADED packageName is null");
-                } else if (isFixedStkMenu) {
-                    enqueueItemUpdatedTask(new PackageUpdatedTask(2, new String[]{packageName, "com.sec.android.app.latin.launcher.stk"}, UserHandleCompat.myUserHandle()));
-                } else {
-                    enqueueItemUpdatedTask(new PackageUpdatedTask(2, new String[]{packageName}, UserHandleCompat.myUserHandle()));
-                }
-            }
+            // TODO: Samsung specific menu
+//            boolean isFixedStkMenu = SemCscFeature.getInstance().getBoolean("CscFeature_RIL_FixedStkMenu");
+//            String fixedStkTitle = SemCscFeature.getInstance().getString("CscFeature_Launcher_FixedStkTitleAs");
+//            String stkTitleFromSIM = SemSystemProperties.get("gsm.STK_SETUP_MENU", null);
+//            Log.d(TAG, "stkTitleFromSIM : " + stkTitleFromSIM + " fixedStkTitle : " + fixedStkTitle + " isFixedStkMenu : " + isFixedStkMenu);
+//            if ((fixedStkTitle == null || fixedStkTitle.length() <= 0 || fixedStkTitle.startsWith("NoSIM%")) && stkTitleFromSIM != null && stkTitleFromSIM.length() > 0) {
+//                String packageName = intent.getData().getSchemeSpecificPart();
+//                if (packageName == null || packageName.length() == 0) {
+//                    Log.d(TAG, "ACTION_STK_TITLE_IS_LOADED packageName is null");
+//                } else if (isFixedStkMenu) {
+//                    enqueueItemUpdatedTask(new PackageUpdatedTask(2, new String[]{packageName, "com.sec.android.app.latin.launcher.stk"}, UserHandleCompat.myUserHandle()));
+//                } else {
+//                    enqueueItemUpdatedTask(new PackageUpdatedTask(2, new String[]{packageName}, UserHandleCompat.myUserHandle()));
+//                }
+//            }
         } else if (ACTION_SPR_FORCE_REFRESH.equals(action)) {
             LauncherProviderID providerID = LauncherAppState.getLauncherProviderID();
             if (providerID != null) {
@@ -1466,13 +1468,14 @@ public class LauncherModel extends BroadcastReceiver implements OnAppsChangedCal
         }
     }
 
-    private void deleteDeviceOwnerOMCItem(Context context) {
-        DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService("device_policy");
-        if (dpm != null && dpm.semGetDeviceOwner() != null) {
-            String[] selectionArg = new String[]{String.valueOf(32)};
-            Log.d(TAG, "deleteDeviceOwnerOMCItem - " + context.getContentResolver().delete(Favorites.CONTENT_URI, "restored=?", selectionArg) + " items removed.");
-        }
-    }
+    // TODO: Samsung specific code
+//    private void deleteDeviceOwnerOMCItem(Context context) {
+//        DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+//        if (dpm != null && dpm.semGetDeviceOwner() != null) {
+//            String[] selectionArg = new String[]{String.valueOf(32)};
+//            Log.d(TAG, "deleteDeviceOwnerOMCItem - " + context.getContentResolver().delete(Favorites.CONTENT_URI, "restored=?", selectionArg) + " items removed.");
+//        }
+//    }
 
     public void handleSCloudRestoreComplete(final Context context) {
         Log.d(TAG, "handleSCloudRestoreComplete");
@@ -1667,12 +1670,13 @@ public class LauncherModel extends BroadcastReceiver implements OnAppsChangedCal
     }
 
     private void updateTargetActivity(Notification notification, PackageUserKey packageUserKey) {
-        if (notification != null) {
-            ComponentName cn = notification.semBadgeTarget;
-            if (cn != null) {
-                packageUserKey.setTargetActivity(cn.getClassName());
-            }
-        }
+        // TODO: Samsung specific code
+//        if (notification != null) {
+//            ComponentName cn = notification.semBadgeTarget;
+//            if (cn != null) {
+//                packageUserKey.setTargetActivity(cn.getClassName());
+//            }
+//        }
     }
 
     private void updateLauncherIconBadges(Set<PackageUserKey> updatedBadges) {
@@ -1716,46 +1720,47 @@ public class LauncherModel extends BroadcastReceiver implements OnAppsChangedCal
     }
 
     private boolean updateBadgeIcon(BadgeInfo badgeInfo) {
-        SecurityException e;
-        boolean hadNotificationToShow = badgeInfo.hasNotificationToShow();
-        NotificationInfo notificationInfo = null;
-        NotificationListener notificationListener = NotificationListener.getInstanceIfConnected();
-        if (notificationListener != null && badgeInfo.getNotificationKeys().size() >= 1) {
-            try {
-                Iterator it = badgeInfo.getNotificationKeys().iterator();
-                NotificationInfo notificationInfo2 = null;
-                while (it.hasNext()) {
-                    try {
-                        StatusBarNotification[] activeNotifications = notificationListener.getActiveNotifications(new String[]{((NotificationKeyData) it.next()).notificationKey});
-                        if (activeNotifications == null || activeNotifications.length != 1) {
-                            notificationInfo = notificationInfo2;
-                        } else {
-                            notificationInfo = new NotificationInfo(LauncherAppState.getInstance().getContext(), activeNotifications[0]);
-                            if (notificationInfo.shouldShowIconInBadge()) {
-                                break;
-                            }
-                            notificationInfo = null;
-                        }
-                        notificationInfo2 = notificationInfo;
-                    } catch (SecurityException e2) {
-                        e = e2;
-                        notificationInfo = notificationInfo2;
-                    }
-                }
-                notificationInfo = notificationInfo2;
-            } catch (SecurityException e3) {
-                e = e3;
-            }
-        }
-        badgeInfo.setNotificationToShow(notificationInfo);
-        if (hadNotificationToShow || badgeInfo.hasNotificationToShow()) {
-            return true;
-        }
-        return false;
-        Log.w(NOTI_TAG, "SecurityException e = " + e);
-        badgeInfo.setNotificationToShow(notificationInfo);
-        if (!hadNotificationToShow) {
-        }
+        // TODO: Check this logic from SMALI, decompiler can't do jackshit with it
+//        SecurityException e;
+//        boolean hadNotificationToShow = badgeInfo.hasNotificationToShow();
+//        NotificationInfo notificationInfo = null;
+//        NotificationListener notificationListener = NotificationListener.getInstanceIfConnected();
+//        if (notificationListener != null && badgeInfo.getNotificationKeys().size() >= 1) {
+//            try {
+//                Iterator it = badgeInfo.getNotificationKeys().iterator();
+//                NotificationInfo notificationInfo2 = null;
+//                while (it.hasNext()) {
+//                    try {
+//                        StatusBarNotification[] activeNotifications = notificationListener.getActiveNotifications(new String[]{((NotificationKeyData) it.next()).notificationKey});
+//                        if (activeNotifications == null || activeNotifications.length != 1) {
+//                            notificationInfo = notificationInfo2;
+//                        } else {
+//                            notificationInfo = new NotificationInfo(LauncherAppState.getInstance().getContext(), activeNotifications[0]);
+//                            if (notificationInfo.shouldShowIconInBadge()) {
+//                                break;
+//                            }
+//                            notificationInfo = null;
+//                        }
+//                        notificationInfo2 = notificationInfo;
+//                    } catch (SecurityException e2) {
+//                        e = e2;
+//                        notificationInfo = notificationInfo2;
+//                    }
+//                }
+//                notificationInfo = notificationInfo2;
+//            } catch (SecurityException e3) {
+//                e = e3;
+//            }
+//        }
+//        badgeInfo.setNotificationToShow(notificationInfo);
+//        if (hadNotificationToShow || badgeInfo.hasNotificationToShow()) {
+//            return true;
+//        }
+//        return false;
+//        Log.w(NOTI_TAG, "SecurityException e = " + e);
+//        badgeInfo.setNotificationToShow(notificationInfo);
+//        if (!hadNotificationToShow) {
+//        }
         return true;
     }
 

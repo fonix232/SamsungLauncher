@@ -7,7 +7,6 @@ import android.app.ActivityOptions;
 import android.app.AppOpsManager;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.SemStatusBarManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -87,11 +86,6 @@ import com.android.launcher3.util.SecureFolderHelper;
 import com.android.launcher3.util.TestHelper;
 import com.android.launcher3.util.logging.SALogging;
 import com.android.vcard.VCardConfig;
-import com.samsung.android.app.SemMultiWindowManager;
-import com.samsung.android.desktopmode.SemDesktopModeManager;
-import com.samsung.android.feature.SemCscFeature;
-import com.samsung.android.knox.SemPersonaManager;
-import com.samsung.android.widget.SemHoverPopupWindow;
 import com.sec.android.app.launcher.BuildConfig;
 import com.sec.android.app.launcher.R;
 import java.io.ByteArrayOutputStream;
@@ -136,8 +130,8 @@ public final class Utilities {
     private static final int BADGE_WITH_NUMBER = 0;
     public static final String BLOCK_CREATE_SHORTCUT_PREFIX = "block_create_shortcut_";
     public static final String CONTACT_SHORTCUT_IDS = "contact_shortcut_ids";
-    private static final int CORE_POOL_SIZE = (CPU_COUNT + 1);
     private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+    private static final int CORE_POOL_SIZE = (CPU_COUNT + 1);
     public static final String DAYLITE_CLASS_NAME_MAIN = "com.samsung.android.app.spage.main.MainActivity";
     public static final String DAYLITE_CLASS_NAME_SETTING = "com.samsung.android.app.spage.main.settings.SettingsActivity";
     public static final String DAYLITE_PACKAGE_NAME = "com.samsung.android.app.spage";
@@ -257,7 +251,7 @@ public final class Utilities {
     }
 
     static boolean isPropertyEnabled(String propertyName) {
-        return Log.isLoggable(propertyName, 2);
+        return Log.isLoggable(propertyName, Log.VERBOSE);
     }
 
     public static float getDescendantCoordRelativeToParent(View descendant, View root, int[] coord, boolean includeRootScroll) {
@@ -345,9 +339,9 @@ public final class Utilities {
         try {
             activity.startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(activity, R.string.activity_not_found, 0).show();
+            Toast.makeText(activity, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
         } catch (SecurityException e2) {
-            Toast.makeText(activity, R.string.activity_not_found, 0).show();
+            Toast.makeText(activity, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Launcher does not have the permission to launch " + intent + ". Make sure to create a MAIN intent-filter for the corresponding activity " + "or use the exported attribute for this activity.", e2);
         }
     }
@@ -379,11 +373,12 @@ public final class Utilities {
         LauncherPairAppsInfo info = (LauncherPairAppsInfo) tag;
         Intent firstIntent = info.mFirstApp.getIntent();
         Intent secondIntent = info.mSecondApp.getIntent();
-        if (!activity.getPackageManager().isSafeMode() || (isSystemApp(activity, firstIntent) && isSystemApp(activity, secondIntent))) {
-            new SemMultiWindowManager().startPairActivitiesAsUser(context, firstIntent, secondIntent, 0, info.mFirstApp.getUserCompat().getUser(), info.mSecondApp.getUserCompat().getUser());
-            return true;
-        }
-        Toast.makeText(activity, R.string.safemode_shortcut_error, 0).show();
+        // TODO: Samsung specific code
+//        if (!activity.getPackageManager().isSafeMode() || (isSystemApp(activity, firstIntent) && isSystemApp(activity, secondIntent))) {
+//            new SemMultiWindowManager().startPairActivitiesAsUser(context, firstIntent, secondIntent, 0, info.mFirstApp.getUserCompat().getUser(), info.mSecondApp.getUserCompat().getUser());
+//            return true;
+//        }
+        Toast.makeText(activity, R.string.safemode_shortcut_error, Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -391,7 +386,8 @@ public final class Utilities {
         RuntimeException e;
         if (!activity.getPackageManager().isSafeMode() || isSystemApp(activity, intent)) {
             appLauncherBoosting(activity, intent);
-            intent.addFlags(VCardConfig.FLAG_REFRAIN_QP_TO_NAME_PROPERTIES);
+            // TODO: Fix intent flags
+            // intent.addFlags(268435456);
             if (v != null) {
                 try {
                     boolean useLaunchAnimation = !intent.hasExtra("com.android.launcher3.intent.extra.shortcut.INGORE_LAUNCH_ANIMATION");
@@ -413,22 +409,22 @@ public final class Utilities {
                     return true;
                 } catch (ActivityNotFoundException e2) {
                     e = e2;
-                    Toast.makeText(activity, R.string.activity_not_found, 0).show();
+                    Toast.makeText(activity, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Unable to launch. tag=" + tag + " intent=" + intent, e);
                     return false;
                 } catch (NullPointerException e3) {
                     e = e3;
-                    Toast.makeText(activity, R.string.activity_not_found, 0).show();
+                    Toast.makeText(activity, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Unable to launch. tag=" + tag + " intent=" + intent, e);
                     return false;
                 } catch (SecurityException e4) {
-                    Toast.makeText(activity, R.string.activity_not_found, 0).show();
+                    Toast.makeText(activity, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Launcher does not have the permission to launch " + intent + ". Make sure to create a MAIN intent-filter for the corresponding activity " + "or use the exported attribute for this activity. " + "tag=" + tag + " intent=" + intent, e4);
                 }
             }
             return false;
         }
-        Toast.makeText(activity, R.string.safemode_shortcut_error, 0).show();
+        Toast.makeText(activity, R.string.safemode_shortcut_error, Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -456,13 +452,14 @@ public final class Utilities {
             if ((v instanceof IconView) && (((IconView) v).getIconDisplay() == 0 || ((IconView) v).getIconDisplay() == 1)) {
                 fromHomescreen = true;
             }
-            try {
-                if (VERSION.SEM_INT >= 2403) {
-                    opts = ActivityOptions.semMakeCustomScaleUpAnimation(v, v.getMeasuredWidth(), v.getMeasuredHeight(), fromHomescreen);
-                }
-            } catch (NoSuchMethodError e) {
-                Log.e(TAG, "startActivitySafely : " + e.toString());
-            }
+            // TODO: Samsung specific code
+//            try {
+//                if (VERSION.SEM_INT >= 2403) {
+//                    opts = ActivityOptions.semMakeCustomScaleUpAnimation(v, v.getMeasuredWidth(), v.getMeasuredHeight(), fromHomescreen);
+//                }
+//            } catch (NoSuchMethodError e) {
+//                Log.e(TAG, "startActivitySafely : " + e.toString());
+//            }
         }
         return opts != null ? opts.toBundle() : null;
     }
@@ -472,7 +469,7 @@ public final class Utilities {
         ComponentName cn = intent.getComponent();
         String packageName = null;
         if (cn == null) {
-            ResolveInfo info = pm.resolveActivity(intent, 65536);
+            ResolveInfo info = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
             if (!(info == null || info.activityInfo == null)) {
                 packageName = info.activityInfo.packageName;
             }
@@ -590,7 +587,7 @@ public final class Utilities {
 
     public static InputFilter[] getEditTextMaxLengthFilter(Context context, final int maxSize) {
         InputFilter[] FilterArray = new InputFilter[1];
-        final Toast mToast = Toast.makeText(context, context.getString(R.string.max_characters_available, new Object[]{Integer.valueOf(maxSize)}), 0);
+        final Toast mToast = Toast.makeText(context, context.getString(R.string.max_characters_available, new Object[]{Integer.valueOf(maxSize)}), Toast.LENGTH_SHORT);
         FilterArray[0] = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 if (start == 0 && end == 0) {
@@ -648,7 +645,7 @@ public final class Utilities {
             return false;
         }
         try {
-            if (!isBlockUninstallAndDisableByEDM(packageName) && (pm.getApplicationInfo(packageName, 8192).flags & 1) == 0) {
+            if (!isBlockUninstallAndDisableByEDM(packageName) && (pm.getApplicationInfo(packageName, PackageManager.MATCH_UNINSTALLED_PACKAGES).flags & 1) == 0) {
                 return true;
             }
             return false;
@@ -662,10 +659,11 @@ public final class Utilities {
         if (isBlockUninstallAndDisableByEDM(packageName)) {
             return false;
         }
-        DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService("device_policy");
-        if (dpm != null && !TestHelper.isRoboUnitTest() && dpm.semHasActiveAdminForPackage(packageName)) {
-            return false;
-        }
+        DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        // TODO: Samsung specific code
+//        if (dpm != null && !TestHelper.isRoboUnitTest() && dpm.semHasActiveAdminForPackage(packageName)) {
+//            return false;
+//        }
         if (SecureFolderHelper.SECURE_FOLDER_PACKAGE_NAME.equals(packageName) && !DisableableAppCache.mDisableBlockedItems.contains(packageName) && SecureFolderHelper.isSecureFolderExist(context)) {
             DisableableAppCache.mDisableBlockedItems.add(packageName);
         }
@@ -725,11 +723,11 @@ public final class Utilities {
     }
 
     public static boolean isGuest() {
-        return UserHandle.semGetCallingUserId() != 0;
+        return false; // TODO: Samsung specific code //UserHandle.semGetCallingUserId() != 0;
     }
 
     public static boolean DEBUGGABLE() {
-        return !TestHelper.isRoboUnitTest() && Debug.semIsProductDev();
+        return !TestHelper.isRoboUnitTest(); // TODO: Samsung specific code  //&& Debug.semIsProductDev();
     }
 
     public static void hideStatusBar(Window window, boolean hideBar) {
@@ -757,13 +755,15 @@ public final class Utilities {
             sIsDoingExpandNotiPanel = true;
             new AsyncTask<Void, Void, Void>() {
                 public Void doInBackground(Void... args) {
-                    Log.d(Utilities.TAG, "expandNotificationsPanel start");
-                    SemStatusBarManager statusBar = (SemStatusBarManager) context.getSystemService("sem_statusbar");
-                    if (statusBar != null) {
-                        statusBar.expandNotificationsPanel();
-                        SALogging.getInstance().insertEventLog(context.getResources().getString(R.string.screen_Home_1xxx), context.getResources().getString(R.string.event_OpenNotiPanel));
-                    }
-                    Log.d(Utilities.TAG, "expandNotificationsPanel end");
+                    // TODO: Samsung specific code
+                    // TODO: Open notification shade here
+//                    Log.d(Utilities.TAG, "expandNotificationsPanel start");
+//                    SemStatusBarManager statusBar = (SemStatusBarManager) context.getSystemService("sem_statusbar");
+//                    if (statusBar != null) {
+//                        statusBar.expandNotificationsPanel();
+//                        SALogging.getInstance().insertEventLog(context.getResources().getString(R.string.screen_Home_1xxx), context.getResources().getString(R.string.event_OpenNotiPanel));
+//                    }
+//                    Log.d(Utilities.TAG, "expandNotificationsPanel end");
                     return null;
                 }
 
@@ -990,7 +990,7 @@ public final class Utilities {
         if (TextUtils.isEmpty(target.activityInfo.permission)) {
             return true;
         }
-        if (TextUtils.isEmpty(srcPackage) || pm.checkPermission(target.activityInfo.permission, srcPackage) != 0) {
+        if (TextUtils.isEmpty(srcPackage) || pm.checkPermission(target.activityInfo.permission, srcPackage) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
         if (!ATLEAST_MARSHMALLOW) {
@@ -1017,7 +1017,8 @@ public final class Utilities {
                 intent.putExtra("badge_count_package_name", componentName.getPackageName());
                 intent.putExtra("badge_count_class_name", componentName.getClassName());
                 intent.putExtra("badge_count", 0);
-                intent.addFlags(VCardConfig.FLAG_REFRAIN_QP_TO_NAME_PROPERTIES);
+                // TODO: Fix intent flag
+                // intent.addFlags(268435456);
                 if (user != null) {
                     context.sendBroadcastAsUser(intent, user.getUser());
                 } else {
@@ -1064,7 +1065,8 @@ public final class Utilities {
                     }
                     themeIntent.setData(parse);
                 }
-                themeIntent.addFlags(268468256);
+                // TODO: Fix intent flag
+                // themeIntent.addFlags(268468256);
                 themeIntent.putExtra("UpButton", false);
                 themeIntent.putExtra("prevPackage", "homeScreen");
                 context.startActivity(themeIntent);
@@ -1083,7 +1085,8 @@ public final class Utilities {
         if (context != null && isAppEnabled(context, SAMSUNG_APPS)) {
             Intent intent = new Intent("android.intent.action.VIEW");
             intent.setData(Uri.parse("samsungapps://ProductDetail/com.samsung.android.themestore?simpleMode=true&signId=50-1061-26"));
-            intent.addFlags(335544352);
+            // TODO: Fix intent flag
+            // intent.addFlags(335544352);
             context.startActivity(intent);
         }
     }
@@ -1179,11 +1182,13 @@ public final class Utilities {
     }
 
     public static int getHomeDefaultPageKey(Context context, String key) {
-        SharedPreferences prefs = context.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0);
-        if (key.equals(LauncherFiles.HOMEEASY_DEFAULT_PAGE_KEY)) {
-            return prefs.getInt(key, 1);
-        }
-        return prefs.getInt(key, SemCscFeature.getInstance().getInt("CscFeature_Launcher_DefaultPageNumber", 0));
+        // TODO: Samsung specific code
+//        SharedPreferences prefs = context.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0);
+//        if (key.equals(LauncherFiles.HOMEEASY_DEFAULT_PAGE_KEY)) {
+//            return prefs.getInt(key, 1);
+//        }
+//        return prefs.getInt(key, SemCscFeature.getInstance().getInt("CscFeature_Launcher_DefaultPageNumber", 0));
+        return 0;
     }
 
     public static void setZeroPageKey(Context context, boolean value, String key) {
@@ -1213,17 +1218,18 @@ public final class Utilities {
     }
 
     public static int getRandomColor(float colorAlpha) {
-        return (((int) (255.0f * colorAlpha)) << 24) | (ViewCompat.MEASURED_SIZE_MASK & ((int) (Math.random() * 1.6777215E7d)));
+        return (((int) (255.0f * colorAlpha)) << 24) | (0x00ffffff & ((int) (Math.random() * 1.6777215E7d)));
     }
 
     static void setMobileKeyboardMode(Configuration newConfig) {
-        boolean z = true;
-        if (LauncherFeature.supportNfcHwKeyboard()) {
-            if (newConfig == null || newConfig.semMobileKeyboardCovered != 1) {
-                z = false;
-            }
-            sIsMobileKeyboardMode = z;
-        }
+        // TODO: Samsung specific code
+//        boolean z = true;
+//        if (LauncherFeature.supportNfcHwKeyboard()) {
+//            if (newConfig == null || newConfig.semMobileKeyboardCovered != 1) {
+//                z = false;
+//            }
+//            sIsMobileKeyboardMode = z;
+//        }
     }
 
     public static boolean isMobileKeyboardMode() {
@@ -1231,34 +1237,38 @@ public final class Utilities {
     }
 
     public static String getKnoxContainerName(Context context) {
-        SemPersonaManager personaManager = (SemPersonaManager) context.getSystemService("persona");
-        String knoxName = null;
-        try {
-            knoxName = SemPersonaManager.getPersonaName(context, SemPersonaManager.getKnoxInfoForApp(context).getInt("userId"));
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-        return knoxName == null ? "Knox" : knoxName;
+        // TODO: Samsung specific code
+//        SemPersonaManager personaManager = (SemPersonaManager) context.getSystemService("persona");
+//        String knoxName = null;
+//        try {
+//            knoxName = SemPersonaManager.getPersonaName(context, SemPersonaManager.getKnoxInfoForApp(context).getInt("userId"));
+//        } catch (Exception e) {
+//            Log.e(TAG, e.getMessage());
+//        }
+//        return knoxName == null ? "Knox" : knoxName;
+
+        return "null";
     }
 
     public static void addToPersonal(Context context, String packageName, ComponentName componentName, String title, Bitmap icon) {
-        String PERSONA_SHORTCUT = "com.samsung.intent.action.LAUNCH_PERSONA_SHORTCUT";
-        try {
-            int userId = SemPersonaManager.getKnoxInfoForApp(context).getInt("userId");
-            Intent intent = new Intent(PERSONA_SHORTCUT);
-            intent.setData(Uri.parse("persona_shortcut://"));
-            Bundle bundle = new Bundle();
-            bundle.putString("package", packageName);
-            bundle.putParcelable("component", componentName);
-            bundle.putString("label", title);
-            bundle.putParcelable("iconBitmap", icon);
-            bundle.putInt("personalId", userId);
-            bundle.putString("commandType", "createShortcut");
-            intent.putExtras(bundle);
-            context.sendBroadcast(intent);
-        } catch (Exception e) {
-            Log.e(TAG, "Exception in adding shortcut to personal." + e);
-        }
+        // TODO: Samsung specific code
+//        String PERSONA_SHORTCUT = "com.samsung.intent.action.LAUNCH_PERSONA_SHORTCUT";
+//        try {
+//            int userId = SemPersonaManager.getKnoxInfoForApp(context).getInt("userId");
+//            Intent intent = new Intent(PERSONA_SHORTCUT);
+//            intent.setData(Uri.parse("persona_shortcut://"));
+//            Bundle bundle = new Bundle();
+//            bundle.putString("package", packageName);
+//            bundle.putParcelable("component", componentName);
+//            bundle.putString("label", title);
+//            bundle.putParcelable("iconBitmap", icon);
+//            bundle.putInt("personalId", userId);
+//            bundle.putString("commandType", "createShortcut");
+//            intent.putExtras(bundle);
+//            context.sendBroadcast(intent);
+//        } catch (Exception e) {
+//            Log.e(TAG, "Exception in adding shortcut to personal." + e);
+//        }
     }
 
     public static IconInfo createAppsButton(Context context) {
@@ -1273,7 +1283,7 @@ public final class Utilities {
 
     public static boolean isPackageExist(Context context, String strAppPackage) {
         try {
-            context.getPackageManager().getPackageInfo(strAppPackage, 1);
+            context.getPackageManager().getPackageInfo(strAppPackage, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (NameNotFoundException e) {
             Log.e(TAG, strAppPackage + " is not installed ");
@@ -1296,10 +1306,7 @@ public final class Utilities {
     private static boolean isAppEnabled(Context context, String pkgName) {
         try {
             ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(pkgName, 0);
-            if (appInfo == null || !appInfo.enabled) {
-                return false;
-            }
-            return true;
+            return appInfo != null && appInfo.enabled;
         } catch (NameNotFoundException e) {
             return false;
         }
@@ -1317,16 +1324,17 @@ public final class Utilities {
     }
 
     static void broadcastStkIntent(Context context) {
-        try {
-            if ("1".equals(TelephonyManager.semGetTelephonyProperty(0, "gsm.sim.screenEvent", "0")) || "1".equals(TelephonyManager.semGetTelephonyProperty(1, "gsm.sim.screenEvent", "0"))) {
-                Intent intent = new Intent(CatEventDownload.STK_EVENT_ACTION);
-                new CatEventDownload().putExtra(intent, "STK EVENT");
-                context.sendBroadcast(intent);
-                Log.v(TAG, "broadcastStkIntent sent");
-            }
-        } catch (NoSuchMethodError e) {
-            Log.e(TAG, "NoSuchMethodError occur broadcastStkIntent.", e);
-        }
+        // TODO: Samsung specific code
+//        try {
+//            if ("1".equals(TelephonyManager.semGetTelephonyProperty(0, "gsm.sim.screenEvent", "0")) || "1".equals(TelephonyManager.semGetTelephonyProperty(1, "gsm.sim.screenEvent", "0"))) {
+//                Intent intent = new Intent(CatEventDownload.STK_EVENT_ACTION);
+//                new CatEventDownload().putExtra(intent, "STK EVENT");
+//                context.sendBroadcast(intent);
+//                Log.v(TAG, "broadcastStkIntent sent");
+//            }
+//        } catch (NoSuchMethodError e) {
+//            Log.e(TAG, "NoSuchMethodError occur broadcastStkIntent.", e);
+//        }
     }
 
     public static Locale getLocale(Context context) {
@@ -1347,7 +1355,7 @@ public final class Utilities {
 
     public static int generateRandomNumber(int limit) {
         Random r = new Random();
-        r.setSeed(System.nanoTime());
+        r.setSeed(java.lang.System.nanoTime());
         return r.nextInt(limit);
     }
 
@@ -1367,7 +1375,7 @@ public final class Utilities {
     }
 
     public static boolean isDeskTopMode(Context context) {
-        return ((SemDesktopModeManager) context.getSystemService("desktopmode")) != null && SemDesktopModeManager.isDesktopMode();
+        return false; // TODO: Samsung specific code //return ((SemDesktopModeManager) context.getSystemService("desktopmode")) != null && SemDesktopModeManager.isDesktopMode();
     }
 
     public static String getStringByLocale(Activity activity, int id, String locale) {
@@ -1380,9 +1388,7 @@ public final class Utilities {
         if (dragObjects == null) {
             return false;
         }
-        Iterator it = dragObjects.iterator();
-        while (it.hasNext()) {
-            DragObject dragObject = (DragObject) it.next();
+        for (DragObject dragObject : dragObjects) {
             if (dragObject != null && (dragObject.dragInfo instanceof FolderInfo)) {
                 return true;
             }
@@ -1398,9 +1404,8 @@ public final class Utilities {
         if (!(animator instanceof AnimatorSet)) {
             return animator.getDuration();
         }
-        Iterator it = ((AnimatorSet) animator).getChildAnimations().iterator();
-        while (it.hasNext()) {
-            long childDuration = ((Animator) it.next()).getDuration();
+        for (Animator o : ((AnimatorSet) animator).getChildAnimations()) {
+            long childDuration = (o).getDuration();
             if (duration < childDuration) {
                 duration = childDuration;
             }
@@ -1416,10 +1421,7 @@ public final class Utilities {
         for (ComponentInfo ci : components) {
             if (className.equals(ci.name)) {
                 int ces = context.getPackageManager().getComponentEnabledSetting(cn);
-                if (ces == 1 || (ces == 0 && ci.enabled)) {
-                    return true;
-                }
-                return false;
+                return ces == 1 || (ces == 0 && ci.enabled);
             }
         }
         return false;
@@ -1450,17 +1452,18 @@ public final class Utilities {
     }
 
     public static void setHoverPopupContentDescription(View view, CharSequence description) {
-        try {
-            view.semSetHoverPopupType(1);
-            SemHoverPopupWindow hover = view.semGetHoverPopup(true);
-            if (hover != null) {
-                hover.setContent(description);
-            }
-        } catch (NoSuchMethodError e) {
-            Log.e(TAG, "Method not found : " + e.toString());
-        } catch (Exception e2) {
-            Log.e(TAG, "setHoverPopupContentDescription : " + e2.toString());
-        }
+        // TODO: Samsung specific code
+//        try {
+//            view.semSetHoverPopupType(1);
+//            SemHoverPopupWindow hover = view.semGetHoverPopup(true);
+//            if (hover != null) {
+//                hover.setContent(description);
+//            }
+//        } catch (NoSuchMethodError e) {
+//            Log.e(TAG, "Method not found : " + e.toString());
+//        } catch (Exception e2) {
+//            Log.e(TAG, "setHoverPopupContentDescription : " + e2.toString());
+//        }
     }
 
     public static int checkHomeHiddenDir() {
@@ -1510,14 +1513,11 @@ public final class Utilities {
             return false;
         }
         try {
-            ActivityInfo activityInfo = pm.getActivityInfo(cn, 128);
+            ActivityInfo activityInfo = pm.getActivityInfo(cn, PackageManager.GET_META_DATA);
             if (activityInfo == null) {
                 Log.d(TAG, "PairApps's " + cn.flattenToShortString() + " is null");
             }
-            if (activityInfo != null) {
-                return true;
-            }
-            return false;
+            return activityInfo != null;
         } catch (NameNotFoundException e) {
             Log.i(TAG, "Activity Not Found : " + cn.flattenToShortString());
             return false;
@@ -1585,10 +1585,7 @@ public final class Utilities {
     }
 
     public static boolean getNotificationPreviewEnable(Context context) {
-        if (Secure.getInt(context.getContentResolver(), NOTIFICATION_PREVIEW, 0) != 1 || getBadgeSettingValue(context) < 0) {
-            return false;
-        }
-        return true;
+        return Secure.getInt(context.getContentResolver(), NOTIFICATION_PREVIEW, 0) == 1 && getBadgeSettingValue(context) >= 0;
     }
 
     public static void setMaxFontScale(Context context, TextView textView) {

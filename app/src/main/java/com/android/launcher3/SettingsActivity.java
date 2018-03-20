@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -156,7 +157,7 @@ public class SettingsActivity extends Activity {
 
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             Bundle extras = new Bundle();
-            extras.putBoolean("value", ((Boolean) newValue).booleanValue());
+            extras.putBoolean("value", (Boolean) newValue);
             getActivity().getContentResolver().call(Settings.CONTENT_URI, Settings.METHOD_SET_BOOLEAN, preference.getKey(), extras);
             return true;
         }
@@ -182,7 +183,8 @@ public class SettingsActivity extends Activity {
 
         private void setHomeScreenMode() {
             if (this.mPrefHomeScreenMode != null) {
-                this.mPrefHomeScreenMode.semSetSummaryColorToColorPrimaryDark(true);
+                // TODO: Samsung specific code
+                //this.mPrefHomeScreenMode.semSetSummaryColorToColorPrimaryDark(true);
                 if (LauncherAppState.getInstance().isHomeOnlyModeEnabled()) {
                     this.mPrefHomeScreenMode.setSummary(R.string.home_screen_mode_only_home);
                 } else {
@@ -222,7 +224,8 @@ public class SettingsActivity extends Activity {
             }
             if (this.mPreAppsScreenGrid != null) {
                 this.mPreAppsScreenGrid.setSummary(summary);
-                this.mPreAppsScreenGrid.semSetSummaryColorToColorPrimaryDark(true);
+                // TODO: Samsung specific code
+                //this.mPreAppsScreenGrid.semSetSummaryColorToColorPrimaryDark(true);
                 this.mPreAppsScreenGrid.setEnabled(true);
                 this.mPreAppsScreenGrid.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference arg0) {
@@ -313,7 +316,7 @@ public class SettingsActivity extends Activity {
                 this.mPreNotificationPanelSetting.setChecked(LauncherAppState.getInstance().getNotificationPanelExpansionEnabled());
                 this.mPreNotificationPanelSetting.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        LauncherAppState.getInstance().setNotificationPanelExpansionEnabled(((Boolean) newValue).booleanValue(), false);
+                        LauncherAppState.getInstance().setNotificationPanelExpansionEnabled((Boolean) newValue, false);
                         return true;
                     }
                 });
@@ -362,12 +365,12 @@ public class SettingsActivity extends Activity {
                 this.mPreOnlyPortraitModeSetting.setChecked(Utilities.isOnlyPortraitMode());
                 this.mPreOnlyPortraitModeSetting.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object obj) {
-                        boolean value = ((Boolean) obj).booleanValue();
+                        boolean value = (Boolean) obj;
                         SALogging.getInstance().insertEventLog(LauncherSettingsFragment.this.getResources().getString(R.string.screen_HomeSettings), LauncherSettingsFragment.this.getResources().getString(R.string.event_PortraitModeOnly), value ? 1 : 0);
                         if (value) {
-                            LauncherSettingsFragment.this.getActivity().setRequestedOrientation(5);
+                            LauncherSettingsFragment.this.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
                         } else {
-                            LauncherSettingsFragment.this.getActivity().setRequestedOrientation(-1);
+                            LauncherSettingsFragment.this.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                         }
                         Utilities.setOnlyPortraitMode(LauncherSettingsFragment.this.getContext(), value);
                         return true;
@@ -386,7 +389,7 @@ public class SettingsActivity extends Activity {
                 switchPreference.setChecked(z);
                 this.mPreAppIconBadgeSetting.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        Secure.putInt(LauncherSettingsFragment.this.getActivity().getContentResolver(), SettingsActivity.NOTIFICATION_BADGING, ((Boolean) newValue).booleanValue() ? 1 : 0);
+                        Secure.putInt(LauncherSettingsFragment.this.getActivity().getContentResolver(), SettingsActivity.NOTIFICATION_BADGING, (Boolean) newValue ? 1 : 0);
                         return true;
                     }
                 });
@@ -411,9 +414,9 @@ public class SettingsActivity extends Activity {
                 this.mPreAddAppsToHomeScreenSetting.setChecked(prefs.getBoolean(Utilities.ADD_ICON_PREFERENCE_KEY, false));
                 this.mPreAddAppsToHomeScreenSetting.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        SALogging.getInstance().insertEventLog(LauncherSettingsFragment.this.getResources().getString(R.string.screen_HomeSettings), LauncherSettingsFragment.this.getResources().getString(R.string.event_AddAppsToHome), ((Boolean) newValue).booleanValue() ? 1 : 0);
-                        SALogging.getInstance().insertStatusLog(LauncherSettingsFragment.this.getResources().getString(R.string.status_AddAppsToHome), ((Boolean) newValue).booleanValue() ? 1 : 0);
-                        prefs.edit().putBoolean(Utilities.ADD_ICON_PREFERENCE_KEY, ((Boolean) newValue).booleanValue()).apply();
+                        SALogging.getInstance().insertEventLog(LauncherSettingsFragment.this.getResources().getString(R.string.screen_HomeSettings), LauncherSettingsFragment.this.getResources().getString(R.string.event_AddAppsToHome), (Boolean) newValue ? 1 : 0);
+                        SALogging.getInstance().insertStatusLog(LauncherSettingsFragment.this.getResources().getString(R.string.status_AddAppsToHome), (Boolean) newValue ? 1 : 0);
+                        prefs.edit().putBoolean(Utilities.ADD_ICON_PREFERENCE_KEY, (Boolean) newValue).apply();
                         return true;
                     }
                 });
@@ -478,7 +481,8 @@ public class SettingsActivity extends Activity {
             }
             if (this.mPreScreenGrid != null) {
                 this.mPreScreenGrid.setSummary(summary);
-                this.mPreScreenGrid.semSetSummaryColorToColorPrimaryDark(true);
+                // TODO: Samsung specific code
+                //this.mPreScreenGrid.semSetSummaryColorToColorPrimaryDark(true);
                 this.mPreScreenGrid.setEnabled(true);
                 this.mPreScreenGrid.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference arg0) {
@@ -513,14 +517,14 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.mActionBar = getActionBar();
         if (this.mActionBar != null) {
-            this.mActionBar.setDisplayOptions(8);
+            this.mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
             this.mActionBar.setDisplayShowTitleEnabled(true);
             this.mActionBar.setDisplayHomeAsUpEnabled(true);
         }
         if (Utilities.isOnlyPortraitMode()) {
-            setRequestedOrientation(5);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         } else {
-            setRequestedOrientation(-1);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
         setContentView(R.layout.settings_main);
         LauncherFeature.setSupportFlexibleGrid(getResources().getBoolean(R.bool.is_supportFlexibleGrid));
@@ -642,7 +646,8 @@ public class SettingsActivity extends Activity {
         Log.d(TAG, "launch Setting App");
         Intent settingApp = new Intent("android.intent.action.MAIN");
         settingApp.setComponent(GlobalSettingUtils.getSettingCN());
-        settingApp.setFlags(268566528);
+        // TODO: Fix intent flag
+        //settingApp.setFlags(268566528);
         Bundle bundle = new Bundle();
         bundle.putBoolean("needSearchMenuInSub", true);
         settingApp.putExtras(bundle);

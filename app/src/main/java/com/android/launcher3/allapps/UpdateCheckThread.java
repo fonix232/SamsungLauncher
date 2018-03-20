@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
-import android.os.SemSystemProperties;
+//import android.os.SemSystemProperties;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import java.io.IOException;
@@ -497,7 +497,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         return (networkOperator == null || networkOperator.length() == 0) ? mnc : networkOperator.substring(3);
     }
 
-    String getCSC() {
-        return SemSystemProperties.get("ro.csc.sales_code");
-    }
+//    String getCSC() {
+//        return SemSystemProperties.get("ro.csc.sales_code");
+//    }
 }

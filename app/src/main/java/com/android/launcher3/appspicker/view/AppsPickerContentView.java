@@ -17,9 +17,9 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.TestHelper;
 import com.android.launcher3.util.locale.LocaleUtils;
-import com.samsung.android.widget.SemArrayIndexer;
-import com.samsung.android.widget.SemIndexScrollView;
-import com.samsung.android.widget.SemIndexScrollView.OnIndexBarEventListener;
+//import com.samsung.android.widget.SemArrayIndexer;
+//import com.samsung.android.widget.SemIndexScrollView;
+//import com.samsung.android.widget.SemIndexScrollView.OnIndexBarEventListener;
 import com.sec.android.app.launcher.R;
 import java.text.Collator;
 import java.util.List;
@@ -41,7 +41,7 @@ public class AppsPickerContentView extends FrameLayout {
     private ListView mSearchListView;
     private ViewGroup mSearchListViewContainer;
     private TextView mSearchResultText;
-    private SemIndexScrollView mTwIndexScrollView;
+    //private SemIndexScrollView mTwIndexScrollView;
 
     public AppsPickerContentView(Context context) {
         this(context, null);

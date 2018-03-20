@@ -21,7 +21,7 @@ import com.android.launcher3.common.base.item.IconInfo;
 import com.android.launcher3.common.base.item.ItemInfo;
 import com.android.launcher3.common.compat.LauncherActivityInfoCompat;
 import com.android.launcher3.common.compat.UserHandleCompat;
-import com.samsung.android.game.SemGameManager;
+//import com.samsung.android.game.SemGameManager;
 import com.sec.android.app.launcher.R;
 import java.util.ArrayList;
 import java.util.HashMap;

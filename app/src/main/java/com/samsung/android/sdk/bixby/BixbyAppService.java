@@ -56,7 +56,7 @@ public class BixbyAppService extends Service {
     private IBixbyAgentAppServiceCallback mCallbackToBa;
     private Handler mHandler = new Handler();
     private boolean mIsKnoxId = false;
-    OnResponseCallback mResponseFromMediator = new OnResponseCallback() {
+    BixbyApi.OnResponseCallback mResponseFromMediator = new BixbyApi.OnResponseCallback() {
         public void onResponse(String result, String msg) throws IllegalStateException {
             if (BixbyAppService.DEBUG) {
                 Log.d(BixbyAppService.TAG, "Send command to EM " + result + " " + msg);
@@ -265,7 +265,7 @@ public class BixbyAppService extends Service {
         for (String pName : packages) {
             if (BIXBY_AGENT_PACKAGE_NAME.equals(pName)) {
                 try {
-                    Signature[] sigs = pm.getPackageInfo(pName, 64).signatures;
+                    Signature[] sigs = pm.getPackageInfo(pName, PackageManager.GET_SIGNATURES).signatures;
                     if (sigs != null && sigs.length > 0 && mBixbAgentSignature.equals(sigs[0])) {
                         return true;
                     }

@@ -16,7 +16,6 @@ import com.android.launcher3.common.base.item.ItemInfo;
 import com.android.launcher3.common.compat.UserHandleCompat;
 import com.android.launcher3.common.view.IconView;
 import com.android.vcard.VCardConfig;
-import com.samsung.android.knox.SemPersonaManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 

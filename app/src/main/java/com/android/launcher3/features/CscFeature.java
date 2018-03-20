@@ -1,6 +1,6 @@
 package com.android.launcher3.features;
 
-import com.samsung.android.feature.SemCscFeature;
+//import com.samsung.android.feature.SemCscFeature;
 
 public class CscFeature {
     public static boolean getBoolean(String tag) {

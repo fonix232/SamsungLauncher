@@ -110,7 +110,7 @@ public class LauncherProvider extends ContentProvider {
             this.mFavoritesProvider.deleteWidgetHost(this.mListener);
             this.mFavoritesProvider.setMaxItemId(this.mFavoritesProvider.initializeMaxItemId("favorites"));
             setFlagEmptyDbCreated();
-            ManagedProfileHeuristic.processAllUsers(Collections.emptyList(), this.mContext);
+            ManagedProfileHeuristic.processAllUsers(Collections.<UserHandleCompat>emptyList(), this.mContext);
         }
 
         private void setFlagEmptyDbCreated() {
@@ -427,32 +427,12 @@ public class LauncherProvider extends ContentProvider {
             }
             return this.mRemoteConfigurationManager.handleRemoteConfigurationCall(method, arg, extras);
         }
-        result = new Bundle();
-        switch (method.hashCode()) {
-            case -1839494009:
-                if (method.equals("getDataBaseVersion")) {
-                    i = 2;
-                    break;
-                }
-                break;
-            case -1803226544:
-                if (method.equals(Settings.METHOD_GET_BOOLEAN)) {
-                    i = 0;
-                    break;
-                }
-                break;
-            case 948012892:
-                if (method.equals(Settings.METHOD_SET_BOOLEAN)) {
-                    i = 1;
-                    break;
-                }
-                break;
-        }
-        switch (i) {
-            case 0:
+        Bundle result = new Bundle();
+        switch(method){
+            case Settings.METHOD_GET_BOOLEAN:
                 result.putBoolean("value", getContext().getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0).getBoolean(arg, extras.getBoolean(Settings.EXTRA_DEFAULT_VALUE)));
                 return result;
-            case 1:
+            case Settings.METHOD_SET_BOOLEAN:
                 boolean value = extras.getBoolean("value");
                 getContext().getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0).edit().putBoolean(arg, value).apply();
                 if (this.mListener != null) {
@@ -463,15 +443,14 @@ public class LauncherProvider extends ContentProvider {
                 }
                 result.putBoolean("value", value);
                 return result;
-            case 2:
+            case "getDataBaseVersion":
                 if (!"getDataBaseVersion".equals(method)) {
                     return result;
                 }
                 result.putInt("DBVersion", 30);
                 return result;
-            default:
-                return null;
         }
+        return result;
     }
 
     private void notifyListeners() {

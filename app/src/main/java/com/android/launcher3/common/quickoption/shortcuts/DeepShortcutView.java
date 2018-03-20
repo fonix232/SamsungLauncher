@@ -21,7 +21,7 @@ public class DeepShortcutView extends FrameLayout implements AnimatorUpdateListe
     private static final Point sTempPoint = new Point();
     private DeepShortcutTextView mBubbleText;
     private View mIconView;
-    private UnbadgedShortcutInfo mInfo;
+    private DeepShortcutsContainer.UnbadgedShortcutInfo mInfo;
     private float mOpenAnimationProgress;
     private final Rect mPillRect;
 
@@ -92,11 +92,11 @@ public class DeepShortcutView extends FrameLayout implements AnimatorUpdateListe
     }
 
     public void setWillDrawIcon(boolean willDraw) {
-        this.mIconView.setVisibility(willDraw ? 0 : 4);
+        this.mIconView.setVisibility(willDraw ? View.VISIBLE : View.INVISIBLE);
     }
 
     public boolean willDrawIcon() {
-        return this.mIconView.getVisibility() == 0;
+        return this.mIconView.getVisibility() == View.VISIBLE;
     }
 
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -104,7 +104,7 @@ public class DeepShortcutView extends FrameLayout implements AnimatorUpdateListe
         this.mPillRect.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
     }
 
-    void applyShortcutInfo(UnbadgedShortcutInfo info, DeepShortcutsContainer container) {
+    void applyShortcutInfo(DeepShortcutsContainer.UnbadgedShortcutInfo info, DeepShortcutsContainer container) {
         this.mInfo = info;
         this.mBubbleText.applyFromShortcutInfo(info, LauncherAppState.getInstance().getIconCache());
         this.mIconView.setBackground(this.mBubbleText.getIcon());

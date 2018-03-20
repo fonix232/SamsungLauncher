@@ -9,7 +9,7 @@ import android.util.Log;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.common.compat.UserHandleCompat;
 import com.android.launcher3.common.multiselect.MultiSelectManager;
-import com.samsung.android.app.SemDualAppManager;
+//import com.samsung.android.app.SemDualAppManager;
 
 public final class DualAppUtils {
     private static final String DUAL_APP_CREATE_CLASS_NAME = "com.samsung.android.da.daagent.CreateDualIM";

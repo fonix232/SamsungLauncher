@@ -1,6 +1,5 @@
 package com.android.launcher3.util.locale.hanzi;
 
-import com.samsung.android.util.SemLog;
 import java.text.CollationKey;
 import java.text.Collator;
 import java.text.RuleBasedCollator;
@@ -12,7 +11,7 @@ public class NameNormalizer {
 
     static {
         if ("ga_IE".equals(Locale.getDefault().toString()) || "et_EE".equals(Locale.getDefault().toString())) {
-            SemLog.secD("NameNormalizer", "@@ sCompressingCollator set to u k  : " + Locale.getDefault());
+            //SemLog.secD("NameNormalizer", "@@ sCompressingCollator set to u k  : " + Locale.getDefault());
             sCompressingCollator = (RuleBasedCollator) Collator.getInstance(Locale.UK);
         } else {
             sCompressingCollator = (RuleBasedCollator) Collator.getInstance(Locale.getDefault());

@@ -16,10 +16,10 @@ import com.android.launcher3.LauncherFeature;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.common.deviceprofile.DeviceProfile;
 import com.android.launcher3.util.WallpaperUtils;
-import com.samsung.android.hardware.context.SemContextEvent;
-import com.samsung.android.hardware.context.SemContextInterruptedGyroAttribute;
-import com.samsung.android.hardware.context.SemContextListener;
-import com.samsung.android.hardware.context.SemContextManager;
+//import com.samsung.android.hardware.context.SemContextEvent;
+//import com.samsung.android.hardware.context.SemContextInterruptedGyroAttribute;
+//import com.samsung.android.hardware.context.SemContextListener;
+//import com.samsung.android.hardware.context.SemContextManager;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -43,10 +43,10 @@ public final class GyroForShadow {
     private static float mMobileKeyboardScreenHeight = 0.0f;
     private static float mPrevX = 0.0f;
     private static float mPrevY = 0.0f;
-    private static SemContextListener mSContextListener = new SemContextListener() {
-        public void onSemContextChanged(SemContextEvent arg0) {
-        }
-    };
+//    private static SemContextListener mSContextListener = new SemContextListener() {
+//        public void onSemContextChanged(SemContextEvent arg0) {
+//        }
+//    };
     private static float mScreenHeight = 0.0f;
     private static float mScreenWidth = 0.0f;
     private static int mSourceType = 0;
@@ -55,7 +55,7 @@ public final class GyroForShadow {
     private static float mTiltRangeY = 0.0f;
     private static float mWallpaperRangeX = 0.5f;
     private static float mWallpaperRangeY = 0.5f;
-    private static SemContextManager sSContextManager;
+    //private static SemContextManager sSContextManager;
     private static SensorManager sSensorManager;
     private static final SensorEventListener sel = new SensorEventListener() {
         public void onSensorChanged(SensorEvent event) {
@@ -90,8 +90,8 @@ public final class GyroForShadow {
     }
 
     public static void initialize(Context context, final Activity activity) {
-        sSensorManager = (SensorManager) context.getSystemService("sensor");
-        sSContextManager = (SemContextManager) context.getSystemService(SCONTEXT_SERVICE);
+        sSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        // sSContextManager = (SemContextManager) context.getSystemService(SCONTEXT_SERVICE);
         checkScontext(context);
         new Thread("changeTiltXYRange") {
             public void run() {
@@ -152,20 +152,20 @@ public final class GyroForShadow {
     }
 
     static void resumeSContext() {
-        if (sSContextManager != null) {
-            sSContextManager.registerListener(mSContextListener, INTERRUPT_GYRO_SERVICE, new SemContextInterruptedGyroAttribute(1));
-            mStartTimestamp = SystemClock.elapsedRealtimeNanos() + DEFAULT_TIME_VALUE;
-            mPrevX = 0.0f;
-            mPrevY = 0.0f;
-            mMapY = 0.0f;
-            mMapX = 0.0f;
-        }
+//        if (sSContextManager != null) {
+//            sSContextManager.registerListener(mSContextListener, INTERRUPT_GYRO_SERVICE, new SemContextInterruptedGyroAttribute(1));
+//            mStartTimestamp = SystemClock.elapsedRealtimeNanos() + DEFAULT_TIME_VALUE;
+//            mPrevX = 0.0f;
+//            mPrevY = 0.0f;
+//            mMapY = 0.0f;
+//            mMapX = 0.0f;
+//        }
     }
 
     static void pauseSContext() {
-        if (sSContextManager != null) {
-            sSContextManager.registerListener(mSContextListener, INTERRUPT_GYRO_SERVICE, new SemContextInterruptedGyroAttribute(0));
-        }
+//        if (sSContextManager != null) {
+//            sSContextManager.registerListener(mSContextListener, INTERRUPT_GYRO_SERVICE, new SemContextInterruptedGyroAttribute(0));
+//        }
     }
 
     static boolean supportScontext(Context context) {
@@ -178,13 +178,13 @@ public final class GyroForShadow {
     private static void checkScontext(Context context) {
         PackageManager pm = context.getPackageManager();
         if (pm != null && (pm.hasSystemFeature("com.sec.feature.sensorhub") || pm.hasSystemFeature("com.sec.feature.scontext_lite"))) {
-            if (sSContextManager == null) {
-                sSContextManager = (SemContextManager) context.getSystemService(SCONTEXT_SERVICE);
-            }
-            if (sSContextManager.isAvailableService(INTERRUPT_GYRO_SERVICE)) {
-                mSourceType = 2;
-                return;
-            }
+//            if (sSContextManager == null) {
+//                sSContextManager = (SemContextManager) context.getSystemService(SCONTEXT_SERVICE);
+//            }
+//            if (sSContextManager.isAvailableService(INTERRUPT_GYRO_SERVICE)) {
+//                mSourceType = 2;
+//                return;
+//            }
         }
         mSourceType = 1;
     }

@@ -51,7 +51,7 @@ import com.android.launcher3.gamehome.GameHomeManager;
 import com.android.launcher3.util.DualAppUtils;
 import com.android.launcher3.util.PinnedShortcutUtils;
 import com.android.launcher3.util.StringJoiner;
-import com.samsung.android.app.SemDualAppManager;
+//import com.samsung.android.app.SemDualAppManager;
 import com.sec.android.app.launcher.R;
 import java.net.URISyntaxException;
 import java.util.ArrayList;

@@ -2,7 +2,6 @@ package com.android.launcher3.util.locale.hanzi;
 
 import android.text.TextUtils;
 import android.util.Log;
-import com.samsung.android.util.SemLog;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -66,7 +65,7 @@ public class HanziToPinyin {
                         break;
                     }
                 }
-                SemLog.secW(TAG, "There is no Chinese collator, HanziToPinyin is disabled");
+                //SemLog.secW(TAG, "There is no Chinese collator, HanziToPinyin is disabled");
                 sInstance = new HanziToPinyin(false);
                 hanziToPinyin = sInstance;
             }
@@ -81,7 +80,7 @@ public class HanziToPinyin {
             if (lastChar != c) {
                 String curString = Character.toString(c);
                 if (COLLATOR.compare(lastString, curString) >= 0) {
-                    SemLog.secE(TAG, "Internal error in Unihan table. The last string \"" + lastString + "\" is greater than current string \"" + curString + "\".");
+                    //SemLog.secE(TAG, "Internal error in Unihan table. The last string \"" + lastString + "\" is greater than current string \"" + curString + "\".");
                     return false;
                 }
                 lastString = curString;
@@ -93,10 +92,12 @@ public class HanziToPinyin {
     public String getPinyin(char character) {
         Token token = new Token();
         String letter = Character.toString(character);
+        String source = "";
+        int type = -1;
         token.source = letter;
         int offset = checkPolyphone(letter);
         if (offset > -1) {
-            token.type = 2;
+            type = 2;
         } else if (character < 'Ā') {
             token.type = 1;
             token.target = letter;
@@ -131,7 +132,7 @@ public class HanziToPinyin {
                 int begin = 0;
                 int end = UNIHANS.length - 1;
                 int suffixType = pinyinSuffixType(character);
-                SemLog.secD(TAG, "getPinyin   suffixType =  " + suffixType);
+                //SemLog.secD(TAG, "getPinyin   suffixType =  " + suffixType);
                 switch (suffixType) {
                     case 1:
                         return PINYIN_LV_STR;

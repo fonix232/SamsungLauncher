@@ -13,8 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 import com.android.vcard.VCardConstants.ImportOnly;
-import com.samsung.android.feature.SemCscFeature;
-import com.samsung.context.sdk.samsunganalytics.a.g.c.a.c;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

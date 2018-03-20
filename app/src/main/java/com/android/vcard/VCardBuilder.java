@@ -10,7 +10,6 @@ import android.support.v4.view.MotionEventCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
-import com.samsung.context.sdk.samsunganalytics.a.g.c.a.c;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;

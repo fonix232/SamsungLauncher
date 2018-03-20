@@ -71,7 +71,8 @@ public class LauncherProviderID extends ContentProvider {
 
     public void createPrefsTable() {
         Log.d(TAG, "[SPRINT] creating pref table");
-        sDb.execSQL("CREATE TABLE IF NOT EXISTS prefs(key TEXT PRIMARY KEY, value INTEGER, modified INTEGER );");
+        // TODO: Review SQL query
+        //sDb.execSQL("CREATE TABLE IF NOT EXISTS prefs(key TEXT PRIMARY KEY, value INTEGER, modified INTEGER );");
     }
 
     public Cursor query(Uri uri, String[] projection, String where, String[] whereArgs, String sortBy) {
@@ -207,55 +208,13 @@ public class LauncherProviderID extends ContentProvider {
 
     public Bundle call(String method, String arg, Bundle extras) {
         Bundle res = new Bundle(1);
-        boolean z = true;
-        switch (method.hashCode()) {
-            case -1166462073:
-                if (method.equals(CALL_PREF_EXISTS)) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 268333907:
-                if (method.equals(CALL_PREF_INIT)) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 318032999:
-                if (method.equals(CALL_GRID_SIZE)) {
-                    z = false;
-                    break;
-                }
-                break;
-            case 1369102655:
-                if (method.equals(CALL_PREF_CREATE)) {
-                    z = true;
-                    break;
-                }
-                break;
-        }
-        switch (z) {
-            case false:
-                int[] xy = new int[2];
-                Utilities.loadCurrentGridSize(getContext(), xy);
-                res.putIntArray(CALL_GRID_SIZE, xy);
-                break;
-            case true:
+        switch(method){
+            case CALL_PREF_EXISTS:
                 boolean isExist = FavoritesProvider.getInstance().tableExists(TABLE_PUBLIC_SCREEN_PREFERENCES);
                 Log.d(TAG, "checkPrefExists: " + isExist);
                 res.putBoolean(CALL_PREF_EXISTS, isExist);
                 break;
-            case true:
-                if (sDb != null) {
-                    createPrefsTable();
-                    initPreferences(getContext());
-                    res.putBoolean(CALL_PREF_CREATE, true);
-                    break;
-                }
-                Log.e(TAG, "createPref: Unable to create table");
-                res.putBoolean(CALL_PREF_CREATE, false);
-                break;
-            case true:
+            case CALL_PREF_INIT:
                 String tableName = getWorkSpaceScreensTable();
                 if (TextUtils.isEmpty(tableName)) {
                     Log.e(TAG, "[SPRINT]InitPref: Unable to initialize table");
@@ -271,6 +230,20 @@ public class LauncherProviderID extends ContentProvider {
                 Log.e(TAG, "[SPRINT]InitPref: Unable to initialize table");
                 res.putBoolean(CALL_PREF_INIT, false);
                 break;
+            case CALL_PREF_CREATE:
+                if (sDb != null) {
+                    createPrefsTable();
+                    initPreferences(getContext());
+                    res.putBoolean(CALL_PREF_CREATE, true);
+                    break;
+                }
+                Log.e(TAG, "createPref: Unable to create table");
+                res.putBoolean(CALL_PREF_CREATE, false);
+                break;
+            case CALL_GRID_SIZE:
+                int[] xy = new int[2];
+                Utilities.loadCurrentGridSize(getContext(), xy);
+                res.putIntArray(CALL_GRID_SIZE, xy);
                 break;
         }
         return res;
@@ -278,6 +251,7 @@ public class LauncherProviderID extends ContentProvider {
 
     /* JADX WARNING: inconsistent code. */
     /* Code decompiled incorrectly, please refer to instructions dump. */
+    // TODO: Fix this call from SMALI
     public void updateScreenCount() {
         /*
         r8 = this;
@@ -347,59 +321,62 @@ public class LauncherProviderID extends ContentProvider {
     }
 
     public void updateScreenIndex() {
-        if (FavoritesProvider.getInstance().tableExists(TABLE_PUBLIC_SCREEN_PREFERENCES)) {
-            sDb.beginTransaction();
-            try {
-                SQLiteStatement update = sDb.compileStatement("UPDATE prefs SET value=?, modified=? WHERE key=?");
-                long index = (long) Utilities.getHomeDefaultPageKey(getContext(), LauncherFiles.HOME_DEFAULT_PAGE_KEY);
-                Log.d(TAG, "[SPRINT] updating index to " + index);
-                update.bindLong(1, index);
-                update.bindLong(2, System.currentTimeMillis());
-                update.bindString(3, "defaultScreen_HomeApps");
-                update.execute();
-                update.close();
-                sDb.setTransactionSuccessful();
-            } catch (Exception e) {
-                Log.e(TAG, "[SPRINT] ERROR while updating screen index");
-            } finally {
-                sDb.endTransaction();
-            }
-        }
+        // TODO: Fix this call
+//        if (FavoritesProvider.getInstance().tableExists(TABLE_PUBLIC_SCREEN_PREFERENCES)) {
+//            sDb.beginTransaction();
+//            try {
+//                SQLiteStatement update = sDb.compileStatement("UPDATE prefs SET value=?, modified=? WHERE key=?");
+//                long index = (long) Utilities.getHomeDefaultPageKey(getContext(), LauncherFiles.HOME_DEFAULT_PAGE_KEY);
+//                Log.d(TAG, "[SPRINT] updating index to " + index);
+//                update.bindLong(1, index);
+//                update.bindLong(2, System.currentTimeMillis());
+//                update.bindString(3, "defaultScreen_HomeApps");
+//                update.execute();
+//                update.close();
+//                sDb.setTransactionSuccessful();
+//            } catch (Exception e) {
+//                Log.e(TAG, "[SPRINT] ERROR while updating screen index");
+//            } finally {
+//                sDb.endTransaction();
+//            }
+//        }
     }
 
     public int getScreenIndex() {
-        if (!FavoritesProvider.getInstance().tableExists(TABLE_PUBLIC_SCREEN_PREFERENCES)) {
-            Log.d(TAG, "[SPRINT] getScreenIndex() Pref does not exist. Creating one");
-            createPrefsTable();
-            initPreferences(getContext());
-        }
-        Cursor c = null;
-        try {
-            c = sDb.rawQuery("SELECT value FROM prefs WHERE key='defaultScreen_HomeApps'", null);
-            if (c == null || !c.moveToNext()) {
-                if (c != null) {
-                    c.close();
-                }
-                Log.e(TAG, "[SPRINT] Unable to get screen index. Getting from shared preferences, instead");
-                return Utilities.getHomeDefaultPageKey(getContext());
-            }
-            Log.d(TAG, "[SPRINT] index: " + c.getLong(0));
-            int i = (int) c.getLong(0);
-            if (c == null) {
-                return i;
-            }
-            c.close();
-            return i;
-        } catch (Exception e) {
-            Log.e(TAG, "[SPRINT] Could not get screen index from Prefs: " + e.getMessage());
-            if (c != null) {
-                c.close();
-            }
-        } catch (Throwable th) {
-            if (c != null) {
-                c.close();
-            }
-        }
+        // TODO: Fix this call
+//        if (!FavoritesProvider.getInstance().tableExists(TABLE_PUBLIC_SCREEN_PREFERENCES)) {
+//            Log.d(TAG, "[SPRINT] getScreenIndex() Pref does not exist. Creating one");
+//            createPrefsTable();
+//            initPreferences(getContext());
+//        }
+//        Cursor c = null;
+//        try {
+//            c = sDb.rawQuery("SELECT value FROM prefs WHERE key='defaultScreen_HomeApps'", null);
+//            if (c == null || !c.moveToNext()) {
+//                if (c != null) {
+//                    c.close();
+//                }
+//                Log.e(TAG, "[SPRINT] Unable to get screen index. Getting from shared preferences, instead");
+//                return Utilities.getHomeDefaultPageKey(getContext());
+//            }
+//            Log.d(TAG, "[SPRINT] index: " + c.getLong(0));
+//            int i = (int) c.getLong(0);
+//            if (c == null) {
+//                return i;
+//            }
+//            c.close();
+//            return i;
+//        } catch (Exception e) {
+//            Log.e(TAG, "[SPRINT] Could not get screen index from Prefs: " + e.getMessage());
+//            if (c != null) {
+//                c.close();
+//            }
+//        } catch (Throwable th) {
+//            if (c != null) {
+//                c.close();
+//            }
+//        }
+        return -1;
     }
 
     public void initPreferences(Context context) {

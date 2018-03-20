@@ -1,5 +1,6 @@
 package com.android.launcher3;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,7 +15,7 @@ public class OpenSourceLicenseActivity extends Activity {
 
     protected void onCreate(Bundle bundle) {
         setContentView(R.layout.about_licences);
-        getActionBar().setDisplayOptions(28);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_HOME_AS_UP);
         this.mWebView = (WebView) findViewById(R.id.webview);
         this.mWebSettings = this.mWebView.getSettings();
         this.mWebView.setLongClickable(false);

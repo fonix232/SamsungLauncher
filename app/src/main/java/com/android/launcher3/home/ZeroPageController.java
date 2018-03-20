@@ -62,7 +62,7 @@ import com.android.launcher3.util.alarm.OnAlarmListener;
 import com.android.launcher3.util.logging.GSIMLogging;
 import com.android.launcher3.util.logging.SALogging;
 import com.android.vcard.VCardConfig;
-import com.samsung.android.feature.SemCscFeature;
+//import com.samsung.android.feature.SemCscFeature;
 import com.samsung.android.sdk.virtualscreen.SVirtualScreen;
 import com.samsung.android.sdk.virtualscreen.SVirtualScreenManager;
 import com.samsung.android.sdk.virtualscreen.SVirtualScreenManager.LaunchParams;

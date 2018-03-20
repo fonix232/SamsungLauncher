@@ -12,7 +12,7 @@ import com.android.launcher3.Utilities;
 import com.android.launcher3.common.base.item.ItemInfo;
 import com.android.launcher3.common.view.DragLayer;
 import com.android.launcher3.common.view.IconView;
-import com.samsung.android.widget.SemTipPopup;
+//import com.samsung.android.widget.SemTipPopup;
 import com.sec.android.app.launcher.R;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class NotificationHelpTipManager {
     private final DragLayer mDragLayer;
     private boolean mEnableToShow = true;
     private ArrayList<IconView> mHotSeatList;
-    private SemTipPopup mSmartTip;
+//    private SemTipPopup mSmartTip;
     private long mTime = -1;
     private ArrayList<IconView> mWorkSpaceList;
 
@@ -54,9 +54,9 @@ public class NotificationHelpTipManager {
 
     public void disableShowHelpTip() {
         this.mEnableToShow = false;
-        if (this.mSmartTip != null) {
-            this.mSmartTip.dismiss(false);
-        }
+//        if (this.mSmartTip != null) {
+//            this.mSmartTip.dismiss(false);
+//        }
     }
 
     public boolean updateHelpTip() {
@@ -111,55 +111,55 @@ public class NotificationHelpTipManager {
         Log.d(TAG, "CellX = " + item.cellX + ", CellY = " + item.cellY + ", posX = " + pos[0] + ", posY = " + pos[1]);
         int targetX = pos[0] + (targetIconView.getWidth() / 2);
         int targetY = pos[1];
-        if (this.mSmartTip != null) {
-            if (item.container == -101 || ((targetIconView.isLandscape() || item.cellY != 0) && !(targetIconView.isLandscape() && (item.cellY == 0 || item.cellY == 1)))) {
-                bottomTop = false;
-            }
-            show(bottomTop, targetX, targetY, targetIconView);
-            int i = this.mCount + 1;
-            this.mCount = i;
-            setNotificationHelpTipAccessPref(i);
-        }
+//        if (this.mSmartTip != null) {
+//            if (item.container == -101 || ((targetIconView.isLandscape() || item.cellY != 0) && !(targetIconView.isLandscape() && (item.cellY == 0 || item.cellY == 1)))) {
+//                bottomTop = false;
+//            }
+//            show(bottomTop, targetX, targetY, targetIconView);
+//            int i = this.mCount + 1;
+//            this.mCount = i;
+//            setNotificationHelpTipAccessPref(i);
+//        }
     }
 
     private void show(boolean bottomTop, int targetX, int targetY, IconView targetIconView) {
-        if (bottomTop) {
-            this.mSmartTip.setTargetPosition(targetX, targetIconView.getHeight() + targetY);
-            this.mSmartTip.show(2);
-            return;
-        }
-        this.mSmartTip.setTargetPosition(targetX, targetY);
-        this.mSmartTip.show(0);
+//        if (bottomTop) {
+//            this.mSmartTip.setTargetPosition(targetX, targetIconView.getHeight() + targetY);
+//            this.mSmartTip.show(2);
+//            return;
+//        }
+//        this.mSmartTip.setTargetPosition(targetX, targetY);
+//        this.mSmartTip.show(0);
     }
 
     private void setSmartTipAttributes() {
-        if (this.mSmartTip != null) {
-            this.mSmartTip.dismiss(false);
-            this.mSmartTip = null;
-        }
-        this.mSmartTip = new SemTipPopup(this.mDragLayer);
-        this.mSmartTip.setMessage(this.mContext.getResources().getString(R.string.badge_help_tip_body));
-        this.mSmartTip.setExpanded(true);
-        this.mSmartTip.setAction(this.mContext.getResources().getString(R.string.badge_help_tip_button), new OnClickListener() {
-            public void onClick(View view) {
-                performDetails();
-                if (NotificationHelpTipManager.this.mSmartTip != null) {
-                    NotificationHelpTipManager.this.mSmartTip.dismiss(false);
-                }
-            }
-
-            private void performDetails() {
-                Intent intent = new Intent();
-                intent.setAction(NotificationHelpTipManager.GLOBAL_NOTIFICATION_SETTINGS_INTENT);
-                try {
-                    if (NotificationHelpTipManager.this.mContext != null) {
-                        NotificationHelpTipManager.this.mContext.startActivity(intent);
-                    }
-                } catch (ActivityNotFoundException e) {
-                    Log.e(NotificationHelpTipManager.TAG, e.toString());
-                }
-            }
-        });
+//        if (this.mSmartTip != null) {
+//            this.mSmartTip.dismiss(false);
+//            this.mSmartTip = null;
+//        }
+//        this.mSmartTip = new SemTipPopup(this.mDragLayer);
+//        this.mSmartTip.setMessage(this.mContext.getResources().getString(R.string.badge_help_tip_body));
+//        this.mSmartTip.setExpanded(true);
+//        this.mSmartTip.setAction(this.mContext.getResources().getString(R.string.badge_help_tip_button), new OnClickListener() {
+//            public void onClick(View view) {
+//                performDetails();
+//                if (NotificationHelpTipManager.this.mSmartTip != null) {
+//                    NotificationHelpTipManager.this.mSmartTip.dismiss(false);
+//                }
+//            }
+//
+//            private void performDetails() {
+//                Intent intent = new Intent();
+//                intent.setAction(NotificationHelpTipManager.GLOBAL_NOTIFICATION_SETTINGS_INTENT);
+//                try {
+//                    if (NotificationHelpTipManager.this.mContext != null) {
+//                        NotificationHelpTipManager.this.mContext.startActivity(intent);
+//                    }
+//                } catch (ActivityNotFoundException e) {
+//                    Log.e(NotificationHelpTipManager.TAG, e.toString());
+//                }
+//            }
+//        });
     }
 
     private IconView findTargetIcon(List<IconView> list) {
