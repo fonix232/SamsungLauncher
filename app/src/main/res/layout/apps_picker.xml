@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.appspicker.view.AppsPickerContainerView android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:gravity="bottom" android:layout_width="fill_parent" android:layout_height="@dimen/appsPicker_title_layout_height">
+        <TextView android:textSize="@dimen/appsPicker_title_count_text_size" android:textStyle="bold" android:textColor="@color/folder_multi_header_text_color" android:gravity="start|center" android:id="@id/select_count_text" android:layout_width="wrap_content" android:layout_height="@dimen/appsPicker_edit_button_text_height" android:singleLine="true" android:fontFamily="sec-roboto-condensed" android:paddingStart="5.0dip" android:paddingEnd="5.0dip" android:layout_marginStart="@dimen/appsPicker_title_gap_x" android:layout_marginEnd="@dimen/appsPicker_title_gap_x" />
+        <LinearLayout android:id="@id/select_add_button_container" android:layout_width="wrap_content" android:layout_height="@dimen/appsPicker_edit_button_text_height" android:layout_marginEnd="@dimen/appsPicker_edit_button_margin_end" android:layout_alignParentEnd="true">
+            <TextView android:textSize="@dimen/appsPicker_edit_button_text_size" android:textStyle="bold" android:textColor="@color/folder_multi_header_text_color" android:gravity="end|center" android:id="@id/select_add_button_text" android:background="@drawable/focusable_button_bg" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/appsPicker_add_button" android:textAllCaps="true" android:fontFamily="sec-roboto-condensed" android:paddingStart="@dimen/appsPicker_edit_button_padding_horizontal" android:paddingEnd="@dimen/appsPicker_edit_button_padding_horizontal" />
+        </LinearLayout>
+    </RelativeLayout>
+    <FrameLayout android:id="@id/apps_picker_app_search_box_container" android:focusable="false" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <com.android.launcher3.appspicker.view.AppsPickerContentView android:id="@id/apps_picker_content" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+        <include android:id="@id/apps_picker_all_list" layout="@layout/apps_picker_all_list" />
+        <include android:id="@id/apps_picker_search_list" layout="@layout/apps_picker_search_list" />
+    </com.android.launcher3.appspicker.view.AppsPickerContentView>
+</com.android.launcher3.appspicker.view.AppsPickerContainerView>

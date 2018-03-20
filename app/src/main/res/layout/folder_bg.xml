@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.folder.view.FolderBgView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:id="@id/folder_bg_help_container" android:layout_width="fill_parent" android:layout_height="wrap_content" android:alpha="0.0">
+        <TextView android:textSize="@dimen/tray_fake_view_text_size" android:textColor="@color/tray_fake_view_text_color" android:gravity="center" android:layout_gravity="bottom" android:id="@id/folder_bg_help_text" android:focusable="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/drag_here_to_move_from_folder" android:importantForAccessibility="no" android:fontFamily="sec-roboto-condensed" />
+    </LinearLayout>
+</com.android.launcher3.folder.view.FolderBgView>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Compat.Notification" parent="@android:style/TextAppearance.StatusBar.EventContent" />
+    <style name="TextAppearance.Compat.Notification.Info" parent="@style/TextAppearance.Compat.Notification">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification.Info.Media" parent="@style/TextAppearance.Compat.Notification.Info" />
+    <style name="TextAppearance.Compat.Notification.Media" parent="@style/TextAppearance.Compat.Notification" />
+    <style name="TextAppearance.Compat.Notification.Time" parent="@style/TextAppearance.Compat.Notification">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification.Time.Media" parent="@style/TextAppearance.Compat.Notification.Time" />
+    <style name="TextAppearance.Compat.Notification.Title" parent="@android:style/TextAppearance.StatusBar.EventContent.Title" />
+    <style name="TextAppearance.Compat.Notification.Title.Media" parent="@style/TextAppearance.Compat.Notification.Title" />
+    <style name="Widget.Compat.NotificationActionContainer" parent="" />
+    <style name="Widget.Compat.NotificationActionText" parent="" />
+    <style name="CardView" parent="@style/Base.CardView" />
+    <style name="AboutPageNoDividerTheme" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:actionBarStyle">@style/NoDividerActionBar</item>
+        <item name="android:statusBarColor">#fffafafa</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <style name="AddItemDialog" parent="@android:style/Theme.DeviceDefault.Light.Dialog.Alert">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="AutoAlignText" parent="@android:style/TextAppearance.DeviceDefault">
+        <item name="android:textSize">@dimen/align_items_checkbox_textsize</item>
+        <item name="android:textColor">?android:textColorAlertDialogListItem</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:paddingStart">@dimen/align_items_checkbox_padding</item>
+        <item name="android:paddingEnd">@dimen/align_items_checkbox_padding</item>
+    </style>
+    <style name="Badge">
+        <item name="android:textSize">@dimen/badge_text_size</item>
+        <item name="android:textColor">@color/badge_text_color</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">end|center|top</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="Base.CardView" parent="@android:style/Widget">
+        <item name="cardCornerRadius">@dimen/cardview_default_radius</item>
+        <item name="cardElevation">@dimen/cardview_default_elevation</item>
+        <item name="cardMaxElevation">@dimen/cardview_default_elevation</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="cardPreventCornerOverlap">true</item>
+    </style>
+    <style name="CardView.Dark" parent="@style/CardView">
+        <item name="cardBackgroundColor">@color/cardview_dark_background</item>
+    </style>
+    <style name="CardView.Light" parent="@style/CardView">
+        <item name="cardBackgroundColor">@color/cardview_light_background</item>
+    </style>
+    <style name="Checkbox">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_check_bg</item>
+        <item name="android:focusable">false</item>
+        <item name="android:layout_width">@dimen/multi_select_checkbox_width</item>
+        <item name="android:layout_height">@dimen/multi_select_checkbox_height</item>
+        <item name="android:button">@drawable/multi_select_checkbox</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+    <style name="ContainerButton">
+        <item name="android:textSize">@dimen/tidyup_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/focusable_button_bg</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:shadowColor">@color/menu_edit_done_button_shadow_color</item>
+        <item name="android:shadowDy">@integer/menu_text_shadow_dy</item>
+        <item name="android:shadowRadius">2.0</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="CountBadge">
+        <item name="android:textSize">@dimen/count_badge_text_size</item>
+        <item name="android:textColor">@color/count_badge_text_color</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center|top</item>
+        <item name="android:background">@drawable/btn_check_to_on_mtrl_009</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:backgroundTint">#ff56c0e5</item>
+    </style>
+    <style name="DeepShortcut">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#ff212121</item>
+        <item name="android:gravity">start|center</item>
+        <item name="android:shadowRadius">0.0</item>
+        <item name="android:drawablePadding">@dimen/deep_shortcut_drawable_padding</item>
+        <item name="android:drawableEnd">@drawable/deep_shortcuts_drag_handle</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:paddingStart">@dimen/bg_pill_height</item>
+        <item name="android:paddingEnd">@dimen/deep_shortcut_padding_end</item>
+        <item name="android:elevation">@dimen/deep_shortcuts_elevation</item>
+        <item name="iconSizeOverride">@dimen/deep_shortcut_icon_size</item>
+    </style>
+    <style name="DialogActionButtonStyle">
+        <item name="android:textSize">@dimen/pinned_shortcut_button_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:colorPrimaryDark</item>
+        <item name="android:background">@drawable/focusable_button_bg</item>
+        <item name="android:paddingLeft">@dimen/pinned_shortcut_button_padding</item>
+        <item name="android:paddingRight">@dimen/pinned_shortcut_button_padding</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:minWidth">0.0dip</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="DropTargetCancelButton">
+        <item name="android:textSize">@dimen/drop_target_cancel_text_size</item>
+        <item name="android:textColor">#fffafafa</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingLeft">@dimen/drop_target_cancel_text_padding</item>
+        <item name="android:paddingTop">@dimen/drop_target_cancel_text_padding_top</item>
+        <item name="android:paddingRight">@dimen/drop_target_cancel_text_padding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="DropTargetCancelButtonContainer">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+    <style name="DropTargetCancelCircle">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">@dimen/drop_target_bar_height</item>
+        <item name="android:layout_height">@dimen/drop_target_bar_height</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+    <style name="HomeAppSettingsTheme" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:actionBarStyle">@style/LauncherActionBar</item>
+        <item name="android:statusBarColor">#fff0f0f0</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <style name="IconText">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center|top</item>
+        <item name="android:layout_gravity">center|top</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:shadowColor">@color/text_shadow_color</item>
+        <item name="android:shadowDy">@integer/text_shadow_dy</item>
+        <item name="android:shadowRadius">@integer/text_shadow_radius</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+        <item name="android:paddingStart">@dimen/iconview_text_padding</item>
+        <item name="android:paddingEnd">@dimen/iconview_text_padding</item>
+        <item name="android:layout_marginStart">@dimen/iconview_text_margin</item>
+        <item name="android:layout_marginEnd">@dimen/iconview_text_margin</item>
+    </style>
+    <style name="LauncherActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:displayOptions">showTitle</item>
+        <item name="android:contentInsetStart">0.0dip</item>
+    </style>
+    <style name="LoadingTheme" parent="@android:style/Theme.DeviceDefault.Light.Panel">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="MultiselectPannelStyle">
+        <item name="android:textSize">@dimen/multi_select_panel_text_size</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:lines">1</item>
+        <item name="android:shadowColor">@color/text_shadow_color</item>
+        <item name="android:shadowDy">@integer/text_shadow_dy</item>
+        <item name="android:shadowRadius">@integer/text_shadow_radius</item>
+        <item name="android:drawablePadding">@dimen/multi_select_panel_drawable_padding</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="NoDividerActionBar" parent="@style/LauncherActionBar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:displayOptions">homeAsUp|showTitle</item>
+        <item name="android:backgroundStacked">@android:color/transparent</item>
+    </style>
+    <style name="OverviewPannelStyle">
+        <item name="android:textSize">@dimen/overview_panel_text_size</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/focusable_view_bg</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">@dimen/overview_panel_options_button_height</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:drawablePadding">@dimen/overview_panel_drawable_padding</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+        <item name="android:layout_marginStart">@dimen/overview_panel_options_button_side_margin</item>
+        <item name="android:layout_marginEnd">@dimen/overview_panel_options_button_side_margin</item>
+    </style>
+    <style name="ScreenGridButton">
+        <item name="android:textSize">@dimen/screen_grid_panel_text_size</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center|top</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:shadowColor">@color/text_shadow_color</item>
+        <item name="android:shadowDy">@integer/text_shadow_dy</item>
+        <item name="android:shadowRadius">@integer/text_shadow_radius</item>
+        <item name="android:drawablePadding">@dimen/screen_grid_panel_drawable_padding</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="ScreenGridTopButton">
+        <item name="android:textSize">@dimen/screen_grid_top_button_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/focusable_button_bg</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:shadowColor">@color/text_shadow_color</item>
+        <item name="android:shadowDy">@integer/text_shadow_dy</item>
+        <item name="android:shadowRadius">@integer/text_shadow_radius</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="SettingsActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:displayOptions">homeAsUp|showTitle</item>
+        <item name="android:contentInsetStart">0.0dip</item>
+    </style>
+    <style name="SettingsTheme" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:actionBarStyle">@style/SettingsActionBar</item>
+        <item name="android:statusBarColor">#fffafafa</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification.Line2" parent="@style/TextAppearance.Compat.Notification.Info" />
+    <style name="TextAppearance.Compat.Notification.Line2.Media" parent="@style/TextAppearance.Compat.Notification.Info.Media" />
+    <style name="Theme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+    <style name="ViewMoreBtnTransparent" parent="@android:style/Widget.Holo.ActionButton">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+    <style name="WidgetContainerTheme" parent="@android:style/Theme.DeviceDefault.Settings">
+        <item name="android:textColorPrimary">?android:textColorPrimaryInverse</item>
+        <item name="android:textColorSecondary">?android:textColorSecondaryInverse</item>
+        <item name="android:colorEdgeEffect">?android:textColorSecondaryInverse</item>
+    </style>
+    <style name="WidgetListText">
+        <item name="android:textSize">@dimen/widget_itemview_title_textSize</item>
+        <item name="android:textColor">#fffafafa</item>
+        <item name="android:shadowColor">#99000000</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">2.0</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="ZeroPageSwitch">
+        <item name="android:textSize">@dimen/overview_zeropage_switch_text_size</item>
+        <item name="android:textColor">#fffafafa</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:clickable">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:shadowColor">#33000000</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">2.0</item>
+        <item name="android:fontFamily">sec-roboto-condensed</item>
+    </style>
+    <style name="body_text_style">
+        <item name="android:textAppearance">?android:textAppearanceListItem</item>
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:lineSpacingExtra">@dimen/body_text_line_spacing_extra</item>
+    </style>
+</resources>

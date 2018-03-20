@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set android:ordering="sequentially"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:duration="@integer/config_EdgeLightArrowShowTranslateXDuration" android:valueFrom="0.0dip" android:valueTo="@dimen/home_edge_light_anim_arrow_translate_x" android:propertyName="translationX" />
+</set>

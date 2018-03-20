@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:background="@drawable/ripple_effct_drawable" android:layout_width="fill_parent" android:layout_height="@dimen/viewmore_galaxyapps_height" android:layout_marginTop="@dimen/viewmore_playstore_top" android:layout_marginStart="@dimen/viewmore_galaxyapps_start" android:layout_marginEnd="@dimen/viewmore_galaxyapps_start"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:id="@id/viewmore_galaxyapps_btn" android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/ViewMoreBtnTransparent">
+        <TextView android:textSize="@dimen/galaxyapps_search_text_size" android:textColor="@color/apps_searchtext_color" android:gravity="center" android:id="@id/viewmore_galaxyapps_text" android:layout_width="fill_parent" android:layout_height="fill_parent" android:minHeight="@dimen/viewmore_galaxyapps_text_height" android:text="@string/viewmore_galaxyapps" android:singleLine="true" android:shadowColor="@color/selectcount_text_shadow_color" android:shadowDy="4.0" android:shadowRadius="2.0" />
+    </FrameLayout>
+</LinearLayout>

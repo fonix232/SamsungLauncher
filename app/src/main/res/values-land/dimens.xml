@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="badge_dot_icon_size">7.0dip</dimen>
+    <dimen name="badge_icon_size">16.0dip</dimen>
+    <dimen name="badge_icon_size_easymode">16.0dip</dimen>
+    <dimen name="badge_icon_width_three_number">25.0dip</dimen>
+    <dimen name="badge_icon_width_three_number_easymode">26.5dip</dimen>
+    <dimen name="badge_icon_width_two_number">19.0dip</dimen>
+    <dimen name="badge_icon_width_two_number_easymode">20.0dip</dimen>
+    <dimen name="badge_text_size">10.0dip</dimen>
+    <dimen name="badge_text_size_easymode">11.0dip</dimen>
+    <item type="dimen" name="ged_home_cellheight">@dimen/ged_home_cellheight_land</item>
+    <item type="dimen" name="ged_home_cellwidth">@dimen/ged_home_cellwidth_land</item>
+</resources>

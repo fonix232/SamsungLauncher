@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:background="@drawable/focusable_view_bg" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="@dimen/appsPicker_icon_layout_width" android:layout_height="@dimen/appsPicker_icon_layout_height">
+        <LinearLayout android:orientation="horizontal" android:id="@id/list_item_icon_container" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/appsPicker_icon_margin_top" android:layout_marginStart="@dimen/appsPicker_icon_margin_start">
+            <ImageView android:id="@id/list_item_icon" android:focusable="false" android:layout_width="@dimen/appsPicker_icon_size" android:layout_height="@dimen/appsPicker_icon_size" android:layout_marginBottom="@dimen/appsPicker_icon_drawable_padding" android:scaleType="fitXY" android:importantForAccessibility="no" />
+            <TextView android:textSize="@dimen/appsPicker_icon_text_size" android:textColor="#fffafafa" android:ellipsize="end" android:gravity="start|center" android:layout_gravity="center_vertical" android:id="@id/list_item_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="@integer/apps_picker_item_max_lines" android:shadowColor="#cc000000" android:shadowDy="3.0" android:shadowRadius="2.0" android:contentDescription="" android:importantForAccessibility="no" android:fontFamily="sec-roboto-condensed" android:textAlignment="gravity" android:paddingStart="@dimen/appsPicker_appInfo_padding" android:paddingEnd="@dimen/appsPicker_appInfo_padding" />
+        </LinearLayout>
+        <CheckBox android:id="@id/list_item_checkbox" android:layout_alignTop="@id/list_item_icon_container" android:layout_alignStart="@id/list_item_icon_container" style="@style/Checkbox" />
+    </RelativeLayout>
+</LinearLayout>

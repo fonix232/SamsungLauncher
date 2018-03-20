@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/header" android:focusableInTouchMode="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="@dimen/appsPicker_header_margin_start" android:layout_marginEnd="@dimen/appsPicker_header_margin_end"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/appsPicker_header_text_height">
+        <TextView android:textSize="@dimen/appsPicker_header_text_size" android:textStyle="bold" android:textColor="#ffffffff" android:id="@id/header_text" android:layout_width="wrap_content" android:layout_height="fill_parent" android:minWidth="@dimen/appsPicker_header_text_height" android:textAllCaps="true" android:fontFamily="sec-roboto-condensed" />
+    </LinearLayout>
+    <FrameLayout android:id="@id/apps_picker_appsearch_divider" android:background="#ffffffff" android:layout_width="fill_parent" android:layout_height="@dimen/appsPicker_header_line_height" android:layout_marginBottom="1.0dip" android:alpha="0.7" android:importantForAccessibility="no" />
+</LinearLayout>

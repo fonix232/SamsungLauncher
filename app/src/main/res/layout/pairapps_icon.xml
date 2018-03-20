@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.view.PairAppsIconView android:orientation="vertical" android:background="@drawable/focusable_view_bg" android:focusable="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_gravity="center|top" android:id="@id/iconview_shadow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/iconview_shadow_offset_y" android:antialias="true" android:scaleType="center" />
+    <ImageView android:layout_gravity="center|top" android:id="@id/iconview_imageView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:antialias="true" android:scaleType="center" />
+    <TextView android:id="@id/iconview_titleView" style="@style/IconText" />
+    <TextView android:id="@id/iconview_titleView_second" style="@style/IconText" />
+    <CheckBox android:layout_gravity="center|top" android:id="@id/iconview_checkbox" android:visibility="gone" style="@style/Checkbox" />
+    <TextView android:id="@id/iconview_count_badge" android:visibility="invisible" style="@style/CountBadge" />
+    <TextView android:id="@id/iconview_badge" android:visibility="gone" style="@style/Badge" />
+</com.android.launcher3.common.view.PairAppsIconView>

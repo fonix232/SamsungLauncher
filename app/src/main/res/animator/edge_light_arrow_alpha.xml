@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set android:ordering="sequentially"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:interpolator="@interpolator/sine_in_out_33" android:duration="@integer/config_edgeLightArrowShowDuration" android:valueFrom="0" android:valueTo="1" android:propertyName="alpha" />
+    <objectAnimator android:interpolator="@interpolator/sine_in_out_33" android:duration="@integer/config_edgeLightArrowHideDuration" android:startOffset="@integer/config_edgelightArrowHideStartDelay" android:valueFrom="1" android:valueTo="0" android:propertyName="alpha" />
+</set>

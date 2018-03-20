@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set android:ordering="sequentially"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:duration="@integer/config_swipeAffordanceArrowShowTranslateYDuration" android:valueFrom="@dimen/home_swipe_affordance_anim_arrow_translate_y" android:valueTo="0.0dip" android:propertyName="translationY" />
+    <objectAnimator android:duration="@integer/config_swipeAffordanceArrowShowTranslateYDuration" android:startOffset="@integer/config_swipeAffordanceArrowShowTranslateYDuration" android:valueFrom="@dimen/home_swipe_affordance_anim_arrow_translate_y" android:valueTo="0.0dip" android:propertyName="translationY" />
+</set>

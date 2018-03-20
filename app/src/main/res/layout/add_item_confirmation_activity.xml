@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/pinned_shortcut_body_text_size" android:textColor="?android:textColorAlertDialogListItem" android:id="@id/add_item_text" android:paddingTop="@dimen/pinned_shortcut_margin" android:paddingBottom="@dimen/pinned_shortcut_margin_bottom" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/add_shortcut_request_home_screen" android:lineSpacingExtra="@dimen/pinned_shortcut_body_text_line_space" android:textDirection="locale" android:paddingStart="@dimen/pinned_shortcut_margin" android:paddingEnd="@dimen/pinned_shortcut_margin" />
+            <FrameLayout android:theme="@style/WidgetContainerTheme" android:background="@drawable/add_item_confirmation_activity_inner_bg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="@dimen/pinned_shortcut_inner_side_margin" android:layout_marginEnd="@dimen/pinned_shortcut_inner_side_margin">
+                <com.android.launcher3.widget.view.LivePreviewWidgetCell android:gravity="center" android:layout_gravity="center" android:orientation="vertical" android:id="@id/widget_cell" android:background="@color/add_item_inner_bg_color" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="105.0dip">
+                    <include layout="@layout/widget_cell_content" />
+                </com.android.launcher3.widget.view.LivePreviewWidgetCell>
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout android:gravity="end|center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pinned_shortcut_button_top_margin" android:layout_marginBottom="@dimen/pinned_shortcut_button_bottom_margin">
+        <Button android:id="@id/add_item_cancel_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@android:string/cancel" android:onClick="onCancelClick" style="@style/DialogActionButtonStyle" />
+        <Button android:id="@id/add_item_add_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/add" android:onClick="onPlaceAutomaticallyClick" style="@style/DialogActionButtonStyle" />
+    </LinearLayout>
+</LinearLayout>

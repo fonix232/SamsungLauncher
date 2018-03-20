@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@id/widget" android:descendantFocusability="afterDescendants" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="@dimen/widget_searchbar_top_margin">
+        <include android:layout_gravity="top" android:id="@id/widget_uninstall_title_bar" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="@dimen/widget_title_bar_height" layout="@layout/widget_uninstall_title_bar" />
+        <include android:layout_gravity="top" android:id="@id/widget_searchbar_container" android:layout_width="fill_parent" android:layout_height="@dimen/widget_search_titlebar_height" layout="@layout/widget_searchbar_container_layout" />
+        <View android:layout_gravity="end|center|top" android:id="@id/widget_menu_anchorview" android:layout_width="1.0dip" android:layout_height="1.0dip" android:layout_marginTop="@dimen/widget_searchbar_anchorview_margin_top" android:layout_marginEnd="@dimen/widget_searchbar_anchorview_margin_end" />
+        <LinearLayout android:gravity="center" android:layout_gravity="top" android:id="@id/widget_search_no_result_view" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="@dimen/widget_title_bar_height">
+            <TextView android:textSize="@dimen/appsearch_font_size" android:textColor="#fffafafa" android:id="@id/widget_search_no_result_text" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/app_search_no_results_found" android:fontFamily="sec-roboto-light" />
+        </LinearLayout>
+        <com.android.launcher3.widget.view.WidgetListPagedView android:id="@id/widget_paged_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="@dimen/widget_page_top_margin" launcher:pageIndicator="@id/widget_page_indicator" />
+        <include android:layout_gravity="bottom|center" android:id="@id/widget_page_indicator" android:layout_width="wrap_content" android:layout_height="@dimen/widget_page_indicator_height" android:layout_marginBottom="@dimen/widget_page_indicator_bottom_margin" layout="@layout/page_indicator" />
+    </FrameLayout>
+</FrameLayout>

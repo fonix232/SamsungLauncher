@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference android:title="@string/show_recommend_apps" android:key="search_recommend" android:summary="@string/show_recommend_apps_detail" android:defaultValue="true" />
+</PreferenceScreen>

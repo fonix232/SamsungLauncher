@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.widget.view.WidgetFolder android:orientation="vertical" android:id="@id/widget_folder" android:background="@android:color/transparent" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    <TextView android:textSize="@dimen/widget_folder_title_text_size" android:textColor="#fffafafa" android:gravity="center" android:id="@id/widget_folder_title" android:layout_width="fill_parent" android:layout_height="@dimen/widget_folder_title_height" android:shadowDx="0.0" android:shadowDy="1.0" android:shadowRadius="2.0" android:fontFamily="sec-roboto-condensed" android:textDirection="locale" android:paddingStart="0.0dip" android:paddingEnd="0.0dip" />
+    <com.android.launcher3.widget.view.WidgetFolderPagedView android:id="@id/widget_folder_pagedview" android:layout_width="fill_parent" android:layout_height="wrap_content" launcher:pageIndicator="@id/widget_folder_page_indicator" />
+    <FrameLayout android:id="@id/indicator_wrapper" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="@dimen/widget_folder_pageindicator_container_height">
+        <include android:layout_gravity="bottom|center" android:id="@id/widget_folder_page_indicator" android:layout_width="wrap_content" android:layout_height="@dimen/widget_page_indicator_height" layout="@layout/page_indicator" />
+    </FrameLayout>
+</com.android.launcher3.widget.view.WidgetFolder>

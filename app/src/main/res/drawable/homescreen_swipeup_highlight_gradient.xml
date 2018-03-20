@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:height="@dimen/tray_highlight_height">
+        <shape>
+            <gradient android:startColor="#18ffffff" android:endColor="#00ffffff" android:angle="90.0" />
+        </shape>
+    </item>
+    <item android:gravity="bottom" android:height="1.0dip">
+        <shape>
+            <solid android:color="#46ffffff" />
+        </shape>
+    </item>
+</layer-list>

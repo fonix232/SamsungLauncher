@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nondisableapps>
+    <item>com.sprint.zone</item>
+    <item>com.coremobility.app.vnotes</item>
+    <item>com.sequent.controlpanel</item>
+    <item>com.sprint.voicemail</item>
+    <item>com.sprint.w.installer</item>
+    <item>com.verizon.viewdini</item>
+    <item>com.asurion.android.verizon.vms</item>
+    <item>com.sec.android.app.dmb</item>
+    <item>com.sec.knox.modeswitcher</item>
+    <item>com.sec.knox.bridge</item>
+    <item>com.welgate.DualmodeSetting</item>
+    <item>com.sec.android.app.simcardmanagement</item>
+    <item>com.sec.att.devicehealthshortcut</item>
+    <item>com.android.stk</item>
+    <item>com.android.stk2</item>
+    <item>com.bst.sync</item>
+    <item>com.kt.wificm</item>
+    <item>com.google.android.gms</item>
+    <item>com.tmobile.pr.mytmobile</item>
+    <item>com.samsung.android.themestore</item>
+</nondisableapps>

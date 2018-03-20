@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.allapps.view.AppsContainer android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    <com.android.launcher3.allapps.view.AppsPagedView android:layout_gravity="center" android:id="@id/apps_content" android:layout_width="fill_parent" android:layout_height="fill_parent" launcher:pageIndicator="@id/apps_page_indicator" />
+    <include android:layout_gravity="bottom|center" android:id="@id/apps_page_indicator" android:layout_width="wrap_content" android:layout_height="@dimen/pageIndicator_dot_size" layout="@layout/page_indicator" />
+    <include android:layout_gravity="top" android:id="@id/apps_searchbar_container" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/all_apps_search_view_margin_top" layout="@layout/apps_search_bar" />
+    <LinearLayout android:layout_gravity="top" android:id="@id/apps_tidyup_container" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="@dimen/tidyup_container_height" android:layout_marginTop="@dimen/tidyup_container_margin_top" android:layout_marginStart="@dimen/tidyup_container_margin" android:layout_marginEnd="@dimen/tidyup_container_margin">
+        <TextView android:id="@id/tidy_up_cancel_button" android:text="@string/cancel" style="@style/ContainerButton" />
+        <TextView android:id="@id/tidy_up_apply_button" android:text="@string/apply" style="@style/ContainerButton" />
+    </LinearLayout>
+    <LinearLayout android:layout_gravity="top" android:id="@id/apps_screen_grid_top_container" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="@dimen/screen_grid_top_button_height" android:layout_marginTop="@dimen/status_bar_height" android:layout_marginStart="@dimen/tidyup_container_margin" android:layout_marginEnd="@dimen/tidyup_container_margin">
+        <TextView android:id="@id/apps_screen_grid_cancel_button" android:text="@string/cancel" style="@style/ContainerButton" />
+        <TextView android:id="@id/apps_screen_grid_apply_button" android:text="@string/apply" style="@style/ContainerButton" />
+    </LinearLayout>
+    <include android:id="@id/apps_screen_grid_panel" android:visibility="gone" layout="@layout/apps_screen_grid_panel" />
+</com.android.launcher3.allapps.view.AppsContainer>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.view.PageIndicatorMarker android:layout_gravity="center" android:focusable="false" android:layout_width="@dimen/pageIndicator_dot_size" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_gravity="center" android:id="@id/inactive" android:layout_width="@dimen/pageIndicator_dot_size" android:layout_height="@dimen/pageIndicator_dot_size" android:src="@drawable/homescreen_menu_page_navi_default" android:scaleType="centerInside" />
+    <ImageView android:layout_gravity="center" android:id="@id/active" android:layout_width="@dimen/pageIndicator_dot_size" android:layout_height="@dimen/pageIndicator_dot_size" android:src="@drawable/homescreen_menu_page_navi_default_f" android:scaleType="centerInside" />
+</com.android.launcher3.common.view.PageIndicatorMarker>

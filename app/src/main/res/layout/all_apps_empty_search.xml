@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:textSize="@dimen/appsearch_font_size" android:textColor="#fffafafa" android:gravity="center" android:id="@id/empty_text" android:focusable="false" android:layout_width="fill_parent" android:layout_height="@dimen/noti_textHeight" android:shadowColor="@color/menu_edit_done_button_shadow_color" android:shadowDy="@integer/menu_text_shadow_dy" android:shadowRadius="2.0" android:fontFamily="sec-roboto-light"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

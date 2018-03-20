@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_itemview_uninstall_size">16.0dip</dimen>
+</resources>

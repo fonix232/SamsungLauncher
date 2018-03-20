@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.widget.view.WidgetItemSingleView android:orientation="vertical" android:background="@drawable/widget_item_background" android:padding="@dimen/widget_itemview_focus_padding" android:focusable="true" android:layout_width="@dimen/widget_itemview_width" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="@dimen/widget_itemview_contents_width" android:layout_height="wrap_content" android:paddingStart="@dimen/widget_itemview_contents_padding" android:paddingEnd="@dimen/widget_itemview_contents_padding">
+        <RelativeLayout android:layout_gravity="start|center" android:paddingBottom="@dimen/widget_title_bottom_padding" android:layout_width="fill_parent" android:layout_height="@dimen/widget_itemview_title_height">
+            <TextView android:ellipsize="end" android:id="@id/widget_name" android:layout_width="wrap_content" android:layout_height="@dimen/widget_itemview_title_name_height" android:maxLines="1" android:layout_centerVertical="true" android:textDirection="locale" android:layout_marginEnd="@dimen/widget_title_margin_end" android:layout_toStartOf="@id/widget_dims" android:layout_alignParentStart="true" style="@style/WidgetListText" />
+            <ImageView android:id="@id/widget_uninstall_icon" android:focusable="false" android:visibility="gone" android:clickable="false" android:layout_width="@dimen/widget_itemview_folder_arraw_size" android:layout_height="@dimen/widget_itemview_folder_arraw_size" android:src="@drawable/homescreen_btn_widget_delete" android:layout_centerVertical="true" android:contentDescription="@null" android:layout_alignParentEnd="true" />
+            <TextView android:ellipsize="end" android:id="@id/widget_dims" android:layout_width="wrap_content" android:layout_height="@dimen/widget_itemview_title_cellspan_height" android:maxLines="1" android:layout_centerVertical="true" android:layout_alignParentEnd="true" style="@style/WidgetListText" />
+        </RelativeLayout>
+    </LinearLayout>
+    <FrameLayout android:layout_gravity="center_horizontal" android:id="@id/widget_preview_container" android:paddingBottom="@dimen/widget_itemview_single_preview_container_padding_bottom" android:layout_width="@dimen/widget_itemview_contents_width" android:layout_height="wrap_content" android:paddingStart="@dimen/widget_itemview_single_preview_container_padding_left" android:paddingEnd="@dimen/widget_itemview_single_preview_container_padding_right">
+        <ImageView android:layout_gravity="center" android:id="@id/widget_preview" android:layout_width="@dimen/widget_itemview_single_preview_image_width" android:layout_height="@dimen/widget_itemview_single_preview_image_height" android:scaleType="centerInside" />
+    </FrameLayout>
+</com.android.launcher3.widget.view.WidgetItemSingleView>

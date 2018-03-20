@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.view.IconView android:layout_gravity="center" android:id="@id/icon" android:background="@drawable/focusable_view_bg" android:paddingTop="@dimen/all_apps_icon_top_bottom_padding" android:paddingBottom="@dimen/all_apps_icon_top_bottom_padding" android:focusable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" launcher:iconDisplay="apps"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    <ImageView android:layout_gravity="center|top" android:id="@id/iconview_imageView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:antialias="true" android:scaleType="center" />
+    <TextView android:id="@id/iconview_titleView" style="@style/IconText" />
+</com.android.launcher3.common.view.IconView>

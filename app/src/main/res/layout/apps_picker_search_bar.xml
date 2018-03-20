@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="bottom" android:background="@android:color/transparent" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="bottom" android:orientation="vertical" android:id="@id/apps_picker_search_bar_wrapper" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginStart="@dimen/appsPicker_container_margin_start" android:layout_marginEnd="@dimen/widget_search_titlebar_padding_right">
+        <SearchView android:textSize="@dimen/widget_searchview_text_size" android:textColor="@color/widget_searchview_text_color" android:textColorHint="@color/widget_searchview_text_color" android:layout_gravity="center_vertical" android:id="@id/apps_picker_app_search_input" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxLength="30" android:layout_weight="1.0" android:inputType="textCapSentences" android:imeOptions="actionSearch|flagNoExtractUi" android:queryHint="@string/folder_multi_search_bar_hint" android:fontFamily="sec-roboto-condensed" android:paddingStart="@dimen/widget_searchbar_searchview_padding_start" android:paddingEnd="@dimen/widget_searchbar_searchview_padding_end" />
+        <View android:id="@id/apps_picker_search_under_bar" android:background="@color/apps_search_titlebar_divider_color" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+    </LinearLayout>
+</LinearLayout>

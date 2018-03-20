@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:baselineAligned="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:scrollbarStyle="insideInset" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.5">
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:minHeight="@dimen/about_page_area">
+            <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <ImageView android:layout_gravity="center_horizontal" android:id="@id/touchWiz_icon" android:layout_width="@dimen/about_icon_width" android:layout_height="@dimen/about_icon_height" android:layout_marginBottom="@dimen/about_icon_bottom_margin" android:scaleType="fitXY" />
+                <TextView android:textSize="@dimen/about_app_name_size" android:textStyle="bold" android:textColor="?android:textColorPrimary" android:layout_gravity="center" android:id="@id/about_app_name" android:paddingBottom="@dimen/about_text_bottom_padding" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/about_text_top_margin" android:text="@string/application_name" android:textAllCaps="true" android:fontFamily="sec-roboto-condensed" android:textAlignment="center" />
+                <TextView android:textColor="?android:textColorSecondary" android:layout_gravity="center" android:id="@id/app_info" android:background="@drawable/about_button" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_text_top_margin" android:minHeight="@dimen/about_info_min_height" android:fontFamily="sec-roboto-condensed" android:textAlignment="center" android:paddingStart="@dimen/about_title_bottom_margin" android:paddingEnd="@dimen/about_title_bottom_margin" />
+                <TextView android:textColor="?android:textColorSecondary" android:gravity="center" android:id="@id/notice_title" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_title_bottom_margin" />
+                <TextView android:textSize="@dimen/about_version_description" android:textColor="?android:textColorSecondary" android:gravity="center" android:id="@id/notice_instruction" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_notice_bottom_margin" android:paddingStart="@dimen/about_notice_instruction_margin" android:paddingEnd="@dimen/about_notice_instruction_margin" />
+                <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <ProgressBar android:layout_gravity="center" android:id="@id/progreess_bar" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="@dimen/about_button_height" />
+                    <Button android:textColor="@color/about_color_description" android:layout_gravity="center" android:id="@id/redirect_button" android:background="@drawable/about_update" android:visibility="gone" android:layout_width="@dimen/about_button_width" android:layout_height="@dimen/about_button_height" />
+                    <Button android:textColor="@color/about_color_description" android:layout_gravity="center" android:id="@id/retry_button" android:background="@drawable/about_update" android:visibility="gone" android:layout_width="@dimen/about_button_width" android:layout_height="@dimen/about_button_height" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="0.5">
+        <TextView android:textSize="@dimen/about_licence_text_size" android:textColor="?android:textColorPrimary" android:layout_gravity="center" android:id="@id/licence_textview" android:background="@drawable/ripple_bg_rectangle" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_notice_bottom_margin" android:text="@string/about_licence" android:fontFamily="sec-roboto-condensed" />
+    </FrameLayout>
+</LinearLayout>

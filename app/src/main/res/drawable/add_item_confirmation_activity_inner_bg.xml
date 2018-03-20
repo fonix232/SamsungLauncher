@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/add_item_inner_bg_color" />
+    <corners android:radius="@dimen/add_item_activity_inner_bg_radius" />
+</shape>

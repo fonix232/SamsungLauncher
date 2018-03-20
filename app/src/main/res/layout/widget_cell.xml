@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.widget.view.WidgetCell android:gravity="center_horizontal" android:orientation="vertical" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:paddingLeft="@dimen/widget_preview_label_horizontal_padding" android:paddingTop="@dimen/widget_preview_label_vertical_padding" android:paddingRight="@dimen/widget_preview_label_horizontal_padding" android:paddingBottom="@dimen/widget_preview_label_vertical_padding" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TextView android:textSize="14.0sp" android:textColor="@color/widgets_view_item_text_color" android:ellipsize="end" android:gravity="start" android:id="@id/widget_name" android:fadingEdge="horizontal" android:layout_width="0.0dip" android:layout_height="wrap_content" android:singleLine="true" android:shadowColor="#b0000000" android:shadowRadius="2.0" android:layout_weight="1.0" android:fontFamily="sans-serif-condensed" />
+        <TextView android:textSize="14.0sp" android:textColor="@color/widgets_view_item_text_color" android:id="@id/widget_dims" android:layout_width="wrap_content" android:layout_height="wrap_content" android:shadowColor="#b0000000" android:shadowRadius="2.0" android:fontFamily="sans-serif-condensed" android:layout_marginStart="5.0dip" />
+    </LinearLayout>
+    <com.android.launcher3.widget.view.WidgetImageView android:id="@id/widget_preview" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+</com.android.launcher3.widget.view.WidgetCell>

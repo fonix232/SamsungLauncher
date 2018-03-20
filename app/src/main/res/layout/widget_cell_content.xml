@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/widget_cell_text_bottom_margin" android:layout_marginStart="@dimen/widget_cell_text_side_margin" android:layout_marginEnd="@dimen/widget_cell_text_side_margin">
+            <TextView android:textSize="@dimen/widget_cell_text_size" android:textColor="@color/pinned_shortcut_body_text_color" android:ellipsize="end" android:gravity="start" android:id="@id/widget_name" android:fadingEdge="horizontal" android:layout_width="0.0dip" android:layout_height="wrap_content" android:maxLines="1" android:layout_weight="1.0" android:fontFamily="sec-roboto-condensed" />
+            <TextView android:textSize="@dimen/widget_cell_text_size" android:textColor="@color/pinned_shortcut_body_text_color" android:id="@id/widget_dims" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="sec-roboto-condensed" android:layout_marginStart="@dimen/widget_cell_text_gap_margin" />
+        </LinearLayout>
+        <com.android.launcher3.widget.view.WidgetImageView android:layout_gravity="center" android:id="@id/widget_preview" android:layout_width="@dimen/widget_cell_app_icon_size" android:layout_height="@dimen/widget_cell_app_icon_size" />
+    </LinearLayout>
+</merge>

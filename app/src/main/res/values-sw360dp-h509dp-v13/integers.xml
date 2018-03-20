@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="apps_default_cellCountX">4</integer>
+    <integer name="apps_default_cellCountY">6</integer>
+    <integer name="config_workspaceOverviewShrinkPercentage">75</integer>
+    <integer name="home_cellCountX">5</integer>
+    <integer name="home_cellCountY">5</integer>
+</resources>

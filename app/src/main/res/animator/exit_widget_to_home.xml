@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set android:ordering="together"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:duration="@integer/config_widgetTransitionDuration" android:valueFrom="1" android:valueTo="0" android:propertyName="alpha" />
+    <objectAnimator android:duration="@integer/config_widgetTransitionDuration" android:valueFrom="1" android:valueTo="0.6" android:valueType="floatType" android:propertyName="scaleX" />
+    <objectAnimator android:duration="@integer/config_widgetTransitionDuration" android:valueFrom="1" android:valueTo="0.6" android:valueType="floatType" android:propertyName="scaleY" />
+</set>

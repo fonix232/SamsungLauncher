@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set android:ordering="together"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:interpolator="@interpolator/sine_in_out_90" android:duration="@integer/widget_itemview_icon_anim_duration" android:startOffset="@integer/widget_search_titlebar_anim_start_delay" android:valueFrom="0" android:valueTo="1" android:propertyName="alpha" />
+</set>

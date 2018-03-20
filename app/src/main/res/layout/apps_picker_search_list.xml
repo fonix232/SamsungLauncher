@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/apps_picker_search_list" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/apps_picker_list_header" />
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ListView android:id="@id/apps_picker_search_list_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@android:color/transparent" android:divider="#ffffffff" android:dividerHeight="0.0px" />
+        <ScrollView android:id="@id/no_result_text_layout" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textSize="@dimen/appsearch_font_size" android:textColor="#fffafafa" android:gravity="center" android:layout_gravity="center" android:id="@id/no_result_text" android:focusable="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/app_search_no_results_found" android:fontFamily="sec-roboto-light" />
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>

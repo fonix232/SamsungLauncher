@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.view.LauncherRootView android:id="@id/launcher" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.android.launcher3.common.view.DragLayer android:id="@id/drag_layer" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <include android:id="@id/launcher_bg" layout="@layout/launcher_bg" />
+        <include android:id="@id/multi_select_panel" android:visibility="gone" layout="@layout/multi_select_panel" />
+        <include android:id="@id/multi_select_help_bubble" android:visibility="gone" layout="@layout/multi_select_help_dialog" />
+        <include android:id="@id/drop_target_bar" layout="@layout/drop_target_bar" />
+        <include android:id="@id/home_view" android:layout_width="fill_parent" android:layout_height="fill_parent" layout="@layout/home" />
+        <include android:layout_gravity="start" android:id="@id/edge_light_container" android:layout_width="fill_parent" android:layout_height="fill_parent" layout="@layout/edge_light" />
+        <include android:id="@id/lighting_effect" layout="@layout/lighting_effect" />
+        <include android:id="@id/widget_view" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" layout="@layout/widget" />
+    </com.android.launcher3.common.view.DragLayer>
+</com.android.launcher3.common.view.LauncherRootView>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.home.EdgeLight android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/edge_light_image" android:focusable="false" android:layout_width="@dimen/home_edge_light_image_width" android:layout_height="fill_parent" android:scaleType="fitXY" />
+    <FrameLayout android:layout_gravity="center_vertical" android:id="@id/edge_light_arrow_frame" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView android:id="@id/edge_light_arrow1" android:layout_width="@dimen/home_edge_light_arrow_width" android:layout_height="@dimen/home_edge_light_arrow_height" android:src="@drawable/edge_light_arrow" android:scaleType="fitXY" android:layout_marginStart="@dimen/home_edge_light_arrow1_margin_start" />
+        <ImageView android:id="@id/edge_light_arrow2" android:layout_width="@dimen/home_edge_light_arrow_width" android:layout_height="@dimen/home_edge_light_arrow_height" android:src="@drawable/edge_light_arrow" android:scaleType="fitXY" android:layout_marginStart="@dimen/home_edge_light_arrow2_margin_start" />
+    </FrameLayout>
+</com.android.launcher3.home.EdgeLight>

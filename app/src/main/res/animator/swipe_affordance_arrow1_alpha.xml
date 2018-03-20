@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set android:ordering="sequentially"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:duration="@integer/config_swipeAffordanceArrowShowDuration" android:valueFrom="0" android:valueTo="1" android:propertyName="alpha" />
+    <objectAnimator android:duration="@integer/config_swipeAffordanceArrowHideDuration" android:startOffset="@integer/config_swipeAffordanceArrowHideStartDelay" android:valueFrom="1" android:valueTo="0" android:propertyName="alpha" />
+    <objectAnimator android:duration="@integer/config_swipeAffordanceArrowShowDuration" android:startOffset="@integer/config_swipeAffordanceArrowShowStartDelay" android:valueFrom="0" android:valueTo="1" android:propertyName="alpha" />
+    <objectAnimator android:duration="@integer/config_swipeAffordanceArrowHideDuration" android:startOffset="@integer/config_swipeAffordanceArrow1LastHideStartDelay" android:valueFrom="1" android:valueTo="0" android:propertyName="alpha" />
+</set>

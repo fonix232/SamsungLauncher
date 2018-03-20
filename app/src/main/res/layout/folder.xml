@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.folder.view.FolderView android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:importantForAccessibility="no"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/folder_container" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="horizontal" android:id="@id/folder_header" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <View android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0" />
+            <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.0">
+                <FrameLayout android:id="@id/folder_header_content" android:layout_width="@dimen/open_folder_header_content_width" android:layout_height="@dimen/open_folder_header_content_height">
+                    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+                            <RelativeLayout android:id="@id/folder_name_wrapper" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/open_folder_title_name_margin_bottom" android:layout_marginStart="@dimen/open_folder_title_name_margin_start" android:layout_marginEnd="@dimen/open_folder_title_name_margin_start">
+                                <com.android.launcher3.folder.view.FolderNameEditText android:textSize="@dimen/open_folder_title_name_text_size_normal" android:ellipsize="end" android:gravity="top" android:id="@id/folder_name" android:background="@null" android:focusable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/folder_hint_text" android:lines="1" android:maxLength="30" android:layout_alignParentBottom="true" android:inputType="textCapSentences" android:imeOptions="actionDone|flagNoExtractUi" android:nextFocusForward="@id/folder_option_btn" android:fontFamily="sec-roboto-condensed" />
+                            </RelativeLayout>
+                        </LinearLayout>
+                        <include android:id="@id/folder_colorpicker" android:visibility="gone" layout="@layout/folder_colorpicker" />
+                        <LinearLayout android:layout_gravity="end" android:id="@id/folder_option_btn_layout" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="0.0">
+                            <ImageView android:layout_gravity="bottom" android:id="@id/folder_option_btn" android:background="@drawable/focusable_view_bg" android:padding="@dimen/open_folder_title_option_button_drawable_padding" android:focusable="true" android:clickable="true" android:layout_width="@dimen/open_folder_title_option_button_size" android:layout_height="@dimen/open_folder_title_option_button_size" android:layout_marginBottom="@dimen/open_folder_title_option_button_margin_bottom" android:src="@drawable/folder_colorpicker_selected_shape" android:contentDescription="@string/folder_color" android:nextFocusForward="@id/folder_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+                <View android:id="@id/bottom_line_color" android:layout_width="fill_parent" android:layout_height="@dimen/open_folder_header_bottom_line_height" />
+            </LinearLayout>
+            <View android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0" />
+        </LinearLayout>
+        <LinearLayout android:id="@id/folder_content_container" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <com.android.launcher3.folder.view.FolderPagedView android:layout_gravity="center_horizontal" android:id="@id/folder_content" android:layout_width="fill_parent" android:layout_height="wrap_content" android:importantForAccessibility="no" launcher:pageIndicator="@id/folder_page_indicator" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center|top" android:id="@id/folder_footer" android:paddingTop="@dimen/open_folder_page_indicator_margin_top" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/open_folder_footer_height">
+            <include android:gravity="center_horizontal" android:id="@id/folder_page_indicator" android:layout_width="wrap_content" android:layout_height="@dimen/open_folder_page_indicator_height" layout="@layout/page_indicator" />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView android:layout_gravity="center|top" android:id="@id/folder_border" android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@drawable/page_view_overlay_select_03" android:scaleType="fitXY" android:contentDescription="@string/talkback_press_back_key_to_close_folder" android:importantForAccessibility="yes" />
+    <LinearLayout android:id="@id/folder_outer_add_button_container" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="@dimen/open_folder_outer_add_button_height">
+        <ViewStub android:id="@id/folder_outer_add_button_stub" android:layout="@layout/folder_outer_add_button" android:inflatedId="@id/folder_add_button_container" android:layout_width="wrap_content" android:layout_height="@dimen/open_folder_outer_add_button_container_height" />
+    </LinearLayout>
+</com.android.launcher3.folder.view.FolderView>

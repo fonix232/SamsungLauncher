@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_gravity="center" android:id="@id/drop_target_cancel_icon_layout" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/drop_target_cancel_circle" android:contentDescription="@null" android:alpha="0.0" style="@style/DropTargetCancelCircle" />
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:id="@id/drop_target_cancel_layout" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView android:layout_gravity="center" android:id="@id/drop_target_cancel_image" android:layout_width="@dimen/drop_target_cancel_image_size" android:layout_height="@dimen/drop_target_cancel_image_size" android:scaleType="fitCenter" android:contentDescription="@null" />
+        <TextView android:id="@id/drop_target_cancel_text" style="@style/DropTargetCancelButton" />
+    </LinearLayout>
+</FrameLayout>

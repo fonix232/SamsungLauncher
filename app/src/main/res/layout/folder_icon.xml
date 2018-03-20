@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.folder.view.FolderIconView android:orientation="vertical" android:background="@drawable/focusable_view_bg" android:focusable="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_gravity="center|top" android:id="@id/iconview_imageView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/homescreen_ic_folder_default" android:antialias="true" />
+    <ImageView android:layout_gravity="center|top" android:id="@id/iconview_image_preview" android:layout_width="wrap_content" android:layout_height="wrap_content" android:antialias="true" />
+    <TextView android:id="@id/iconview_titleView" style="@style/IconText" />
+    <CheckBox android:layout_gravity="center|top" android:id="@id/iconview_checkbox" android:visibility="gone" style="@style/Checkbox" />
+    <TextView android:id="@id/iconview_count_badge" android:visibility="invisible" style="@style/CountBadge" />
+    <TextView android:id="@id/iconview_badge" android:visibility="gone" style="@style/Badge" />
+</com.android.launcher3.folder.view.FolderIconView>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference android:title="@string/home_screen_layout" android:key="pref_home_screen_mode" />
+    <Preference android:title="@string/home_screen_screengrid" android:key="pref_screen_grid" />
+    <Preference android:title="@string/setting_apps_screen_grid" android:key="pref_apps_screen_grid" />
+    <Preference android:title="@string/apps_button_title" android:key="pref_apps_button_setting" android:summary="@string/apps_button_summary" />
+    <SemSwitchPreferenceScreen android:title="@string/app_icon_badges_title" android:key="pref_app_icon_badges" android:summary="@string/app_icon_badges_summary" />
+    <SwitchPreference android:title="@string/add_apps_to_home_screen_title" android:key="pref_add_apps_to_home_screen" android:summary="@string/add_apps_to_home_screen_summary" />
+    <SwitchPreference android:title="@string/notification_panel_setting_title" android:key="pref_notification_panel_setting" android:summary="@string/notification_panel_setting_summary" />
+    <SwitchPreference android:title="@string/only_portrait_mode" android:key="pref_only_portrait_mode_setting" android:summary="@string/only_portrait_mode_summary" />
+    <Preference android:title="@string/badge_manage_title" android:key="badge_manager" android:summary="@string/badge_manage_summary" />
+    <Preference android:title="@string/home_screen_settings_hide_apps" android:key="pref_hide_apps" />
+    <Preference android:title="@string/widget_button_text" android:key="pref_hide_widgets" />
+    <Preference android:title="@string/about_home_screen" android:key="pref_about_page" />
+    <Preference android:key="pref_daylite_setting" />
+</PreferenceScreen>

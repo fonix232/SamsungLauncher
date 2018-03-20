@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="config_appsAlphaRatio">150.0%</fraction>
+    <fraction name="config_appsPageIndicatorScaleRatio">300.0%</fraction>
+    <fraction name="config_appsPageIndicatorShrinkFactor">50.0%</fraction>
+    <fraction name="config_appsShrinkFactor">95.00001%</fraction>
+    <fraction name="config_folderBgGrowFactor">150.0%</fraction>
+    <fraction name="config_folderIconPreviewPaddingRatio">13.999998%</fraction>
+    <fraction name="config_homeAlphaRatio">200.0%</fraction>
+    <fraction name="config_homePageIndicatorScaleRatio">300.0%</fraction>
+    <fraction name="config_homePageIndicatorShrinkFactor">50.0%</fraction>
+    <fraction name="config_homeShrinkFactor">90.0%</fraction>
+    <fraction name="config_pageSnapMovingRatio">39.999996%</fraction>
+    <fraction name="config_start_sfinder_from_home">5.9999943%</fraction>
+    <fraction name="config_swipeDistanceRatio">33.333004%</fraction>
+    <fraction name="config_workspaceDragScrollInwardFactor">70.00001%</fraction>
+    <fraction name="config_workspaceNormalScrollInwardFactor">20.000004%</fraction>
+    <fraction name="widget_resize_handle_size_factor">150.0%</fraction>
+</resources>

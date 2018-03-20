@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="is_supportFlexibleGrid">true</bool>
+    <bool name="hotseat_transpose_layout_with_orientation">false</bool>
+    <bool name="folder_custom_color_picker_enabled">false</bool>
+    <bool name="install_shortcut_api_enabled">true</bool>
+    <bool name="resizable_launcher_enabled">false</bool>
+    <bool name="restore_contact_shortcut_receiver_enabled">false</bool>
+    <bool name="config_isLightTheme">true</bool>
+    <bool name="config_largeHeap">true</bool>
+    <bool name="enable_backup">false</bool>
+    <bool name="is_large_tablet">false</bool>
+    <bool name="notification_badging_enabled">true</bool>
+</resources>

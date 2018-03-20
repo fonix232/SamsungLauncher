@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_folder_title_height">71.0dip</dimen>
+    <item type="dimen" name="widget_folder_title_padding_start">@dimen/widget_page_padding_left</item>
+    <dimen name="widget_folder_title_text_size">17.0dip</dimen>
+    <dimen name="widget_itemview_folder_arraw_size">13.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_gap">0.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_height">89.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_image_height">89.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_image_width">107.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_padding_bottom">12.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_padding_left">0.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_padding_right">0.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_padding_top">0.0dip</dimen>
+    <dimen name="widget_itemview_folder_preview_width">107.0dip</dimen>
+    <dimen name="widget_itemview_height">136.0dip</dimen>
+    <dimen name="widget_itemview_single_preview_container_padding_bottom">12.0dip</dimen>
+    <dimen name="widget_itemview_single_preview_container_padding_left">0.0dip</dimen>
+    <dimen name="widget_itemview_single_preview_container_padding_right">0.0dip</dimen>
+    <dimen name="widget_itemview_single_preview_container_padding_top">0.0dip</dimen>
+    <dimen name="widget_itemview_single_preview_image_height">89.0dip</dimen>
+    <dimen name="widget_itemview_single_preview_image_width">107.0dip</dimen>
+    <dimen name="widget_itemview_title_textSize">12.0dip</dimen>
+    <dimen name="widget_itemview_width">136.0dip</dimen>
+    <dimen name="widget_page_cellgap_x">14.0dip</dimen>
+    <dimen name="widget_page_cellgap_y">20.0dip</dimen>
+    <dimen name="widget_page_padding_left">17.0dip</dimen>
+    <dimen name="widget_page_padding_right">17.0dip</dimen>
+    <dimen name="widget_searchview_text_size">17.0sp</dimen>
+    <dimen name="widget_folder_pageindicator_container_height">34.5dip</dimen>
+    <dimen name="widget_page_indicator_bottom_margin">31.0dip</dimen>
+    <dimen name="widget_page_top_margin">76.0dip</dimen>
+    <dimen name="widget_title_bottom_padding">0.0dip</dimen>
+    <dimen name="widget_cell_text_size">19.0dip</dimen>
+    <dimen name="widget_page_indicator_height">15.0dip</dimen>
+</resources>

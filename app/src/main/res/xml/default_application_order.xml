@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appOrder
+  xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
+    <folder launcher:screen="0" launcher:title="@string/folder_samsung">
+        <favorite launcher:className="com.sec.android.app.myfiles.common.MainActivity" launcher:packageName="com.sec.android.app.myfiles" launcher:screen="0" />
+        <favorite launcher:className="com.samsung.android.voc.LauncherActivity" launcher:packageName="com.samsung.android.voc" launcher:screen="1" />
+        <favorite launcher:className="com.sec.android.app.voicenote.main.VNMainActivity" launcher:packageName="com.sec.android.app.voicenote" launcher:screen="2" />
+        <favorite launcher:className="com.samsung.android.email.ui.activity.MessageListXL" launcher:packageName="com.samsung.android.email.provider" launcher:screen="3" />
+        <favorite launcher:className="com.sec.android.app.sbrowser.SBrowserMainActivity" launcher:packageName="com.sec.android.app.sbrowser" launcher:screen="4" />
+        <favorite launcher:className="com.samsung.android.app.shealth.home.HomeMainActivity" launcher:packageName="com.sec.android.app.shealth" launcher:screen="5" />
+        <favorite launcher:className="com.samsung.voiceserviceplatform.ui.SVoiceMainActivity" launcher:packageName="com.samsung.voiceserviceplatform" launcher:screen="6" />
+        <favorite launcher:className="com.sec.android.app.samsungapps.SamsungAppsMainActivity" launcher:packageName="com.sec.android.app.samsungapps" launcher:screen="7" />
+    </folder>
+    <folder launcher:screen="0" launcher:title="@string/folder_google">
+        <favorite launcher:className="com.google.android.googlequicksearchbox.SearchActivity" launcher:packageName="com.google.android.googlequicksearchbox" launcher:screen="0" />
+        <favorite launcher:className="com.google.android.apps.chrome.Main" launcher:packageName="com.android.chrome" launcher:screen="1" />
+        <favorite launcher:className="com.google.android.gm.ConversationListActivityGmail" launcher:packageName="com.google.android.gm" launcher:screen="2" />
+        <favorite launcher:className="com.google.android.maps.MapsActivity" launcher:packageName="com.google.android.apps.maps" launcher:screen="3" />
+        <favorite launcher:className="com.google.android.youtube.app.honeycomb.Shell$HomeActivity" launcher:packageName="com.google.android.youtube" launcher:screen="4" />
+        <favorite launcher:className="com.google.android.apps.docs.app.NewMainProxyActivity" launcher:packageName="com.google.android.apps.docs" launcher:screen="5" />
+        <favorite launcher:className="com.google.android.youtube.videos.EntryPoint" launcher:packageName="com.google.android.videos" launcher:screen="6" />
+        <favorite launcher:className="com.google.android.talk.SigningInActivity" launcher:packageName="com.google.android.talk" launcher:screen="7" />
+        <favorite launcher:className="com.google.android.apps.photos.home.HomeActivity" launcher:packageName="com.google.android.apps.photos" launcher:screen="8" />
+    </folder>
+    <folder launcher:screen="0" launcher:title="@string/folder_social">
+        <favorite launcher:className="com.sec.android.devicehelp.DeviceHelp" launcher:packageName="com.sec.android.devicehelp" launcher:screen="0" />
+        <favorite launcher:className="com.sec.att.usagemanager3.UsageManagerActivity" launcher:packageName="com.sec.att.usagemanager3" launcher:screen="1" />
+        <favorite launcher:className="com.att.myWireless.activity.login.SplashScreenActivity" launcher:packageName="com.att.myWireless" launcher:screen="2" />
+        <favorite launcher:className="com.locationlabs.finder.cni.Navigator" launcher:packageName="com.locationlabs.cni.att" launcher:screen="3" />
+        <favorite launcher:className="com.asurion.android.mobilerecovery.att.ui.activity.ZeroActivity" launcher:packageName="com.asurion.android.mobilerecovery.att" launcher:screen="4" />
+        <favorite launcher:className="com.cequint.hs.client.frontend.WebShell" launcher:packageName="com.cequint.ecid" launcher:screen="5" />
+        <favorite launcher:className="com.lookout.ui.LoadDispatch" launcher:packageName="com.lookout" launcher:screen="6" />
+        <favorite launcher:className="com.newbay.syncdrive.android.ui.gui.activities.SplashLogoActivity" launcher:packageName="com.att.android.digitallocker" launcher:screen="7" />
+        <favorite launcher:className="com.ubercab.UBUberActivity" launcher:packageName="com.ubercab" launcher:screen="8" />
+        <favorite launcher:className="com.drivemode.activity.SplashScreen" launcher:packageName="com.drivemode" launcher:screen="9" />
+        <favorite launcher:className="com.amazon.mShop.home.HomeActivity" launcher:packageName="com.amazon.mShop.android" launcher:screen="10" />
+        <favorite launcher:className="com.amazon.kindle.UpgradePage" launcher:packageName="com.amazon.kindle" launcher:screen="11" />
+    </folder>
+    <folder launcher:screen="0" launcher:title="@string/folder_microsoft_apps">
+        <favorite launcher:className="com.microsoft.office.apphost.LaunchActivity" launcher:packageName="com.microsoft.office.word" launcher:screen="0" />
+        <favorite launcher:className="com.microsoft.office.apphost.LaunchActivity" launcher:packageName="com.microsoft.office.excel" launcher:screen="1" />
+        <favorite launcher:className="com.microsoft.office.apphost.LaunchActivity" launcher:packageName="com.microsoft.office.powerpoint" launcher:screen="2" />
+        <favorite launcher:className="com.microsoft.skydrive.MainActivity" launcher:packageName="com.microsoft.skydrive" launcher:screen="3" />
+        <favorite launcher:className="com.microsoft.office.onenote.ui.ONMSplashActivity" launcher:packageName="com.microsoft.office.onenote" launcher:screen="4" />
+        <favorite launcher:className="com.skype.raider.Main" launcher:packageName="com.skype.raider" launcher:screen="5" />
+        <favorite launcher:className="com.linkedin.android.MainActivity" launcher:packageName="com.linkedin.android" launcher:screen="6" />
+    </folder>
+    <favorite launcher:className="com.samsung.android.app.watchmanager.setupwizard.SetupWizardWelcomeActivity" launcher:packageName="com.samsung.android.app.watchmanager" launcher:screen="0" />
+    <favorite launcher:className="com.android.vending.AssetBrowserActivity" launcher:packageName="com.android.vending" launcher:screen="0" />
+    <favorite launcher:className="com.facebook.katana.LoginActivity" launcher:packageName="com.facebook.katana" launcher:screen="0" />
+    <favorite launcher:className="com.android.dialer.DialtactsActivity" launcher:packageName="com.android.contacts" launcher:screen="0" />
+    <favorite launcher:className="com.android.mms.ui.ConversationComposer" launcher:packageName="com.android.mms" launcher:screen="0" />
+    <favorite launcher:className="com.sec.android.app.camera.Camera" launcher:packageName="com.sec.android.app.camera" launcher:screen="0" />
+    <favorite launcher:className="com.sec.android.gallery3d.app.GalleryOpaqueActivity" launcher:packageName="com.sec.android.gallery3d" launcher:screen="0" />
+    <favorite launcher:className="com.sec.android.app.clockpackage.ClockPackage" launcher:packageName="com.sec.android.app.clockpackage" launcher:screen="0" />
+    <favorite launcher:className="com.android.contacts.activities.PeopleActivity" launcher:packageName="com.android.contacts" launcher:screen="0" />
+    <favorite launcher:className="com.android.settings.Settings" launcher:packageName="com.android.settings" launcher:screen="0" />
+    <favorite launcher:className="com.android.calendar.AllInOneActivity" launcher:packageName="com.android.calendar" launcher:screen="0" />
+    <favorite launcher:className="com.sec.android.app.popupcalculator.Calculator" launcher:packageName="com.sec.android.app.popupcalculator" launcher:screen="0" />
+    <favorite launcher:className="com.android.music.activitymanagement.TopLevelActivity" launcher:packageName="com.google.android.music" launcher:screen="0" />
+    <favorite launcher:className="com.samsung.android.app.memo.Main" launcher:packageName="com.samsung.android.app.memo" launcher:screen="0" />
+    <favorite launcher:className="com.google.android.googlequicksearchbox.VoiceSearchActivity" launcher:packageName="com.google.android.googlequicksearchbox" launcher:screen="0" launcher:hidden="true" />
+</appOrder>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="widget_folder_page_column">2</integer>
+    <integer name="widget_folder_page_row">2</integer>
+    <integer name="widget_page_column">2</integer>
+    <integer name="widget_page_row">3</integer>
+</resources>

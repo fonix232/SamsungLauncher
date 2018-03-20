@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<favorites
+  xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
+    <PageCount>1</PageCount>
+    <ScreenIndex>0</ScreenIndex>
+    <home>
+        <appwidget launcher:className="com.sec.android.daemonapp.appwidget.WeatherAppWidget2x1" launcher:packageName="com.sec.android.daemonapp" launcher:screen="0" launcher:x="1" launcher:y="0" launcher:spanX="3" launcher:spanY="3" />
+        <appwidget launcher:className="com.samsung.knox.securefolder.containeragent.ui.widget.WidgetProvider" launcher:packageName="com.samsung.knox.securefolder" launcher:screen="0" launcher:x="0" launcher:y="4" launcher:spanX="5" launcher:spanY="1" />
+    </home>
+    <hotseat>
+        <favorite launcher:className="com.samsung.knox.securefolder.switcher.SwitchToPersonalIcon" launcher:packageName="com.samsung.knox.securefolder" launcher:screen="0" />
+        <favorite launcher:className="com.android.contacts.activities.PeopleActivity" launcher:packageName="com.samsung.android.contacts" launcher:screen="1" />
+        <favorite launcher:className="com.sec.android.app.sbrowser.SBrowserMainActivity" launcher:packageName="com.sec.android.app.sbrowser" launcher:screen="2" />
+        <favorite launcher:className="com.sec.android.gallery3d.app.GalleryOpaqueActivity" launcher:packageName="com.sec.android.gallery3d" launcher:screen="3" />
+        <favorite launcher:className="com.sec.android.app.camera.Camera" launcher:packageName="com.sec.android.app.camera" launcher:screen="4" />
+    </hotseat>
+</favorites>

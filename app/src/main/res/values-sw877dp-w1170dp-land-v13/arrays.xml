@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="apps_grid_info">
+        <item>6|5|9|9|75|16|7|1|48|116|107|64</item>
+    </string-array>
+    <string-array name="folder_grid_info">
+        <item>5|5|7|11|75|16|7|1|134|150|107</item>
+    </string-array>
+    <string-array name="home_grid_info">
+        <item>6|5|9|9|75|18|7|1|48|81|188|151|114|0|21</item>
+        <item>6|6|6|6|68|18|1|1|48|81|188|148|129</item>
+    </string-array>
+    <string-array name="hotseat_grid_icon_info">
+        <item>6|75|18|7|1</item>
+        <item>6|68|18|1|1</item>
+    </string-array>
+    <string-array name="support_apps_grid_size">
+        <item>6x5</item>
+    </string-array>
+    <string-array name="support_grid_size">
+        <item>6x5</item>
+        <item>6x6</item>
+    </string-array>
+</resources>

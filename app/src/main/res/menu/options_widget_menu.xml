@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@id/options_widget_menu_uninstall" android:title="@string/multi_select_uninstall" />
+    <item android:id="@id/options_widget_menu_contactus" android:title="@string/option_menu_contact_up" />
+</menu>

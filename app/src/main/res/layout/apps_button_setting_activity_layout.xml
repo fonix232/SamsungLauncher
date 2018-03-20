@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:descendantFocusability="afterDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:gravity="center_vertical" android:id="@id/show_apps" android:background="?android:listChoiceBackgroundIndicator" android:paddingLeft="@dimen/home_settings_mode_list_margin_left" android:paddingRight="@dimen/home_settings_mode_list_margin_left" android:focusable="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="?android:listPreferredItemHeightSmall">
+                <RadioButton android:gravity="center_vertical" android:id="@id/show_apps_radio" android:background="@null" android:focusable="false" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:paddingTop="@dimen/list_item_top_padding" android:paddingBottom="@dimen/list_item_bottom_padding" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apps_button_show" android:paddingStart="@dimen/home_settings_mode_list_margin_left" android:paddingEnd="0.0dip" style="?android:attr/textAppearanceListItem" />
+            </LinearLayout>
+            <View android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="@dimen/home_settings_apps_button_list_divider" android:layout_marginStart="@dimen/list_radiobox_width_for_divider_inset" />
+            <LinearLayout android:gravity="center_vertical" android:id="@id/hide_apps" android:background="?android:listChoiceBackgroundIndicator" android:paddingLeft="@dimen/home_settings_mode_list_margin_left" android:paddingRight="@dimen/home_settings_mode_list_margin_left" android:focusable="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="?android:listPreferredItemHeightSmall">
+                <RadioButton android:gravity="center_vertical" android:id="@id/hide_apps_radio" android:background="@null" android:focusable="false" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView android:paddingTop="@dimen/list_item_top_padding" android:paddingBottom="@dimen/list_item_bottom_padding" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apps_button_hide" android:paddingStart="@dimen/home_settings_mode_list_margin_left" android:paddingEnd="0.0dip" style="?android:attr/textAppearanceListItem" />
+            </LinearLayout>
+            <View android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="@dimen/home_settings_apps_button_list_divider" android:layout_marginStart="@dimen/list_radiobox_width_for_divider_inset" />
+        </LinearLayout>
+        <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/body_text_top_padding" android:layout_marginBottom="@dimen/body_text_top_padding">
+            <ImageView android:layout_gravity="center_horizontal" android:background="@drawable/settings_app_tray_button_bg" android:layout_width="@dimen/apps_button_setting_icons_background_width" android:layout_height="@dimen/apps_button_setting_icons_background_height" />
+            <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:id="@id/icons_layout" android:layout_width="@dimen/apps_button_setting_icons_layout_width" android:layout_height="wrap_content" />
+        </FrameLayout>
+        <TextView android:textColor="@color/home_mode_description_text_color" android:id="@id/help_instruction" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/body_text_top_padding" android:text="@string/apps_button_setting_guide_text" android:layout_marginStart="@dimen/body_text_side_padding" android:layout_marginEnd="@dimen/body_text_side_padding" style="@style/body_text_style" />
+    </LinearLayout>
+</ScrollView>

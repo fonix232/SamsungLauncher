@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:background="@drawable/toolbar_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:background="@drawable/tw_tab_unselected_bar_holo" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/menu_selected_back_down" android:background="?android:actionBarItemBackground" android:focusable="true" android:clickable="true" android:layout_width="52.0dip" android:layout_height="fill_parent" android:contentDescription="@string/menu_navigate_up">
+            <ImageView android:layout_width="wrap_content" android:layout_height="fill_parent" android:src="?android:homeAsUpIndicator" android:scaleType="center" />
+        </LinearLayout>
+        <TextView android:textSize="@dimen/widget_title_bar_text_size" android:textColor="@color/menu_title_selected_text" android:gravity="start|center" android:id="@id/menu_selected_backtext" android:clickable="true" android:layout_width="wrap_content" android:layout_height="fill_parent" android:maxWidth="@dimen/widget_title_bar_text_max_width" android:text="@string/menu_uninstall" android:singleLine="true" android:paddingStart="0.0dip" android:paddingEnd="@dimen/widget_title_bar_left_padding" style="@style/android:TextAppearance.DeviceDefault.Widget.ActionBar.Title" />
+    </LinearLayout>
+</LinearLayout>

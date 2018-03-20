@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_gravity="top" android:id="@id/lighting_effect_top_off" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scaleType="fitXY" />
+    <ImageView android:layout_gravity="top" android:id="@id/lighting_effect_top_on" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scaleType="fitXY" android:alpha="0.0" />
+    <ImageView android:layout_gravity="bottom" android:id="@id/lighting_effect_bottom_off" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scaleType="fitXY" android:rotation="180.0" />
+    <ImageView android:layout_gravity="bottom" android:id="@id/lighting_effect_bottom_on" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scaleType="fitXY" android:alpha="0.0" android:rotation="180.0" />
+</FrameLayout>

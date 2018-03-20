@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.home.OverviewPanel android:gravity="center|top" android:layout_gravity="bottom|center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/overview_panel_margin_bottom"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:id="@id/overview_panel_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginStart="@dimen/overview_panel_margin_side" android:layout_marginEnd="@dimen/overview_panel_margin_side">
+        <TextView android:id="@id/wallpapers_button" android:text="@string/wallpaper_button_text" android:drawableTop="@drawable/homescreen_ic_reorder_wallpaper" style="@style/OverviewPannelStyle" />
+        <TextView android:id="@id/theme_button" android:visibility="gone" android:text="@string/theme_button_text" android:drawableTop="@drawable/homescreen_ic_reorder_theme" style="@style/OverviewPannelStyle" />
+        <TextView android:id="@id/widget_button" android:text="@string/widget_button_text" android:drawableTop="@drawable/homescreen_ic_reorder_widgets" style="@style/OverviewPannelStyle" />
+        <TextView android:id="@id/settings_button" android:text="@string/homes_screen_settings" android:drawableTop="@drawable/homescreen_ic_reorder_setting" style="@style/OverviewPannelStyle" />
+    </LinearLayout>
+</com.android.launcher3.home.OverviewPanel>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<favorites
+  xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
+    <PageCount>1</PageCount>
+    <ScreenIndex>0</ScreenIndex>
+    <home>
+        <favorite launcher:className="com.samsung.android.email.ui.activity.MessageListXL" launcher:packageName="com.samsung.android.email.provider" launcher:screen="0" launcher:x="0" launcher:y="4" />
+        <favorite launcher:className="com.android.calendar.AllInOneActivity" launcher:packageName="com.samsung.android.calendar" launcher:screen="0" launcher:x="1" launcher:y="4" />
+        <favorite launcher:className="com.sec.android.app.myfiles.common.MainActivity" launcher:packageName="com.sec.android.app.myfiles" launcher:screen="0" launcher:x="2" launcher:y="4" />
+        <favorite launcher:className="com.sec.android.app.camera.Camera" launcher:packageName="com.sec.android.app.camera" launcher:screen="0" launcher:x="3" launcher:y="4" />
+        <favorite launcher:className="com.sec.knox.containeragent2.ui.settings.KnoxSettingsActivity" launcher:packageName="com.sec.knox.containeragent2" launcher:screen="0" launcher:x="4" launcher:y="4" />
+        <favorite launcher:className="com.sec.knox.containeragent2.ui.settings.KnoxSettingsActivity2" launcher:packageName="com.sec.knox.containeragent2" launcher:screen="0" launcher:x="4" launcher:y="4" />
+    </home>
+    <hotseat>
+        <favorite launcher:className="com.sec.knox.switcher.MainActivity" launcher:packageName="com.sec.knox.switcher" launcher:screen="0" />
+        <favorite launcher:className="com.sec.knox.shortcutsms.PhoneShortcut" launcher:packageName="com.sec.knox.shortcutsms" launcher:screen="1" />
+        <favorite launcher:className="com.android.dialer.DialtactsActivity" launcher:packageName="com.samsung.android.contacts" launcher:screen="1" />
+        <favorite launcher:className="com.android.contacts.activities.PeopleActivity" launcher:packageName="com.samsung.android.contacts" launcher:screen="2" />
+        <favorite launcher:className="com.sec.knox.shortcutsms.SMSShortcut" launcher:packageName="com.sec.knox.shortcutsms" launcher:screen="3" />
+        <favorite launcher:className="com.sec.android.app.sbrowser.SBrowserMainActivity" launcher:packageName="com.sec.android.app.sbrowser" launcher:screen="4" />
+    </hotseat>
+</favorites>

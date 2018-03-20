@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:weightSum="100.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="7.63" />
+    <LinearLayout android:orientation="vertical" android:id="@id/about_page_layout" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="74.14">
+        <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:id="@id/about_area" android:layout_width="fill_parent" android:layout_height="0.0dip">
+                <ImageView android:layout_gravity="center_horizontal" android:id="@id/touchWiz_icon" android:layout_width="@dimen/about_icon_width" android:layout_height="@dimen/about_icon_height" android:layout_marginBottom="@dimen/about_icon_bottom_margin" android:scaleType="fitXY" />
+                <TextView android:textSize="@dimen/about_app_name_size" android:textStyle="bold" android:textColor="?android:textColorPrimary" android:layout_gravity="center" android:id="@id/about_app_name" android:paddingBottom="@dimen/about_text_bottom_padding" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/about_text_top_margin" android:text="@string/application_name" android:textAllCaps="true" android:fontFamily="sec-roboto-condensed" android:textAlignment="center" />
+                <TextView android:textSize="@dimen/about_version" android:textColor="?android:textColorSecondary" android:gravity="center" android:layout_gravity="center" android:id="@id/app_info" android:background="@drawable/about_button" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_text_top_margin" android:minHeight="@dimen/about_info_min_height" android:fontFamily="sec-roboto-condensed" android:textAlignment="center" android:paddingStart="@dimen/about_title_bottom_margin" android:paddingEnd="@dimen/about_title_bottom_margin" android:layout_marginStart="@dimen/about_title_bottom_margin" android:layout_marginEnd="@dimen/about_title_bottom_margin" />
+                <TextView android:textSize="@dimen/about_version" android:textColor="?android:textColorSecondary" android:gravity="center" android:id="@id/notice_title" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_title_bottom_margin" />
+                <TextView android:textSize="@dimen/about_version_description" android:textColor="?android:textColorSecondary" android:gravity="center" android:id="@id/notice_instruction" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_notice_bottom_margin" />
+                <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+                    <ProgressBar android:layout_gravity="center" android:id="@id/progreess_bar" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="@dimen/about_button_height" />
+                    <Button android:textColor="@color/about_color_description" android:layout_gravity="center" android:id="@id/redirect_button" android:background="@drawable/about_update" android:visibility="gone" android:layout_width="@dimen/about_button_width" android:layout_height="@dimen/about_button_height" />
+                    <Button android:textColor="@color/about_color_description" android:layout_gravity="center" android:id="@id/retry_button" android:background="@drawable/about_update" android:visibility="gone" android:layout_width="@dimen/about_button_width" android:layout_height="wrap_content" android:minHeight="@dimen/about_button_height" />
+                </FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+        <View android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="10.0">
+        <LinearLayout android:gravity="bottom|center" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TextView android:textSize="@dimen/about_licence_text_size" android:textColor="?android:textColorPrimary" android:layout_gravity="bottom" android:id="@id/licence_textview" android:background="@drawable/ripple_bg_rectangle" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/about_notice_bottom_margin" android:text="@string/about_licence" android:fontFamily="sec-roboto-condensed" />
+        </LinearLayout>
+    </LinearLayout>
+    <View android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="7.63" />
+</LinearLayout>

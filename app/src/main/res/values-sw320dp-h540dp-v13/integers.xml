@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="apps_default_cellCountX">4</integer>
+    <integer name="apps_default_cellCountY">5</integer>
+    <integer name="config_workspaceOverviewShrinkPercentage">65</integer>
+    <integer name="widget_folder_page_column">2</integer>
+    <integer name="widget_folder_page_row">2</integer>
+    <integer name="widget_page_column">2</integer>
+    <integer name="widget_page_row">3</integer>
+    <integer name="home_cellCountX">4</integer>
+    <integer name="home_cellCountY">4</integer>
+    <integer name="config_workspaceScreenGridShrinkPercentage">68</integer>
+    <integer name="easy_home_cellCountX">3</integer>
+    <integer name="easy_home_cellCountY">3</integer>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple android:color="#40000000"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/mask" android:drawable="@drawable/homescreen_btn_widget_uninstall" />
+    <item android:drawable="@drawable/homescreen_btn_widget_uninstall" />
+</ripple>

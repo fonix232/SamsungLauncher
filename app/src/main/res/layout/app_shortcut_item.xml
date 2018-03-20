@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.quickoption.AppShortcut android:background="@drawable/ripple_bg_quick_option_rectangle" android:focusable="true" android:layout_width="fill_parent" android:layout_height="fill_parent" android:hapticFeedbackEnabled="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/app_shorcut_icon" android:layout_width="@dimen/quick_options_icon_size" android:layout_height="@dimen/quick_options_icon_size" />
+        <TextView android:textSize="@dimen/quick_options_app_shortcut_text_size" android:textColor="#ff444444" android:ellipsize="marquee" android:layout_gravity="center_vertical" android:id="@id/app_shorcut_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:singleLine="true" android:marqueeRepeatLimit="1" android:fontFamily="sec-roboto-light" android:textDirection="locale" android:layout_marginStart="@dimen/quick_options_text_margin_start" />
+    </LinearLayout>
+</com.android.launcher3.common.quickoption.AppShortcut>

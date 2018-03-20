@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="open_folder_border_margin">33.0dip</dimen>
+    <dimen name="open_folder_content_min_height">500.0dip</dimen>
+    <dimen name="open_folder_content_min_margin">25.0dip</dimen>
+    <dimen name="open_folder_edit_help_text_margin_from_folder_content">63.0dip</dimen>
+    <dimen name="open_folder_header_content_height">78.0dip</dimen>
+    <dimen name="open_folder_header_content_width">557.0dip</dimen>
+    <dimen name="open_folder_outer_add_button_container_margin_bottom">12.0dip</dimen>
+    <dimen name="open_folder_outer_add_button_height">30.0dip</dimen>
+    <dimen name="open_folder_outer_add_button_text_size">18.0dip</dimen>
+    <dimen name="open_folder_page_indicator_margin_top">25.0dip</dimen>
+    <dimen name="open_folder_page_spacing_on_drag">5.0dip</dimen>
+    <dimen name="open_folder_title_colorpicker_img_gap_x">14.0dip</dimen>
+    <dimen name="open_folder_title_colorpicker_img_size">21.0dip</dimen>
+    <dimen name="open_folder_title_colorpicker_layout_margin_bottom">15.0dip</dimen>
+    <dimen name="open_folder_title_name_margin_bottom">13.0dip</dimen>
+    <dimen name="open_folder_title_name_margin_start">11.0dip</dimen>
+    <dimen name="open_folder_title_name_text_size_normal">25.0dip</dimen>
+    <dimen name="open_folder_title_option_button_margin_bottom">12.0dip</dimen>
+    <dimen name="open_folder_title_option_button_size">27.0dip</dimen>
+    <dimen name="open_folder_content_margin_top">20.0dip</dimen>
+    <dimen name="open_folder_margin_top">98.0dip</dimen>
+    <dimen name="open_folder_outer_add_button_container_height">55.0dip</dimen>
+    <dimen name="open_folder_page_indicator_height">20.0dip</dimen>
+    <dimen name="open_folder_title_colorpicker_layout_margin_end">14.0dip</dimen>
+    <dimen name="open_folder_title_option_button_margin_end">12.0dip</dimen>
+    <dimen name="open_folder_outer_add_button_gap">12.0dip</dimen>
+    <item type="dimen" name="open_folder_title_option_button_drawable_padding">@dimen/open_folder_focusable_view_padding</item>
+</resources>

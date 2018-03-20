@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.home.HomeContainer android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    <View android:layout_gravity="center|top" android:id="@id/default_home_button" android:background="@drawable/focusable_view_bg" android:focusable="true" android:visibility="gone" android:layout_width="@dimen/overview_home_button_size" android:layout_height="@dimen/overview_home_button_size" android:layout_marginTop="@dimen/overview_home_button_margin_top" android:foreground="@drawable/default_home_button" />
+    <LinearLayout android:orientation="vertical" android:id="@id/screen_grid_top_container" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_gravity="top" android:orientation="horizontal" android:id="@id/screen_grid_button_layout" android:layout_width="fill_parent" android:layout_height="@dimen/screen_grid_top_button_height" android:layout_marginTop="@dimen/status_bar_height">
+            <TextView android:id="@id/screen_grid_cancel_button" android:text="@string/cancel" style="@style/ScreenGridTopButton" />
+            <TextView android:id="@id/screen_grid_apply_button" android:text="@string/apply" style="@style/ScreenGridTopButton" />
+        </LinearLayout>
+        <TextView android:ellipsize="end" android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/screen_grid_explain_text" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="@dimen/screen_grid_explain_view_height" android:maxLines="2" style="@style/ScreenGridButton" />
+    </LinearLayout>
+    <com.android.launcher3.home.Workspace android:id="@id/workspace" android:layout_width="fill_parent" android:layout_height="fill_parent" launcher:pageIndicator="@id/home_page_indicator" launcher:defaultScreen="@integer/config_workspaceDefaultScreen" />
+    <include android:id="@id/hotseat" layout="@layout/hotseat" />
+    <include android:id="@id/overview_panel" android:visibility="gone" layout="@layout/overview_panel" />
+    <include android:id="@id/screen_grid_panel" android:visibility="gone" layout="@layout/screengrid_panel" />
+    <include android:id="@id/swipe_affordance" layout="@layout/swipe_affordance" />
+    <include android:layout_gravity="bottom|center" android:id="@id/home_page_indicator" android:layout_width="wrap_content" android:layout_height="@dimen/pageIndicator_dot_size" layout="@layout/page_indicator" />
+</com.android.launcher3.home.HomeContainer>

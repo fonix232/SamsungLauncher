@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.home.SwipeAffordance android:layout_gravity="bottom|center" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:layout_gravity="center" android:id="@id/swipe_affordance_arrow_frame" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView android:id="@id/swipe_affordance_arrow2" android:visibility="gone" android:layout_width="@dimen/home_swipe_affordance_arrow_width" android:layout_height="@dimen/home_swipe_affordance_arrow_height" android:src="@drawable/lock_ic_shortcut_cue_na_mtrl" android:scaleType="fitXY" />
+        <ImageView android:id="@id/swipe_affordance_arrow1" android:visibility="gone" android:layout_width="@dimen/home_swipe_affordance_arrow_width" android:layout_height="@dimen/home_swipe_affordance_arrow_height" android:layout_marginTop="@dimen/home_swipe_affordance_first_arrow_margin_top" android:src="@drawable/lock_ic_shortcut_cue_na_mtrl" android:scaleType="fitXY" />
+    </FrameLayout>
+    <TextView android:textSize="@dimen/home_swipe_affordance_text_size" android:textColor="@color/tray_fake_view_text_color" android:layout_gravity="center" android:id="@id/swipe_affordance_text" android:visibility="gone" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/swipe_up_for_more_apps" android:shadowColor="#b0000000" android:shadowDy="1.0" android:shadowRadius="2.0" android:fontFamily="sec-roboto-condensed" />
+</com.android.launcher3.home.SwipeAffordance>

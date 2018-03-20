@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/badge_item_layout" android:background="?android:listChoiceBackgroundIndicator" android:focusable="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/badge_icon" android:layout_width="40.0dip" android:layout_height="40.0dip" android:src="@drawable/ic_launcher_home" android:layout_centerVertical="true" android:contentDescription="@null" />
+    <Switch android:id="@id/switchBadge" android:paddingTop="16.0dip" android:paddingBottom="16.0dip" android:clickable="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:checked="true" android:minHeight="?android:listPreferredItemHeightSmall" android:layout_centerVertical="true" android:textAlignment="viewStart" android:paddingStart="?android:listPreferredItemPaddingStart" android:paddingEnd="@dimen/badge_list_item_padding" android:layout_toEndOf="@id/badge_icon" android:layout_alignParentEnd="true" style="?android:attr/textAppearanceListItem" />
+    <View android:id="@id/row_divider" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="2.0px" android:layout_alignParentBottom="true" android:layout_marginStart="42.0dip" />
+</RelativeLayout>

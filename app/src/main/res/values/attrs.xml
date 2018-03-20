@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="isFrontPosition" format="boolean" />
+    <attr name="cardBackgroundColor" format="color" />
+    <attr name="cardCornerRadius" format="dimension" />
+    <attr name="cardElevation" format="dimension" />
+    <attr name="cardMaxElevation" format="dimension" />
+    <attr name="cardUseCompatPadding" format="boolean" />
+    <attr name="cardPreventCornerOverlap" format="boolean" />
+    <attr name="contentPadding" format="dimension" />
+    <attr name="contentPaddingLeft" format="dimension" />
+    <attr name="contentPaddingRight" format="dimension" />
+    <attr name="contentPaddingTop" format="dimension" />
+    <attr name="contentPaddingBottom" format="dimension" />
+    <attr name="key" format="string" />
+    <attr name="value" format="string" />
+    <attr name="className" format="string" />
+    <attr name="packageName" format="string" />
+    <attr name="screen" format="string" />
+    <attr name="x" format="string" />
+    <attr name="y" format="string" />
+    <attr name="spanX" format="string" />
+    <attr name="spanY" format="string" />
+    <attr name="icon" format="reference" />
+    <attr name="title" format="reference" />
+    <attr name="uri" format="string" />
+    <attr name="instance" format="string" />
+    <attr name="festival" format="string" />
+    <attr name="hideAddButton" format="boolean" />
+    <attr name="hidden" format="boolean" />
+    <attr name="folderColor" format="string" />
+    <attr name="fontProviderAuthority" format="string" />
+    <attr name="fontProviderPackage" format="string" />
+    <attr name="fontProviderQuery" format="string" />
+    <attr name="fontProviderCerts" format="reference" />
+    <attr name="fontProviderFetchStrategy">
+        <enum name="async" value="1" />
+        <enum name="blocking" value="0" />
+    </attr>
+    <attr name="fontProviderFetchTimeout" format="integer">
+        <enum name="forever" value="-1" />
+    </attr>
+    <attr name="fontStyle">
+        <enum name="italic" value="1" />
+        <enum name="normal" value="0" />
+    </attr>
+    <attr name="font" format="reference" />
+    <attr name="fontWeight" format="integer" />
+    <attr name="iconSizeOverride" format="dimension" />
+    <attr name="iconDisplay" format="integer">
+        <enum name="apps" value="2" />
+        <enum name="folder_item" value="3" />
+        <enum name="hotseat" value="1" />
+        <enum name="workspace" value="0" />
+    </attr>
+    <attr name="workspace" format="reference" />
+    <attr name="folderItems" format="reference" />
+    <attr name="layout_ignoreInsets" format="boolean" />
+    <attr name="maxVisibleSize" format="integer" />
+    <attr name="pageLayoutWidthGap" format="dimension" />
+    <attr name="pageLayoutHeightGap" format="dimension" />
+    <attr name="pageIndicator" format="reference" />
+    <attr name="layoutManager" format="string" />
+    <attr name="spanCount" format="integer" />
+    <attr name="reverseLayout" format="boolean" />
+    <attr name="stackFromEnd" format="boolean" />
+    <attr name="fastScrollEnabled" format="boolean" />
+    <attr name="fastScrollVerticalThumbDrawable" format="reference" />
+    <attr name="fastScrollVerticalTrackDrawable" format="reference" />
+    <attr name="fastScrollHorizontalThumbDrawable" format="reference" />
+    <attr name="fastScrollHorizontalTrackDrawable" format="reference" />
+    <attr name="horizontalgap" format="dimension" />
+    <attr name="verticalgap" format="dimension" />
+    <attr name="desiredwidth" format="dimension" />
+    <attr name="desiredheight" format="dimension" />
+    <attr name="defaultScreen" format="integer" />
+    <attr name="cellCountX" format="integer" />
+    <attr name="cellCountY" format="integer" />
+</resources>

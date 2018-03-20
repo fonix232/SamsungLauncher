@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="is_supportFlexibleGrid">false</bool>
+    <bool name="hotseat_transpose_layout_with_orientation">false</bool>
+</resources>

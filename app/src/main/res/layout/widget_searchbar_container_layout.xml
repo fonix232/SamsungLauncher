@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.widget.view.WidgetSearchbar android:gravity="bottom" android:id="@id/widget_searchbar_container_layout" android:background="@android:color/transparent" android:layout_width="fill_parent" android:layout_height="fill_parent" android:paddingStart="@dimen/widget_search_titlebar_padding_left" android:paddingEnd="@dimen/widget_search_titlebar_padding_right"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="bottom" android:orientation="vertical" android:id="@id/searchbar_wrapper" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <SearchView android:textSize="@dimen/widget_searchview_text_size" android:textColor="@color/widget_searchview_text_color" android:textColorHint="@color/widget_searchview_text_color" android:layout_gravity="center_vertical" android:id="@id/widget_searchbar_view" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxLength="30" android:layout_weight="1.0" android:inputType="textCapSentences" android:imeOptions="actionSearch|flagNoExtractUi" android:queryHint="@string/search_for_widgets" android:fontFamily="sec-roboto-condensed" android:paddingStart="@dimen/widget_searchbar_searchview_padding_start" android:paddingEnd="@dimen/widget_searchbar_searchview_padding_end" />
+            <View android:layout_gravity="center_vertical" android:id="@id/widget_searchbar_divider" android:background="@color/searchbar_divider_color" android:layout_width="1.0dip" android:layout_height="@dimen/widget_searchbar_divider_height" />
+            <include android:id="@id/widget_more_menu_btn" layout="@layout/widget_more_menu_btn" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@id/widget_searchbar_titlebar_divider" android:background="@color/apps_search_titlebar_divider_color" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+    </LinearLayout>
+</com.android.launcher3.widget.view.WidgetSearchbar>

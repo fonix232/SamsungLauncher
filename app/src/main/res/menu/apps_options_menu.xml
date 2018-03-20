@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@id/options_menu_view_type" android:title="@string/options_menu_sort" />
+    <item android:id="@id/options_menu_tide_up_pages" android:title="@string/options_menu_tide_up_pages" />
+    <item android:id="@id/options_menu_home_screen_settings" android:title="@string/option_menu_home_screen_settings" />
+    <item android:id="@id/options_menu_sfinder_settings" android:title="@string/option_menu_sfinder_settings" />
+    <item android:id="@id/options_menu_galaxy_essentials" android:title="@string/option_menu_galaxy_essentials" />
+    <item android:id="@id/options_menu_contactus" android:title="@string/option_menu_contact_up" />
+    <item android:id="@id/options_menu_search_recommend" android:title="@string/options_menu_search_recommend" />
+    <item android:id="@id/options_menu_clear_search_history" android:title="@string/options_menu_clear_search_history" />
+</menu>

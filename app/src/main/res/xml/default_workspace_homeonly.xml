@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<favorites
+  xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
+    <home>
+        <appwidget launcher:className="com.sec.android.daemonapp.appwidget.WeatherAppWidget2x1" launcher:packageName="com.sec.android.daemonapp" launcher:screen="0" launcher:x="1" launcher:y="0" launcher:spanX="3" launcher:spanY="3" />
+        <appwidget launcher:className="com.google.android.googlequicksearchbox.SearchWidgetProvider" launcher:packageName="com.google.android.googlequicksearchbox" launcher:screen="0" launcher:x="0" launcher:y="4" launcher:spanX="5" launcher:spanY="1" />
+        <favorite launcher:className="com.google.android.googlequicksearchbox.VoiceSearchActivity" launcher:packageName="com.google.android.googlequicksearchbox" launcher:screen="0" launcher:hidden="true" />
+    </home>
+    <hotseat>
+        <favorite launcher:className="com.android.dialer.DialtactsActivity" launcher:packageName="com.samsung.android.contacts" launcher:screen="0" />
+        <favorite launcher:className="com.android.mms.ui.ConversationComposer" launcher:packageName="com.samsung.android.messaging" launcher:screen="1" />
+        <favorite launcher:className="com.sec.android.app.sbrowser.SBrowserMainActivity" launcher:packageName="com.sec.android.app.sbrowser" launcher:screen="2" />
+        <favorite launcher:className="com.android.vending.AssetBrowserActivity" launcher:packageName="com.android.vending" launcher:screen="3" />
+        <favorite launcher:className="com.sec.android.app.camera.Camera" launcher:packageName="com.sec.android.app.camera" launcher:screen="4" />
+    </hotseat>
+</favorites>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.tray.FakeView android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="top" android:orientation="vertical" android:id="@id/tray_fake_view_drop" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/tray_fake_view_text_size" android:textColor="@color/tray_fake_view_text_color" android:gravity="center" android:id="@id/tray_fake_view_text" android:layout_width="fill_parent" android:layout_height="@dimen/tray_transfer_panel_top_height" android:text="@string/move_to_home" android:fontFamily="sec-roboto-condensed" />
+        <View android:background="@color/tray_transfer_divider_color" android:layout_width="fill_parent" android:layout_height="@dimen/tray_transfer_divider_height" />
+    </LinearLayout>
+</com.android.launcher3.common.tray.FakeView>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="folder_custom_color_picker_enabled">true</bool>
+    <bool name="install_shortcut_api_enabled">false</bool>
+    <bool name="resizable_launcher_enabled">true</bool>
+    <bool name="restore_contact_shortcut_receiver_enabled">true</bool>
+</resources>

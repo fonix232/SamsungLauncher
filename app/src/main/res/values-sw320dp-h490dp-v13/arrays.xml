@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="apps_grid_info">
+        <item>3|4|4|4|59|13|4|2|7|80|26|5</item>
+        <item>4|5|3|3|49|12|-1|2|7|70|26|5</item>
+        <item>5|5|3|3|43|11|2|2|7|79|23|4</item>
+    </string-array>
+    <string-array name="folder_grid_info">
+        <item>3|3|2|2|59|12.5|4|1|31|132|126</item>
+        <item>4|4|2|2|42|12.5|1|1|31|132|126</item>
+    </string-array>
+    <string-array name="home_grid_info">
+        <item>3|3|4|4|59|13|4|2|8|52|170|149|99|10|33</item>
+        <item>4|4|3|3|49|12.5|2|2|7|57|147|118.5|80|8|34</item>
+        <item>4|5|3|3|46|12|1|1|7|44|124|105|105|17</item>
+        <item>5|5|3|3|41|11|1|1|8|36|123|108|108|19</item>
+    </string-array>
+    <string-array name="hotseat_grid_icon_info">
+        <item>3|59|13|2|1</item>
+        <item>4|50|12.5|2|1</item>
+        <item>4|44|12|2|1</item>
+        <item>5|44|12|2|1</item>
+    </string-array>
+    <string-array name="support_apps_grid_size">
+        <item>4x5</item>
+        <item>5x5</item>
+    </string-array>
+    <string-array name="support_grid_size">
+        <item>4x4</item>
+        <item>4x5</item>
+        <item>5x5</item>
+    </string-array>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/item_view" android:paddingLeft="@dimen/galaxyapps_search_result_item_view_padding" android:paddingTop="@dimen/appsearch_list_padding_top" android:paddingRight="@dimen/galaxyapps_search_result_item_view_padding" android:paddingBottom="@dimen/appsearch_list_padding_top" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/photo" android:paddingTop="10.0dip" android:layout_width="wrap_content" android:layout_height="fill_parent" android:drawable="@drawable/homescreen_apptray_btn_bg" android:paddingStart="10.0dip" android:paddingEnd="20.0dip" />
+    <TextView android:textSize="17.0sp" android:textStyle="normal" android:textColor="@color/galaxyapps_name_color" android:id="@id/name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="sans-serif-medium" android:layout_toEndOf="@id/photo" />
+    <TextView android:textSize="13.0sp" android:textColor="@color/galaxyapps_seller_color" android:id="@id/seller" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/name" android:fontFamily="sec-roboto-light" android:layout_toEndOf="@id/photo" />
+    <TextView android:textSize="13.0sp" android:textColor="@color/apps_search_price_color" android:id="@id/price" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/seller" android:fontFamily="sec-roboto-light" android:layout_toEndOf="@id/photo" />
+    <TextView android:textSize="13.0sp" android:textStyle="bold" android:textColor="#ff32cd32" android:id="@id/rating" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/price" android:layout_toEndOf="@id/photo" />
+</RelativeLayout>

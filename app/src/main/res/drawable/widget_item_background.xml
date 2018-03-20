@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@id/widget_focus" android:drawable="@drawable/focusable_view_bg" />
+    <item android:id="@id/widget_bg" android:drawable="@drawable/homescreen_widgets_preview_bg" />
+</layer-list>

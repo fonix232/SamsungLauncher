@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="apps_default_cellCountX">5</integer>
+    <integer name="apps_default_cellCountY">6</integer>
+    <integer name="config_workspaceOverviewShrinkPercentage">75</integer>
+    <integer name="widget_folder_page_column">3</integer>
+    <integer name="widget_folder_page_row">3</integer>
+    <integer name="widget_page_column">3</integer>
+    <integer name="widget_page_row">3</integer>
+    <integer name="home_cellCountX">6</integer>
+    <integer name="home_cellCountY">5</integer>
+    <integer name="config_appsPicker_MaxAppsPerRow">6</integer>
+    <integer name="config_appsPicker_NumAppsPerRow">5</integer>
+    <integer name="config_maxNumberOfPageIndicatorsToShow">45</integer>
+    <integer name="quick_options_dismiss_distance">40</integer>
+</resources>

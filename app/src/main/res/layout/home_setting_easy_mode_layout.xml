@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:card="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_margin="@dimen/home_settings_easy_mode_tips_margin" card:cardCornerRadius="2.0dip">
+        <LinearLayout android:orientation="vertical" android:padding="@dimen/home_settings_easy_mode_tips_padding" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/home_settings_easy_mode_tips_text_margin_bottom">
+                <TextView android:textSize="@dimen/home_settings_easy_mode_tips_title_text_size" android:textColor="@color/home_settings_easy_mode_tips_title_text_color" android:layout_gravity="start" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/homesetting_easymode_title" android:textAllCaps="true" android:fontFamily="sec-roboto-condensed" />
+                <ImageView android:layout_gravity="end" android:id="@id/easy_mode_delete_button" android:background="@drawable/focusable_button_bg" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/tw_card_type_close_mtrl" android:scaleType="fitXY" android:contentDescription="@string/homesetting_easymode_close" />
+            </FrameLayout>
+            <TextView android:textSize="@dimen/home_settings_easy_mode_tips_button_text_size" android:textColor="@color/home_settings_easy_mode_tips_msg_text_color" android:layout_gravity="start" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/home_settings_easy_mode_tips_text_margin_bottom" android:text="@string/homesetting_easymode_summary" android:fontFamily="sec-roboto-light" />
+            <TextView android:textSize="@dimen/home_settings_easy_mode_tips_button_text_size" android:textStyle="bold" android:textColor="@color/home_settings_easy_mode_tips_button_text_color" android:gravity="center_vertical" android:layout_gravity="end" android:id="@id/easy_mode_setting_button" android:background="@drawable/focusable_button_bg" android:clickable="true" android:layout_width="wrap_content" android:layout_height="@dimen/home_settings_easy_mode_tips_button_height" android:text="@string/option_menu_home_settings" android:textAllCaps="true" android:fontFamily="sec-roboto-condensed" android:paddingStart="@dimen/home_settings_easy_mode_tips_button_padding" android:paddingEnd="@dimen/home_settings_easy_mode_tips_button_padding" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

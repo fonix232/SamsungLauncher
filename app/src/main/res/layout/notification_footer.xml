@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.quickoption.notifications.NotificationFooterLayout android:layout_gravity="center_vertical" android:background="@drawable/bg_quick_option_body" android:focusable="true" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="end|center" android:orientation="horizontal" android:id="@id/icon_row" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginEnd="@dimen/notification_footer_margin" />
+    <View android:layout_gravity="start|center" android:id="@id/overflow" android:background="@drawable/horizontal_ellipsis" android:layout_width="@dimen/notification_footer_icon_size" android:layout_height="@dimen/notification_footer_icon_size" android:layout_marginStart="@dimen/notification_footer_margin" />
+</com.android.launcher3.common.quickoption.notifications.NotificationFooterLayout>

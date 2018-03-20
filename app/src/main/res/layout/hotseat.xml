@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.home.Hotseat android:layout_gravity="bottom" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.android.launcher3.home.HotseatCellLayout android:layout_gravity="center" android:id="@id/layout" android:layout_width="wrap_content" android:layout_height="fill_parent" />
+</com.android.launcher3.home.Hotseat>

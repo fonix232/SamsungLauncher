@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.quickoption.shortcuts.DeepShortcutView android:background="@drawable/bg_white_pill" android:layout_width="@dimen/bg_pill_width" android:layout_height="@dimen/bg_pill_height" android:elevation="@dimen/deep_shortcuts_elevation"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.android.launcher3.common.quickoption.shortcuts.DeepShortcutTextView android:id="@id/deep_shortcut" android:background="@drawable/bg_pill_focused" android:focusable="true" android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/DeepShortcut">
+        <ImageView android:layout_gravity="center|top" android:id="@id/iconview_imageView" android:layout_width="0.0dip" android:layout_height="0.0dip" android:scaleType="center" />
+        <TextView android:textColor="@android:color/black" android:id="@id/iconview_titleView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/iconview_text_margin" android:layout_marginEnd="@dimen/iconview_text_margin" />
+    </com.android.launcher3.common.quickoption.shortcuts.DeepShortcutTextView>
+    <View android:layout_gravity="start" android:id="@id/deep_shortcut_icon" android:layout_width="@dimen/deep_shortcut_icon_size" android:layout_height="@dimen/deep_shortcut_icon_size" android:layout_margin="@dimen/deep_shortcut_padding_start" />
+</com.android.launcher3.common.quickoption.shortcuts.DeepShortcutView>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="apps_grid_info">
+        <item>3|4|4|4|66|13|0|2|8|105|25|7</item>
+        <item>4|4|4|4|58|13|0|2|8|85|25|7</item>
+        <item>4|6|1|1|50|12|2|2|8|85|25|7</item>
+        <item>5|6|1|1|50|12|2|2|8|85|25|7</item>
+    </string-array>
+    <string-array name="folder_grid_info">
+        <item>3|3|4|4|50|13|2|2|44|187|120</item>
+    </string-array>
+    <string-array name="home_grid_info">
+        <item>3|4|4|4|66|15|5|2|8|45|115|98|94</item>
+        <item>4|4|4|4|58|13|0|2|8|45|115|98|94</item>
+        <item>4|5|1|1|50|12|0|2|8|45|115|98|94</item>
+        <item>5|5|1|1|50|12|0|2|8|45|115|98|94</item>
+    </string-array>
+    <string-array name="hotseat_grid_icon_info">
+        <item>3|66|15|3|1</item>
+        <item>4|58|13|2|1</item>
+        <item>5|50|12|2|1</item>
+        <item>5|50|12|2|1</item>
+    </string-array>
+    <string-array name="support_apps_grid_size">
+        <item>4x5</item>
+        <item>5x5</item>
+    </string-array>
+    <string-array name="support_grid_size">
+        <item>4x4</item>
+        <item>4x5</item>
+        <item>5x5</item>
+    </string-array>
+    <string-array name="applock_white_list_pkg">
+        <item>com.android.settings</item>
+        <item>com.samsung.android.sm</item>
+        <item>com.samsung.android.sm_cn</item>
+        <item>com.samsung.android.lool</item>
+        <item>com.android.stk</item>
+        <item>com.android.stk2</item>
+        <item>com.sec.android.app.camera</item>
+        <item>com.sec.android.app.clockpackage</item>
+        <item>com.sec.android.app.clockpackagechina</item>
+        <item>com.sec.knox.switcher</item>
+        <item>com.sec.knox.switchknoxI</item>
+        <item>com.sec.enterprise.knox.express</item>
+        <item>com.sec.android.app.irsettings</item>
+        <item>com.samsung.android.app.sprotect</item>
+        <item>com.samsung.android.spay</item>
+        <item>com.samsung.knox.securefolder</item>
+    </string-array>
+    <string-array name="changed_component_list">
+        <item>com.samsung.android.email.ui/.activity.MessageListXL| com.samsung.android.email.provider/com.samsung.android.email.ui.activity.MessageListXL</item>
+        <item>com.android.contacts/.activities.PeopleActivity| com.samsung.android.contacts/com.android.contacts.activities.PeopleActivity</item>
+        <item>com.android.mms/.ui.ConversationComposer| com.samsung.android.messaging/com.android.mms.ui.ConversationComposer</item>
+        <item>com.android.contacts/com.android.dialer.DialtactsActivity| com.samsung.android.contacts/com.android.dialer.DialtactsActivity</item>
+        <item>com.android.calendar/.AllInOneActivity| com.samsung.android.calendar/com.android.calendar.AllInOneActivity</item>
+        <item>com.sec.android.app.clockpackage/.common.activity.ClockPackage| com.sec.android.app.clockpackage/.ClockPackage</item>
+        <item>com.sec.android.app.clockpackagechina/com.sec.android.app.clockpackage.ClockPackage| com.sec.android.app.clockpackage/.ClockPackage</item>
+        <item>com.samsung.android.video/.list.activity.VideoList| com.samsung.android.videolist/.list.activity.VideoList</item>
+        <item>com.sec.knox.switcher/.MainActivity| com.samsung.android.knox.containeragent/.switcher.SwitchToPersonalIcon</item>
+        <item>com.sec.knox.shortcutsms/.PhoneShortcut| com.samsung.android.knox.containeragent/.switcher.PhoneIcon</item>
+        <item>com.sec.knox.shortcutsms/.SMSShortcut| com.samsung.android.knox.containeragent/.switcher.SMSIcon</item>
+        <item>com.sec.knox.containeragent2/.ui.settings.KnoxSettingsActivity| com.samsung.android.knox.containeragent/.settings.KnoxSettingsActivityIconI</item>
+        <item>com.sec.knox.containeragent2/.ui.settings.KnoxSettingsActivity2| com.samsung.android.knox.containeragent/.settings.KnoxSettingsActivityIconII</item>
+    </string-array>
+    <string-array name="changed_component_widget_list">
+        <item>com.android.calendar/.widget.MonthWidgetProvider| com.samsung.android.calendar/com.android.calendar.widget.MonthWidgetProvider</item>
+        <item>com.samsung.android.app.memo/.control.ui.widget.ToolbarWidgetProvider| com.samsung.android.app.notes/.widget.WidgetToolBarProvider</item>
+        <item>com.samsung.android.app.memo/.control.ui.widget.MemoWidgetProvider| com.samsung.android.app.notes/.widget.WidgetProvider</item>
+        <item>com.android.mms/.widget.MmsWidgetProvider| com.samsung.android.messaging/com.android.mms.widget.MmsWidgetProvider</item>
+        <item>com.samsung.android.calendar/com.android.calendar.widget.MonthWidgetProvider| com.samsung.android.calendar/com.android.calendar.widget.month.MonthWidgetProvider</item>
+        <item>com.samsung.android.calendar/com.android.calendar.widget.ListWidgetProvider| com.samsung.android.calendar/com.android.calendar.widget.list.ListWidgetProvider</item>
+        <item>com.samsung.android.calendar/com.android.calendar.widget.TaskWidgetProvider| com.samsung.android.calendar/com.android.calendar.widget.task.TaskWidgetProvider</item>
+        <item>com.android.calendar/com.android.calendar.widget.MonthWidgetProvider| com.samsung.android.calendar/com.android.calendar.widget.month.MonthWidgetProvider</item>
+        <item>com.android.calendar/com.android.calendar.widget.ListWidgetProvider| com.samsung.android.calendar/com.android.calendar.widget.list.ListWidgetProvider</item>
+        <item>com.android.calendar/com.android.calendar.widget.TaskWidgetProvider| com.samsung.android.calendar/com.android.calendar.widget.task.TaskWidgetProvider</item>
+    </string-array>
+    <string-array name="csc_folder_title_for_translation">
+        <item>Google|folder_google</item>
+        <item>Microsoft Apps|folder_microsoft_apps</item>
+        <item>Samsung|folder_samsung</item>
+        <item>Tools|folder_tools</item>
+        <item>Social|folder_social</item>
+    </string-array>
+    <string-array name="index_string_favorite_array_stroke">
+        <item>\#</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+    </string-array>
+    <string-array name="sapp_white_list_pkg">
+        <item>com.sprint.w.installer</item>
+        <item>com.sec.android.easyMover.Agent</item>
+        <item>com.samsung.android.mateagent</item>
+    </string-array>
+</resources>

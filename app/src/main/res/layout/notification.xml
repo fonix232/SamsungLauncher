@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.common.quickoption.notifications.NotificationItemView android:id="@id/notification_view" android:background="@drawable/bg_white_round_rect" android:layout_width="@dimen/quick_option_item_width" android:layout_height="wrap_content" android:layout_marginTop="@dimen/quick_options_container_gap" android:elevation="@dimen/quick_option_elevation" android:backgroundTint="@color/notification_color_beneath"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:orientation="vertical" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <FrameLayout android:id="@id/header" android:background="@drawable/bg_quick_option_header" android:layout_width="fill_parent" android:layout_height="@dimen/notification_header_height" android:paddingStart="@dimen/quick_option_listview_padding_start" android:paddingEnd="@dimen/quick_option_listview_padding_end">
+            <TextView android:textSize="@dimen/notification_header_text_size" android:textColor="@color/notification_text_color" android:gravity="center_vertical" android:layout_gravity="start" android:id="@id/notification_text" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/notifications_header" android:fontFamily="sec-roboto-light" />
+        </FrameLayout>
+        <include android:id="@id/main_view" android:layout_width="fill_parent" android:layout_height="@dimen/notification_main_height" android:layout_below="@id/header" layout="@layout/notification_main" />
+        <FrameLayout android:id="@id/divider" android:background="@color/quick_options_popup_color" android:layout_width="fill_parent" android:layout_height="@dimen/popup_item_divider_height" android:layout_below="@id/main_view" android:paddingStart="@dimen/quick_option_listview_padding_start" android:paddingEnd="@dimen/quick_option_listview_padding_end">
+            <View android:background="@color/quick_options_popup_divider" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        </FrameLayout>
+        <include android:id="@id/footer" android:layout_width="fill_parent" android:layout_height="@dimen/notification_footer_height" android:layout_below="@id/divider" layout="@layout/notification_footer" />
+    </RelativeLayout>
+</com.android.launcher3.common.quickoption.notifications.NotificationItemView>
