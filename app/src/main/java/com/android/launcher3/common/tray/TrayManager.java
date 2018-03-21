@@ -49,7 +49,8 @@ public class TrayManager {
     private DragManager mDragManager;
     private FakeViewAnimation mFakeViewAnimation = new FakeViewAnimation();
     private int mFakeViewAnimationTime;
-    private DragEventCallback mFakeViewDragEventListener = new DragEventCallback() {
+
+    private FakeView.DragEventCallback mFakeViewDragEventListener = new FakeView.DragEventCallback() {
         public void onDragEnter(int direction) {
             if (!TrayManager.this.mSuppressChangeStage) {
                 int lightDirection;

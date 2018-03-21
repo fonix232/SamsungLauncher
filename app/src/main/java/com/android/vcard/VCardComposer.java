@@ -14,7 +14,7 @@ import android.provider.ContactsContract.RawContacts;
 import android.provider.ContactsContract.RawContactsEntity;
 import android.text.TextUtils;
 import android.util.Log;
-import com.samsung.android.knox.SemPersonaManager;
+//import com.samsung.android.knox.SemPersonaManager;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class VCardComposer {
     private static final String SIM_NAME_3 = "SIM3";
     private static final String UTF_8 = "UTF-8";
     private static final String[] sContactsProjection = new String[]{"_id"};
-    private static final Map<Integer, String> sImMap = new HashMap();
+    private static final Map<Integer, String> sImMap = new HashMap<>();
     private final String mCharset;
     private final ContentResolver mContentResolver;
     private Uri mContentUriForRawContactsEntity;
@@ -251,15 +251,22 @@ public class VCardComposer {
         if (this.mIsDoCoMo && !this.mFirstVCardEmittedInDoCoMoCase) {
             this.mFirstVCardEmittedInDoCoMoCase = true;
         }
-        String vcard = createOneEntryInternal(this.mCursor.getLong(this.mIdColumn), getEntityIteratorMethod);
+        String vcard = null;
+        try {
+            vcard = createOneEntryInternal(this.mCursor.getLong(this.mIdColumn), getEntityIteratorMethod);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         if (!this.mCursor.moveToNext()) {
             Log.e(LOG_TAG, "Cursor#moveToNext() returned false");
         }
         return vcard;
     }
 
-    private String createOneEntryInternal(long contactId, Method getEntityIteratorMethod) {
-        Map<String, List<ContentValues>> contentValuesListMap = new HashMap();
+    private String createOneEntryInternal(long contactId, Method getEntityIteratorMethod) throws InvocationTargetException, IllegalAccessException {
+        Map<String, List<ContentValues>> contentValuesListMap = new HashMap<>();
         EntityIterator entityIterator = null;
         Uri uri = this.mContentUriForRawContactsEntity;
         if (contactId < ENTERPRISE_CONTACT_ID_BASE * 100 || this.mRawContactEntitlesInfoCallback == null) {
@@ -271,11 +278,12 @@ public class VCardComposer {
                 }
             } catch (IllegalArgumentException e) {
                 Log.e(LOG_TAG, "IllegalArgumentException has been thrown: " + e.getMessage());
-            } catch (IllegalAccessException e2) {
-                Log.e(LOG_TAG, "IllegalAccessException has been thrown: " + e2.getMessage());
-            } catch (InvocationTargetException e3) {
-                Log.e(LOG_TAG, "InvocationTargetException has been thrown: ", e3);
-                throw new RuntimeException("InvocationTargetException has been thrown");
+                // TODO: Samsung specific code
+//            } catch (IllegalAccessException e2) {
+//                Log.e(LOG_TAG, "IllegalAccessException has been thrown: " + e2.getMessage());
+//            } catch (InvocationTargetException e3) {
+//                Log.e(LOG_TAG, "InvocationTargetException has been thrown: ", e3);
+//                throw new RuntimeException("InvocationTargetException has been thrown");
             } catch (Throwable th) {
                 if (entityIterator != null) {
                     entityIterator.close();
@@ -283,16 +291,16 @@ public class VCardComposer {
             }
         } else {
             int userId = (int) (Long.valueOf(contactId).longValue() / ENTERPRISE_CONTACT_ID_BASE);
-            if (SemPersonaManager.isKnoxId(userId)) {
-                uri = this.mRawContactEntitlesInfoCallback.getRawContactEntitlesInfo(contactId).rawContactEntitlesUri;
-                contactId %= ENTERPRISE_CONTACT_ID_BASE;
-                uri = uri.buildUpon().appendQueryParameter(KNOX_CONTAINER_ID, String.valueOf(userId)).build();
-            }
+//            if (SemPersonaManager.isKnoxId(userId)) {
+//                uri = this.mRawContactEntitlesInfoCallback.getRawContactEntitlesInfo(contactId).rawContactEntitlesUri;
+//                contactId %= ENTERPRISE_CONTACT_ID_BASE;
+//                uri = uri.buildUpon().appendQueryParameter(KNOX_CONTAINER_ID, String.valueOf(userId)).build();
+//            }
         }
         String selection = "contact_id=?";
         String[] selectionArgs = new String[]{String.valueOf(contactId)};
         if (getEntityIteratorMethod != null) {
-            entityIterator = (EntityIterator) getEntityIteratorMethod.invoke(null, new Object[]{this.mContentResolver, uri, "contact_id=?", selectionArgs, null});
+            entityIterator = (EntityIterator) getEntityIteratorMethod.invoke(null, this.mContentResolver, uri, "contact_id=?", selectionArgs, null);
         } else {
             entityIterator = RawContacts.newEntityIterator(this.mContentResolver.query(uri, null, "contact_id=?", selectionArgs, "is_super_primary, (CASE WHEN display_name IS (SELECT display_name FROM view_contacts WHERE _id = " + String.valueOf(contactId) + ") THEN 1 ELSE 0 END) DESC"));
         }
@@ -311,14 +319,14 @@ public class VCardComposer {
             return "";
         }
         while (entityIterator.hasNext()) {
-            Iterator it = ((Entity) entityIterator.next()).getSubValues().iterator();
+            Iterator<NamedContentValues> it = entityIterator.next().getSubValues().iterator();
             while (it.hasNext()) {
-                ContentValues contentValues = ((NamedContentValues) it.next()).values;
+                ContentValues contentValues = (it.next()).values;
                 String key = contentValues.getAsString("mimetype");
                 if (key != null) {
-                    List<ContentValues> contentValuesList = (List) contentValuesListMap.get(key);
+                    List<ContentValues> contentValuesList = contentValuesListMap.get(key);
                     if (contentValuesList == null) {
-                        contentValuesList = new ArrayList();
+                        contentValuesList = new ArrayList<>();
                         contentValuesListMap.put(key, contentValuesList);
                     }
                     contentValuesList.add(contentValues);
@@ -350,12 +358,13 @@ public class VCardComposer {
             if (cursor != null) {
                 cursor.close();
             }
-            return isSimAccount;
+
         } catch (Throwable th) {
             if (cursor != null) {
                 cursor.close();
             }
         }
+        return isSimAccount;
     }
 
     public String buildVCard(Map<String, List<ContentValues>> contentValuesListMap) {
@@ -364,43 +373,43 @@ public class VCardComposer {
             return "";
         }
         VCardBuilder builder = new VCardBuilder(this.mVCardType, this.mCharset);
-        builder.appendNameProperties((List) contentValuesListMap.get("vnd.android.cursor.item/name")).appendNickNames((List) contentValuesListMap.get("vnd.android.cursor.item/nickname")).appendPhones((List) contentValuesListMap.get("vnd.android.cursor.item/phone_v2"), this.mPhoneTranslationCallback);
+        builder.appendNameProperties(contentValuesListMap.get("vnd.android.cursor.item/name")).appendNickNames(contentValuesListMap.get("vnd.android.cursor.item/nickname")).appendPhones(contentValuesListMap.get("vnd.android.cursor.item/phone_v2"), this.mPhoneTranslationCallback);
         if ((this.mVCardType & 4194304) != 0) {
             return builder.toString();
         }
         if ((this.mVCardType & 524288) == 0) {
-            builder.appendEmails((List) contentValuesListMap.get("vnd.android.cursor.item/email_v2"));
+            builder.appendEmails(contentValuesListMap.get("vnd.android.cursor.item/email_v2"));
         }
         if ((this.mVCardType & 262144) == 0) {
-            builder.appendPostals((List) contentValuesListMap.get("vnd.android.cursor.item/postal-address_v2"));
+            builder.appendPostals(contentValuesListMap.get("vnd.android.cursor.item/postal-address_v2"));
         }
         if ((this.mVCardType & 131072) == 0) {
-            builder.appendOrganizations((List) contentValuesListMap.get("vnd.android.cursor.item/organization"));
+            builder.appendOrganizations(contentValuesListMap.get("vnd.android.cursor.item/organization"));
         }
         if ((this.mVCardType & 65536) == 0) {
-            builder.appendWebsites((List) contentValuesListMap.get("vnd.android.cursor.item/website"));
+            builder.appendWebsites(contentValuesListMap.get("vnd.android.cursor.item/website"));
         }
         if ((this.mVCardType & 8388608) == 0 && this.mCurrentContactID > 0 && !isSimcardAccount(this.mCurrentContactID)) {
-            builder.appendPhotos((List) contentValuesListMap.get("vnd.android.cursor.item/photo"));
-            builder.appendNameCard((List) contentValuesListMap.get("vnd.sec.cursor.item/name_card"), this.mContentResolver);
+            builder.appendPhotos(contentValuesListMap.get("vnd.android.cursor.item/photo"));
+            builder.appendNameCard(contentValuesListMap.get("vnd.sec.cursor.item/name_card"), this.mContentResolver);
         }
         if ((this.mVCardType & 32768) == 0) {
-            builder.appendNotes((List) contentValuesListMap.get("vnd.android.cursor.item/note"));
+            builder.appendNotes(contentValuesListMap.get("vnd.android.cursor.item/note"));
         }
         if ((this.mVCardType & 16384) == 0) {
-            builder.appendEvents((List) contentValuesListMap.get("vnd.android.cursor.item/contact_event"));
+            builder.appendEvents(contentValuesListMap.get("vnd.android.cursor.item/contact_event"));
         }
         if ((this.mVCardType & 8192) == 0) {
-            builder.appendIms((List) contentValuesListMap.get("vnd.android.cursor.item/im"));
+            builder.appendIms(contentValuesListMap.get("vnd.android.cursor.item/im"));
         }
         if ((this.mVCardType & 4096) == 0) {
-            builder.appendSipAddresses((List) contentValuesListMap.get("vnd.android.cursor.item/sip_address"));
+            builder.appendSipAddresses(contentValuesListMap.get("vnd.android.cursor.item/sip_address"));
         }
         if ((this.mVCardType & 2048) == 0) {
-            builder.appendRelation((List) contentValuesListMap.get("vnd.android.cursor.item/relation"));
+            builder.appendRelation(contentValuesListMap.get("vnd.android.cursor.item/relation"));
         }
         if ((this.mIsDoCoMo || this.mIsChn) && contentValuesListMap.containsKey("vnd.android.cursor.item/group_membership")) {
-            builder.appendGroupName((List) contentValuesListMap.get("vnd.android.cursor.item/group_membership"), this.mContentResolver);
+            builder.appendGroupName(contentValuesListMap.get("vnd.android.cursor.item/group_membership"), this.mContentResolver);
         }
         return builder.toString();
     }

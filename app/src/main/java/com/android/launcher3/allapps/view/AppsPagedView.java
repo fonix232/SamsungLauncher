@@ -38,7 +38,7 @@ import com.android.launcher3.folder.view.FolderIconView;
 import com.android.launcher3.util.DvfsUtil;
 import com.android.launcher3.util.logging.GSIMLogging;
 import com.android.launcher3.util.logging.SALogging;
-import com.samsung.android.feature.SemGateConfig;
+// import com.samsung.android.feature.SemGateConfig;
 import com.sec.android.app.launcher.R;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -80,8 +80,8 @@ public class AppsPagedView extends PagedView implements Insettable {
     public AppsPagedView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.mLauncher = (Launcher) context;
-        if (getImportantForAccessibility() == 0) {
-            setImportantForAccessibility(1);
+        if (getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
+            setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
         setMinScale(1.0f);
         Resources res = getResources();
@@ -346,13 +346,12 @@ public class AppsPagedView extends PagedView implements Insettable {
         for (int i = 0; i < total; i++) {
             updateAccessibilityFlags(getCellLayout(i), show);
         }
-        int i2 = (this.mListener.getState() == 0 || this.mListener.getState() == 2) ? 0 : 4;
-        setImportantForAccessibility(i2);
+        setImportantForAccessibility((this.mListener.getState() == 0 || this.mListener.getState() == 2) ? View.IMPORTANT_FOR_ACCESSIBILITY_AUTO : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
     }
 
     private void updateAccessibilityFlags(CellLayout page, boolean show) {
-        int accessible = ((this.mListener.getState() == 0 || this.mListener.getState() == 2) && show) ? 0 : 4;
-        page.setImportantForAccessibility(2);
+        int accessible = ((this.mListener.getState() == 0 || this.mListener.getState() == 2) && show) ? View.IMPORTANT_FOR_ACCESSIBILITY_AUTO : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS;
+        page.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
         page.getCellLayoutChildren().setImportantForAccessibility(accessible);
         page.setContentDescription(null);
         page.setAccessibilityDelegate(null);
@@ -526,9 +525,9 @@ public class AppsPagedView extends PagedView implements Insettable {
         if (this.mDragMgr.isDragging() && this.mListener.getState() == 0) {
             this.mDragMgr.forceTouchMove();
         }
-        if (SemGateConfig.isGateEnabled()) {
-            Log.i("GATE", "<GATE-M>SCREEN_LOADED_APP_MENU_" + getCurrentPage() + "</GATE-M>");
-        }
+//        if (SemGateConfig.isGateEnabled()) {
+//            Log.i("GATE", "<GATE-M>SCREEN_LOADED_APP_MENU_" + getCurrentPage() + "</GATE-M>");
+//        }
     }
 
     protected void onPageBeginMoving() {
@@ -695,16 +694,16 @@ public class AppsPagedView extends PagedView implements Insettable {
     }
 
     public void addItem(View view, ItemInfo item) {
-        LayoutParams lp;
+        CellLayout.LayoutParams lp;
         Log.d(TAG, "addItem = title : " + item.title + " , rank : " + item.rank + " , screen : " + item.screenId);
         int pagePos = item.rank % getMaxItemsPerScreen();
         item.cellX = pagePos % getCellCountX();
         item.cellY = pagePos / getCellCountX();
         ViewGroup.LayoutParams genericLp = view.getLayoutParams();
         if (genericLp == null || !(genericLp instanceof LayoutParams)) {
-            lp = new LayoutParams(item.cellX, item.cellY, 1, 1);
+            lp = new CellLayout.LayoutParams(item.cellX, item.cellY, 1, 1);
         } else {
-            lp = (LayoutParams) genericLp;
+            lp = (CellLayout.LayoutParams) genericLp;
             lp.cellX = item.cellX;
             lp.cellY = item.cellY;
         }
@@ -744,7 +743,7 @@ public class AppsPagedView extends PagedView implements Insettable {
         item.cellX = rank % countX;
         item.cellY = rank / countX;
         item.mDirty = true;
-        LayoutParams lp = (LayoutParams) view.getLayoutParams();
+        CellLayout.LayoutParams lp = (CellLayout.LayoutParams) view.getLayoutParams();
         lp.cellX = rank % countX;
         lp.cellY = rank / countX;
         getCellLayout(screen).addViewToCellLayout(view, -1, this.mLauncher.getViewIdForItem(item), lp, true);
@@ -800,17 +799,14 @@ public class AppsPagedView extends PagedView implements Insettable {
 
     private ArrayList<CellLayoutChildren> getAllCellLayoutChildren() {
         ArrayList<CellLayoutChildren> childrenArrayList = new ArrayList();
-        Iterator it = this.mCellLayouts.iterator();
-        while (it.hasNext()) {
-            childrenArrayList.add(((CellLayout) it.next()).getCellLayoutChildren());
+        for (CellLayout mCellLayout : this.mCellLayouts) {
+            childrenArrayList.add((mCellLayout).getCellLayoutChildren());
         }
         return childrenArrayList;
     }
 
     public void mapOverItems(boolean recurse, ItemOperator op) {
-        Iterator it = getAllCellLayoutChildren().iterator();
-        while (it.hasNext()) {
-            CellLayoutChildren clc = (CellLayoutChildren) it.next();
+        for (CellLayoutChildren clc : getAllCellLayoutChildren()) {
             int itemCount = clc.getChildCount();
             int itemIdx = 0;
             while (itemIdx < itemCount) {
@@ -841,16 +837,13 @@ public class AppsPagedView extends PagedView implements Insettable {
         while (i < total_page - 1 && ((AppsViewCellLayout) getCellLayout(i)).isFullyOccupied()) {
             i++;
         }
-        if (i < total_page - 1) {
-            return true;
-        }
-        return false;
+        return i < total_page - 1;
     }
 
     public String getPageDescription() {
         int lastPage = getChildCount();
         int currentPage = getCurrentPage() + 1;
-        return getResources().getString(R.string.default_scroll_format, new Object[]{Integer.valueOf(currentPage), Integer.valueOf(lastPage)});
+        return getResources().getString(R.string.default_scroll_format, currentPage, lastPage);
     }
 
     public int getDesiredWidth() {

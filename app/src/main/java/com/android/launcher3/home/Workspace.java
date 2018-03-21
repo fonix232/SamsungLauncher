@@ -156,7 +156,8 @@ public class Workspace extends PagedView implements LauncherTransitionable, OnHi
         if (ZeroPageController.supportVirtualScreen()) {
             this.mZeroPageController = new ZeroPageController(context, this);
         }
-        context.obtainStyledAttributes(attrs, R.styleable.Workspace, defStyle, 0).recycle();
+        // TODO: Samsung specific code
+        //context.obtainStyledAttributes(attrs, R.styleable.Workspace, defStyle, 0).recycle();
         setupShrinkFactor();
         this.mDefaultPage = Utilities.getHomeDefaultPageKey(this.mLauncher);
         if (this.mDefaultPage < 0) {
@@ -254,7 +255,7 @@ public class Workspace extends PagedView implements LauncherTransitionable, OnHi
             }
             CellLayout cl = (CellLayout) child;
             cl.setClickable(true);
-            cl.setImportantForAccessibility(2);
+            cl.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
             super.onChildViewAdded(parent, child);
             return;
         }
@@ -1217,38 +1218,34 @@ public class Workspace extends PagedView implements LauncherTransitionable, OnHi
         for (int i = getPageIndexToStart(); i < total; i++) {
             updateAccessibilityFlags((CellLayout) getPageAt(i), i, show);
         }
-        setImportantForAccessibility(show ? 0 : 4);
+        setImportantForAccessibility(show ? View.IMPORTANT_FOR_ACCESSIBILITY_AUTO : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
     }
 
     private void updateAccessibilityFlags(CellLayout page, int pageNo, boolean show) {
         int accessible = 4;
         int state = this.mHomeController.getState();
         if ((state == 4 || state == 5) && show) {
-            page.setImportantForAccessibility(1);
-            page.getCellLayoutChildren().setImportantForAccessibility(4);
+            page.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            page.getCellLayoutChildren().setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
             page.setContentDescription(getPageDescription(pageNo, false));
             return;
         }
         if ((state == 1 || state == 6) && show) {
             accessible = 0;
         }
-        page.setImportantForAccessibility(2);
+        page.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
         page.getCellLayoutChildren().setImportantForAccessibility(accessible);
         page.setContentDescription(null);
         page.setAccessibilityDelegate(null);
     }
 
     public void onLauncherTransitionPrepare(Launcher l, boolean animated, boolean toWorkspace, StageEntry data) {
-        int i = true;
+        int i = 0;
         if (toWorkspace) {
             int internalStateFrom = data.getInternalStateFrom();
             int internalStateTo = data.getInternalStateTo();
             if ((internalStateFrom == 1 && internalStateTo == 4) || (internalStateFrom == 4 && internalStateTo == 2)) {
-                boolean z;
-                if (internalStateTo != 4) {
-                    z = false;
-                }
-                setCustomFlagOnChild(z, false);
+                setCustomFlagOnChild(internalStateTo == 4, false);
             } else if (internalStateFrom == 4 && internalStateTo == 1) {
                 int currentPage = getCurrentPage();
                 int duration = getResources().getInteger(R.integer.config_overviewTransitionDuration);
@@ -1869,7 +1866,7 @@ public class Workspace extends PagedView implements LauncherTransitionable, OnHi
         if (LauncherFeature.supportHomeModeChange() && LauncherAppState.getInstance().isHomeOnlyModeEnabled() && isOverviewState()) {
             View pageDeleteBtn = getPageDeleteBtn(this.mCurrentPage);
             if (pageDeleteBtn != null) {
-                int visibility = isEmptyPage(this.mCurrentPage) ? 0 : 8;
+                int visibility = isEmptyPage(this.mCurrentPage) ? View.VISIBLE : View.GONE;
                 if (pageDeleteBtn.getVisibility() != visibility) {
                     setAlphaWithVisibility(pageDeleteBtn, visibility, false);
                 }
@@ -2482,11 +2479,14 @@ public class Workspace extends PagedView implements LauncherTransitionable, OnHi
                         }
                     }, 300);
                 }
-            }).setNegativeButton(17039360, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface arg0, int arg1) {
-                    SALogging.getInstance().insertEventLog(Workspace.this.getResources().getString(R.string.screen_HomeOption), Workspace.this.getResources().getString(R.string.event_Removepage_negative));
-                }
-            }).setOnDismissListener(new OnDismissListener() {
+            })
+                    // TODO: Samsung specific code
+// .setNegativeButton(17039360, new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface arg0, int arg1) {
+//                    SALogging.getInstance().insertEventLog(Workspace.this.getResources().getString(R.string.screen_HomeOption), Workspace.this.getResources().getString(R.string.event_Removepage_negative));
+//                }
+//            })
+            .setOnDismissListener(new OnDismissListener() {
                 public void onDismiss(DialogInterface dialog) {
                     LauncherAppState.getInstance().getTopViewChangedMessageHandler().sendMessage(5);
                 }

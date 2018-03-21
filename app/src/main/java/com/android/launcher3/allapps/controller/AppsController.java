@@ -139,7 +139,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
     private int mAppsSlipY;
     private ViewGroup mAppsTidyUpContainer;
     private SearchedAppBounceAnimation mBounceAnimation;
-    private DataListener mDataListener = new DataListener() {
+    private AppsAdapter.DataListener mDataListener = new AppsAdapter.DataListener() {
         public void updateApps(ArrayList<ItemInfo> apps) {
             AppsController.this.updateApps(apps);
         }
@@ -459,7 +459,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
     private void startDrag(CellInfo cellInfo, boolean allowQuickOption) {
         View child = cellInfo.cell;
         if (Utilities.ATLEAST_O || child.isInTouchMode()) {
-            child.setVisibility(4);
+            child.setVisibility(View.INVISIBLE);
             changeState(1, true);
             this.mDragController.startDrag(cellInfo);
             this.mLauncher.beginDragShared(child, this.mDragController, allowQuickOption, false);
@@ -497,7 +497,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
                     StageEntry data = new StageEntry();
                     data.enableAnimation = true;
                     data.fromStage = 2;
-                    data.putExtras(AppsPickerController.KEY_PICKER_MODE, Integer.valueOf(1));
+                    data.putExtras(AppsPickerController.KEY_PICKER_MODE, 1);
                     data.putExtras(AppsPickerController.KEY_BOUNCED_ITEM, appinfo);
                     data.putExtras(AppsPickerController.KEY_BOUNCED_ITEM_USER, this.mLauncher.getSearchedAppUser());
                     getStageManager().startStage(6, data);
@@ -580,7 +580,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
     }
 
     public void setPagedViewVisibility(boolean show) {
-        int visibility = show ? 0 : 8;
+        int visibility = show ? View.VISIBLE : View.GONE;
         if (this.mAppsPagedView != null) {
             this.mAppsPagedView.setVisibility(visibility);
         }
@@ -599,7 +599,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
             int fromViewMode = data.fromStage;
             HashMap<View, Integer> layerViews = data.getLayerViews();
             boolean animated = data.enableAnimation;
-            if (((Integer) data.getExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, Integer.valueOf(0))).intValue() > 0) {
+            if (((Integer) data.getExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, 0)).intValue() > 0) {
                 suppressChangeStageOnce = true;
             } else {
                 suppressChangeStageOnce = false;
@@ -830,7 +830,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
             return false;
         }
         initBounceAnimation();
-        IconInfo tag = v.getTag();
+        ItemInfo tag = (ItemInfo) v.getTag();
         if (!(tag instanceof IconInfo) && !(tag instanceof FolderInfo)) {
             return false;
         }
@@ -841,7 +841,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
                 } else {
                     this.mLauncher.startAppShortcutOrInfoActivity(v);
                     if (tag instanceof IconInfo) {
-                        sendGSIMLog(tag);
+                        sendGSIMLog((IconInfo)tag);
                     }
                 }
                 return true;
@@ -861,7 +861,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
                 if (!(tag instanceof IconInfo)) {
                     return false;
                 }
-                IconInfo item = tag;
+                IconInfo item = (IconInfo)tag;
                 this.mLauncher.startAppShortcutOrInfoActivity(v);
                 this.mAppsSearch.updateRecentApp(item);
                 sendGSIMLog(item);
@@ -962,11 +962,11 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
                 this.mAppsPagedView.setCrosshairsVisibilityChilds(0);
                 this.mAppsPagedView.showHintPages();
             } else if (toState == 4) {
-                data.putExtras(KEY_REPOSITION_BY, Integer.valueOf(2));
+                data.putExtras(KEY_REPOSITION_BY, 2);
                 stateChangeAnim = this.mAppsAnimation.getTidyUpAnimation(animated, layerViews, true, data);
                 LauncherAppState.getInstance().getTopViewChangedMessageHandler().sendMessage(10);
             } else if (toState == 0) {
-                data.putExtras(KEY_REPOSITION_BY, Integer.valueOf(0));
+                data.putExtras(KEY_REPOSITION_BY, 0);
                 stateChangeAnim = this.mAppsAnimation.getChangeViewTypeAnimation(animated, layerViews, data);
             } else if (toState == 5) {
                 if (this.mAppsScreenGridPanel != null) {
@@ -1019,7 +1019,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         } else if (fromState == 4) {
             if (toState == 0) {
                 boolean z;
-                data.putExtras(KEY_REPOSITION_BY, Integer.valueOf(2));
+                data.putExtras(KEY_REPOSITION_BY, 2);
                 AppsTransitionAnimation appsTransitionAnimation = this.mAppsAnimation;
                 if (this.mApplyTideUpPage || !data.enableAnimation) {
                     z = false;
@@ -1175,10 +1175,10 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         while (it.hasNext()) {
             ItemInfo info = (ItemInfo) it.next();
             if (isItemInFolder(info)) {
-                if (!folderItemMap.containsKey(Long.valueOf(info.container))) {
-                    folderItemMap.put(Long.valueOf(info.container), new ArrayList());
+                if (!folderItemMap.containsKey(info.container)) {
+                    folderItemMap.put(info.container, new ArrayList());
                 }
-                ((ArrayList) folderItemMap.get(Long.valueOf(info.container))).add((IconInfo) info);
+                ((ArrayList) folderItemMap.get(info.container)).add((IconInfo) info);
             } else {
                 removeItems.add(info);
                 if (isSelectState()) {
@@ -1193,7 +1193,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         this.mReorderController.removeEmptyCellsAndViews(removeItems, animate);
         for (Long longValue : folderItemMap.keySet()) {
             long containerId = longValue.longValue();
-            ArrayList itemsInContainer = (ArrayList) folderItemMap.get(Long.valueOf(containerId));
+            ArrayList itemsInContainer = (ArrayList) folderItemMap.get(containerId);
             View view = getAppsIconByItemId(containerId);
             if (view != null) {
                 FolderInfo folderInfo = (FolderInfo) view.getTag();
@@ -1294,11 +1294,11 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
             item.container = container;
             item.screenId = (long) screen;
             ContentValues values = new ContentValues();
-            values.put("container", Long.valueOf(item.container));
-            values.put("cellX", Integer.valueOf(item.cellX));
-            values.put("cellY", Integer.valueOf(item.cellY));
-            values.put(BaseLauncherColumns.RANK, Integer.valueOf(item.rank));
-            values.put("screen", Long.valueOf(item.screenId));
+            values.put("container", item.container);
+            values.put("cellX", item.cellX);
+            values.put("cellY", item.cellY);
+            values.put(BaseLauncherColumns.RANK, item.rank);
+            values.put("screen", item.screenId);
             contentValues.add(values);
         }
         this.mAdapterProvider.updateItemsInDatabaseHelper(this.mLauncher, contentValues, items);
@@ -1317,12 +1317,12 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         item.hidden = hidden;
         item.mDirty = true;
         ContentValues values = new ContentValues();
-        values.put("container", Long.valueOf(item.container));
-        values.put(BaseLauncherColumns.RANK, Integer.valueOf(item.rank));
-        values.put("cellX", Integer.valueOf(item.cellX));
-        values.put("cellY", Integer.valueOf(item.cellY));
-        values.put("screen", Long.valueOf(item.screenId));
-        values.put("hidden", Integer.valueOf(item.hidden));
+        values.put("container", item.container);
+        values.put(BaseLauncherColumns.RANK, item.rank);
+        values.put("cellX", item.cellX);
+        values.put("cellY", item.cellY);
+        values.put("screen", item.screenId);
+        values.put("hidden", item.hidden);
         this.mAdapterProvider.updateItem(values, item);
     }
 
@@ -1493,7 +1493,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
                 if (this.mLauncher.isHomeStage()) {
                     onStagePreEnter();
                 }
-                if (this.mAppsContainer.getVisibility() != 0) {
+                if (this.mAppsContainer.getVisibility() != View.VISIBLE) {
                     this.mAppsContainer.setVisibility(View.VISIBLE);
                     this.mAppsContainer.setAlpha(0.0f);
                 }
@@ -1544,7 +1544,8 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
 
     public void startTrayMove() {
         if (Talk.INSTANCE.isAccessibilityEnabled()) {
-            this.mAppsContainer.semClearAccessibilityFocus();
+            // TODO: Samsung specific code
+            //this.mAppsContainer.semClearAccessibilityFocus();
         }
     }
 
@@ -1705,7 +1706,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         } else if (this.mAppsPagedView.hasEmptyCellAtPages()) {
             changeState(4, true);
         } else {
-            Toast.makeText(this.mLauncher, R.string.no_changes, 0).show();
+            Toast.makeText(this.mLauncher, R.string.no_changes, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1743,7 +1744,8 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         intent.setComponent(new ComponentName("com.samsung.android.app.galaxyfinder", "com.samsung.android.app.galaxyfinder.GalaxyFinderActivity"));
         intent.putExtra("from", this.mLauncher.getPackageName());
         intent.putExtra("launch_mode", "launched_settings");
-        intent.setFlags(268468224);
+        // TODO: Fix intent flags
+        // intent.setFlags(268468224);
         try {
             this.mLauncher.startActivity(intent);
         } catch (ActivityNotFoundException e) {
@@ -1776,7 +1778,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         }
         if (enter) {
             changeState(2, animated);
-            Talk.INSTANCE.postSay(this.mLauncher.getResources().getString(R.string.tts_changed_to_apps_edit_mode) + " " + String.format(this.mLauncher.getResources().getString(R.string.default_scroll_format), new Object[]{Integer.valueOf(this.mAppsPagedView.getCurrentPage() + 1), Integer.valueOf(this.mAppsPagedView.getPageCount())}));
+            Talk.INSTANCE.postSay(this.mLauncher.getResources().getString(R.string.tts_changed_to_apps_edit_mode) + " " + String.format(this.mLauncher.getResources().getString(R.string.default_scroll_format), new Object[]{this.mAppsPagedView.getCurrentPage() + 1, this.mAppsPagedView.getPageCount()}));
             return;
         }
         this.mMultiSelectManager.clearCheckedApps();
@@ -1914,14 +1916,14 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         Iterator it = appsViewList.iterator();
         while (it.hasNext()) {
             ItemInfo item = (ItemInfo) it.next();
-            if (!itemMap.containsKey(Long.valueOf(item.container))) {
-                itemMap.put(Long.valueOf(item.container), new ArrayList());
+            if (!itemMap.containsKey(item.container)) {
+                itemMap.put(item.container, new ArrayList());
             }
-            ((ArrayList) itemMap.get(Long.valueOf(item.container))).add((IconInfo) item);
+            ((ArrayList) itemMap.get(item.container)).add((IconInfo) item);
         }
         for (Long longValue : itemMap.keySet()) {
             long containerId = longValue.longValue();
-            ArrayList itemsInContainer = (ArrayList) itemMap.get(Long.valueOf(containerId));
+            ArrayList itemsInContainer = (ArrayList) itemMap.get(containerId);
             if (containerId > 0) {
                 FolderIconView iconView = (FolderIconView) getAppsIconByItemId(containerId);
                 if (iconView != null) {
@@ -1977,7 +1979,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         if (info.container != -102) {
             View folderIconView = getAppsIconByItemId(info.container);
             if (folderIconView != null) {
-                FolderInfo folderObject = folderIconView.getTag();
+                FolderInfo folderObject = (FolderInfo)folderIconView.getTag();
                 if (folderObject instanceof FolderInfo) {
                     folderObject.add(info);
                 }
@@ -2084,17 +2086,17 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         it = items.iterator();
         while (it.hasNext()) {
             ItemInfo item2 = (ItemInfo) it.next();
-            if (!itemMap.containsKey(Long.valueOf(item2.container))) {
-                itemMap.put(Long.valueOf(item2.container), new ArrayList());
+            if (!itemMap.containsKey(item2.container)) {
+                itemMap.put(item2.container, new ArrayList());
             }
-            ((ArrayList) itemMap.get(Long.valueOf(item2.container))).add((IconInfo) item2);
+            ((ArrayList) itemMap.get(item2.container)).add((IconInfo) item2);
         }
         Set<Long> keys = itemMap.keySet();
         ArrayList<ItemInfo> updateItems = new ArrayList();
         ArrayList<ContentValues> contentValues = new ArrayList();
         for (Long longValue : keys) {
             long containerId = longValue.longValue();
-            ArrayList itemsInContainer = (ArrayList) itemMap.get(Long.valueOf(containerId));
+            ArrayList itemsInContainer = (ArrayList) itemMap.get(containerId);
             if (containerId != container && containerId > 0) {
                 View view = getAppsIconByItemId(containerId);
                 if (view == null) {
@@ -2105,17 +2107,17 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
             }
             it = itemsInContainer.iterator();
             while (it.hasNext()) {
-                item = (IconInfo) it.next();
+                IconInfo item = (IconInfo) it.next();
                 item.container = container;
                 item.screenId = screenId;
                 item.mDirty = true;
                 ContentValues values = new ContentValues();
-                values.put("container", Long.valueOf(item.container));
-                values.put(BaseLauncherColumns.RANK, Integer.valueOf(item.rank));
-                values.put("cellX", Integer.valueOf(item.cellX));
-                values.put("cellY", Integer.valueOf(item.cellY));
-                values.put("screen", Long.valueOf(item.screenId));
-                values.put("hidden", Integer.valueOf(item.hidden));
+                values.put("container", item.container);
+                values.put(BaseLauncherColumns.RANK, item.rank);
+                values.put("cellX", item.cellX);
+                values.put("cellY", item.cellY);
+                values.put("screen", item.screenId);
+                values.put("hidden", item.hidden);
                 updateItems.add(item);
                 contentValues.add(values);
             }
@@ -2263,14 +2265,14 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
         if (this.mState == 4) {
             repositionByTypeUpPages();
         } else if (this.mState == 0) {
-            int repostionBy = ((Integer) entry.getExtras(KEY_REPOSITION_BY, Integer.valueOf(0))).intValue();
+            int repostionBy = ((Integer) entry.getExtras(KEY_REPOSITION_BY, 0)).intValue();
             if (repostionBy == 2) {
                 applyOrCancelTideUpPages();
             } else if (repostionBy == 0) {
                 applySetViewType();
             }
         } else if (this.mState == 5) {
-            repositionByGrid((int[]) entry.getExtras(KEY_TARGET_GRID_SIZE, Integer.valueOf(0)));
+            repositionByGrid((int[]) entry.getExtras(KEY_TARGET_GRID_SIZE, 0));
         }
     }
 
@@ -2319,7 +2321,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
                 folderInfo.setAlphabeticalOrder(this.mViewType != ViewType.CUSTOM_GRID, false, this.mLauncher);
             }
             if (repositionBy != 3) {
-                view = (View) folderViewMap.get(folderInfo);
+                View view = (View) folderViewMap.get(folderInfo);
                 if (view instanceof FolderIconView) {
                     ((FolderIconView) view).applyStyle();
                     checkIfConfigIsDifferentFromActivity();
@@ -2345,7 +2347,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
     public void updateCountBadge(View view, boolean animate) {
         if (view instanceof IconView) {
             TextView countBadge = ((IconView) view).getCountBadgeView();
-            if (countBadge != null && countBadge.getVisibility() == 0) {
+            if (countBadge != null && countBadge.getVisibility() == View.VISIBLE) {
                 ((IconView) view).updateCountBadge(false, animate);
             }
         }
@@ -2457,7 +2459,7 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
             return false;
         }
         StageEntry data = new StageEntry();
-        data.putExtras(KEY_REPOSITION_BY, Integer.valueOf(1));
+        data.putExtras(KEY_REPOSITION_BY, 1);
         data.putExtras(KEY_TARGET_GRID_SIZE, new int[]{gridX, gridY});
         data.enableAnimation = animated;
         data.setInternalStateFrom(this.mState);
@@ -2561,12 +2563,8 @@ public class AppsController extends Stage implements OnFocusChangeListener, OnLo
             view.setContentDescription(buttonDescriptionFormat + " " + this.mLauncher.getResources().getString(R.string.accessibility_button));
             return;
         }
-        String str = TAG;
         StringBuilder append = new StringBuilder().append("This view can't cast to TextView : ");
-        if (view == null) {
-            view = "null";
-        }
-        Log.e(str, append.append(view).toString());
+        Log.e(TAG, append.append(view == null ? "null" : view).toString());
     }
 
     public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {

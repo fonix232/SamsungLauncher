@@ -138,8 +138,9 @@ public class PageIndicator extends LinearLayout {
         this.mMarkers = new ArrayList();
         this.mWindowRange = new int[2];
         this.mMarkerStartOffset = 0;
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PageIndicator, defStyle, 0);
-        this.mMaxVisibleSize = a.getInteger(0, 15);
+        // TODO: Samsung specific code
+//        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PageIndicator, defStyle, 0);
+//        this.mMaxVisibleSize = a.getInteger(0, 15);
         this.mEnableGroupingSize = this.mMaxVisibleSize;
         Resources res = context.getResources();
         this.mMarkerGap = res.getDimensionPixelSize(R.dimen.pageIndicator_dot_gap);
@@ -149,8 +150,8 @@ public class PageIndicator extends LinearLayout {
         this.mWindowRange[0] = 0;
         this.mWindowRange[1] = 0;
         this.mLayoutInflater = LayoutInflater.from(context);
-        setImportantForAccessibility(4);
-        a.recycle();
+        setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+        //a.recycle();
     }
 
     public void enableLayoutTransitions() {
@@ -221,7 +222,7 @@ public class PageIndicator extends LinearLayout {
         }
         i = 0;
         while (i < this.mMarkers.size()) {
-            marker = (PageIndicatorMarker) this.mMarkers.get(i);
+            PageIndicatorMarker marker = (PageIndicatorMarker) this.mMarkers.get(i);
             LayoutParams lp = (LayoutParams) marker.getLayoutParams();
             lp.width = this.mMarkerWidth + markerGap;
             if (i == this.mMarkers.size() - 1) {
@@ -234,7 +235,7 @@ public class PageIndicator extends LinearLayout {
                 if (indexOfChild(marker) < 0) {
                     addView(marker, i);
                 }
-                if (i != this.mActiveMarkerIndex || marker.getMarkerType() == IndicatorType.PLUS) {
+                if (i != this.mActiveMarkerIndex || marker.getMarkerType() == PageMarkerResources.IndicatorType.PLUS) {
                     marker.inactivate(windowMoved);
                 } else {
                     marker.activate(windowMoved);
@@ -369,10 +370,10 @@ public class PageIndicator extends LinearLayout {
             if (i == index) {
                 m.setMarkerDrawables(marker.active, marker.inactive, marker.type);
             } else if (this.mExistZeroPage && i == 0) {
-                markerRes = new PageMarkerResources(IndicatorType.ZEROPAGE);
+                PageMarkerResources markerRes = new PageMarkerResources(PageMarkerResources.IndicatorType.ZEROPAGE);
                 m.setMarkerDrawables(markerRes.active, markerRes.inactive, markerRes.type);
-            } else if (m.getMarkerType() == IndicatorType.HOME) {
-                markerRes = new PageMarkerResources(IndicatorType.DEFAULT);
+            } else if (m.getMarkerType() == PageMarkerResources.IndicatorType.HOME) {
+                PageMarkerResources markerRes = new PageMarkerResources(PageMarkerResources.IndicatorType.DEFAULT);
                 m.setMarkerDrawables(markerRes.active, markerRes.inactive, markerRes.type);
             }
             i++;
@@ -383,18 +384,18 @@ public class PageIndicator extends LinearLayout {
         this.mExistZeroPage = existZeroPage;
     }
 
-    private boolean canNotEditMarker(int index, IndicatorType type) {
-        return (type == IndicatorType.ZEROPAGE || type == IndicatorType.PLUS || (index == 0 && this.mExistZeroPage && type == IndicatorType.HOME)) ? false : true;
+    private boolean canNotEditMarker(int index, PageMarkerResources.IndicatorType type) {
+        return (type == PageMarkerResources.IndicatorType.ZEROPAGE || type == PageMarkerResources.IndicatorType.PLUS || (index == 0 && this.mExistZeroPage && type == PageMarkerResources.IndicatorType.HOME)) ? false : true;
     }
 
     public void removeMarker(int index, boolean allowAnimations) {
         boolean z = true;
         if (this.mMarkers.size() > 0) {
             index = Math.max(0, Math.min(this.mMarkers.size() - (this.mExistPlusPage ? 2 : 1), this.mMarkerStartOffset + index));
-            IndicatorType markerType = ((PageIndicatorMarker) this.mMarkers.get(index)).getMarkerType();
+            PageMarkerResources.IndicatorType markerType = ((PageIndicatorMarker) this.mMarkers.get(index)).getMarkerType();
             if (!isGrouping() || !canNotEditMarker(index, markerType)) {
                 this.mMarkers.remove(index);
-                if (!allowAnimations || markerType == IndicatorType.ZEROPAGE) {
+                if (!allowAnimations || markerType == PageMarkerResources.IndicatorType.ZEROPAGE) {
                     z = false;
                 }
                 offsetWindowCenterTo(z);
@@ -426,7 +427,7 @@ public class PageIndicator extends LinearLayout {
                 if (PageIndicator.this.mPagedView != null) {
                     int index = PageIndicator.this.mMarkers.indexOf(v);
                     int page = Math.max(ZeroPageController.isEnableZeroPage() ? -1 : 0, PageIndicator.this.getPageIndex(index) - PageIndicator.this.mMarkerStartOffset);
-                    if (!(!PageIndicator.this.isGrouping() || ((PageIndicatorMarker) PageIndicator.this.mMarkers.get(index)).getMarkerType() == IndicatorType.ZEROPAGE || ((PageIndicatorMarker) PageIndicator.this.mMarkers.get(index)).getMarkerType() == IndicatorType.PLUS)) {
+                    if (!(!PageIndicator.this.isGrouping() || ((PageIndicatorMarker) PageIndicator.this.mMarkers.get(index)).getMarkerType() == PageMarkerResources.IndicatorType.ZEROPAGE || ((PageIndicatorMarker) PageIndicator.this.mMarkers.get(index)).getMarkerType() == PageMarkerResources.IndicatorType.PLUS)) {
                         PageIndicator.this.showPageNumber(PageIndicator.this.mMarkerStartOffset + page);
                     }
                     if (PageIndicator.this.mPagedView.isScrolling()) {
@@ -559,7 +560,7 @@ public class PageIndicator extends LinearLayout {
                 if (isShowAnim) {
                     runnableVisibility.run();
                 } else {
-                    PageIndicator.this.setVisibility(4);
+                    PageIndicator.this.setVisibility(View.INVISIBLE);
                 }
                 PageIndicator.this.setScaleX(1.0f);
                 PageIndicator.this.setScaleY(1.0f);

@@ -50,7 +50,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class HomeBindController implements HomeCallbacks {
+public class HomeBindController implements HomeLoader.HomeCallbacks {
     static final String ACTION_FIRST_LOAD_COMPLETE = "com.android.launcher3.action.FIRST_LOAD_COMPLETE";
     static final boolean DEBUG_WIDGETS = false;
     static final String FIRST_LOAD_COMPLETE = "launcher.first_load_complete";
@@ -154,7 +154,7 @@ public class HomeBindController implements HomeCallbacks {
         })) {
             boolean animateIcons = forceAnimateIcons && this.mHomeController.canRunNewAppsAnimation();
             if (item.container != -101 || this.mHotseat != null) {
-                View view;
+                final View view;
                 switch (item.itemType) {
                     case 0:
                     case 1:
@@ -577,7 +577,8 @@ public class HomeBindController implements HomeCallbacks {
         })) {
             Workspace workspace = this.mWorkspace;
             if (this.mHomeController.isOverviewState() && ZeroPageController.isEnableZeroPage()) {
-                insertIndex++;
+                // TODO: Samsung specific code
+                //insertIndex++;
             }
             workspace.insertNewWorkspaceScreen(screenId, insertIndex);
         }
@@ -625,7 +626,7 @@ public class HomeBindController implements HomeCallbacks {
                     addView = null;
                 } else if (info.oldScreenId == -1 || info.oldScreenId == info.screenId) {
                     CellLayout cellLayout = this.mWorkspace.getScreenWithId(info.screenId);
-                    childView = cellLayout.getCellLayoutChildren().getChildAt(info);
+                    View childView = cellLayout.getCellLayoutChildren().getChildAt(info);
                     if (childView != null) {
                         LayoutParams lp = (LayoutParams) childView.getLayoutParams();
                         if (lp.useTmpCoords) {
@@ -636,7 +637,7 @@ public class HomeBindController implements HomeCallbacks {
                     addView = null;
                 } else {
                     CellLayout oldLayout = this.mWorkspace.getScreenWithId(info.oldScreenId);
-                    childView = oldLayout.getCellLayoutChildren().getChildAt(info);
+                    View childView = oldLayout.getCellLayoutChildren().getChildAt(info);
                     if (childView != null) {
                         oldLayout.removeView(childView);
                         addView = childView;
@@ -913,9 +914,10 @@ public class HomeBindController implements HomeCallbacks {
         })) {
             Workspace workspace = this.mWorkspace;
             if (this.mHomeController.isOverviewState() && ZeroPageController.isEnableZeroPage()) {
-                index++;
+                // TODO: Samsung specific code
+                //index++;
             }
-            workspace.removeScreenWithItem(index, true, false);
+            workspace.removeScreenWithItem(index + 1, true, false);
         }
     }
 

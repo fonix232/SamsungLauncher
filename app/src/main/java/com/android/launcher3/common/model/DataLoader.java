@@ -56,7 +56,6 @@ import com.android.launcher3.util.PairAppsUtilities;
 import com.android.launcher3.util.ShortcutTray;
 import com.android.launcher3.util.StringFilter;
 import com.android.launcher3.util.StringJoiner;
-import com.samsung.android.knox.SemPersonaManager;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,7 +73,7 @@ public abstract class DataLoader {
     private static final String TAG = "DataLoader";
     protected static boolean mIsBootCompleted;
     protected static BadgeCache sBadgeCache;
-    protected static final MultiHashMap<ComponentKey, String> sBgDeepShortcutMap = new MultiHashMap();
+    protected static final MultiHashMap<ComponentKey, String> sBgDeepShortcutMap = new MultiHashMap(0);
     protected static final LongArrayMap<FolderInfo> sBgFolders = new LongArrayMap();
     protected static final LongArrayMap<ItemInfo> sBgItemsIdMap = new LongArrayMap();
     protected static final Object sBgLock = new Object();
@@ -136,15 +135,16 @@ public abstract class DataLoader {
         }
 
         static {
-            TARGET_PACKAGE = null;
-            Log.d(TAG, "KnoxBadgeUpdates: " + UserHandle.semGetMyUserId());
-            if (!SemPersonaManager.isSecureFolderId(UserHandle.semGetMyUserId()) && SemPersonaManager.isKnoxId(UserHandle.semGetMyUserId())) {
-                TARGET_PACKAGE = "com.samsung.android.knox.containeragent";
-                Log.d(TAG, "KnoxBadgeUpdates: initialising baseTarget map");
-                BaseTargetMapping.put("com.samsung.android.messaging", TARGET_PACKAGE + ".switcher.SMSIcon");
-                BaseTargetMapping.put("com.samsung.android.contacts", TARGET_PACKAGE + ".switcher.PhoneIcon");
-                setAliasActivityCount(BaseTargetMapping.size());
-            }
+            // TODO: Samsung specific code
+//            TARGET_PACKAGE = null;
+//            Log.d(TAG, "KnoxBadgeUpdates: " + UserHandle.semGetMyUserId());
+//            if (!SemPersonaManager.isSecureFolderId(UserHandle.semGetMyUserId()) && SemPersonaManager.isKnoxId(UserHandle.semGetMyUserId())) {
+//                TARGET_PACKAGE = "com.samsung.android.knox.containeragent";
+//                Log.d(TAG, "KnoxBadgeUpdates: initialising baseTarget map");
+//                BaseTargetMapping.put("com.samsung.android.messaging", TARGET_PACKAGE + ".switcher.SMSIcon");
+//                BaseTargetMapping.put("com.samsung.android.contacts", TARGET_PACKAGE + ".switcher.PhoneIcon");
+//                setAliasActivityCount(BaseTargetMapping.size());
+//            }
         }
 
         private static void setAliasActivityCount(int count) {
@@ -165,16 +165,17 @@ public abstract class DataLoader {
         }
 
         public static void updateBadgeCountForKnoxIcons(ArrayList<ItemInfo> updated, Map<PackageUserKey, BadgeInfo> badgeMap) {
-            if (!SemPersonaManager.isSecureFolderId(UserHandle.semGetMyUserId()) && SemPersonaManager.isKnoxId(UserHandle.semGetMyUserId())) {
-                int i = 0;
-                for (String basePackage : BaseTargetMapping.keySet()) {
-                    int i2 = i + 1;
-                    ArrayList<ItemInfo> arrayList = updated;
-                    Map<PackageUserKey, BadgeInfo> map = badgeMap;
-                    updateBadgeCountForKnoxIconsForComponent(arrayList, map, TARGET_PACKAGE, (String) BaseTargetMapping.get(basePackage), new PackageUserKey(basePackage, UserHandleCompat.fromUser(UserHandle.getUserHandleForUid(0))), i);
-                    i = i2;
-                }
-            }
+            // TODO: Samsung specific code
+//            if (!SemPersonaManager.isSecureFolderId(UserHandle.semGetMyUserId()) && SemPersonaManager.isKnoxId(UserHandle.semGetMyUserId())) {
+//                int i = 0;
+//                for (String basePackage : BaseTargetMapping.keySet()) {
+//                    int i2 = i + 1;
+//                    ArrayList<ItemInfo> arrayList = updated;
+//                    Map<PackageUserKey, BadgeInfo> map = badgeMap;
+//                    updateBadgeCountForKnoxIconsForComponent(arrayList, map, TARGET_PACKAGE, (String) BaseTargetMapping.get(basePackage), new PackageUserKey(basePackage, UserHandleCompat.fromUser(UserHandle.getUserHandleForUid(0))), i);
+//                    i = i2;
+//                }
+//            }
         }
 
         private static void updateBadgeCountForKnoxIconsForComponent(ArrayList<ItemInfo> updated, Map<PackageUserKey, BadgeInfo> badgeMap, String targetPackageName, String targetComponent, PackageUserKey basePackageUserKey, int aliasCounter) {
@@ -634,8 +635,8 @@ public abstract class DataLoader {
     }
 
     protected ArrayList<ItemInfo> getUnRestoredItems(ArrayList<ItemInfo> items) {
-        ArrayList<ItemInfo> removeItems = new ArrayList();
-        ArrayList<Long> updateIds = new ArrayList();
+        ArrayList<ItemInfo> removeItems = new ArrayList<>();
+        ArrayList<Long> updateIds = new ArrayList<>();
         LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(sContext);
         Iterator it = items.iterator();
         while (it.hasNext()) {
@@ -643,7 +644,7 @@ public abstract class DataLoader {
             if (info instanceof IconInfo) {
                 IconInfo iconInfo = (IconInfo) info;
                 if ((iconInfo.status & 4) != 0) {
-                    ComponentName cn;
+                    ComponentName cn = null;
                     if (iconInfo.componentName != null) {
                         cn = iconInfo.componentName;
                     } else if (iconInfo.intent == null || iconInfo.intent.getComponent() == null) {
@@ -651,8 +652,8 @@ public abstract class DataLoader {
                     } else {
                         cn = iconInfo.intent.getComponent();
                     }
-                    if (launcherApps.isActivityEnabledForProfile(cn, iconInfo.user)) {
-                        updateIds.add(Long.valueOf(iconInfo.id));
+                    if (cn != null && launcherApps.isActivityEnabledForProfile(cn, iconInfo.user)) {
+                        updateIds.add(iconInfo.id);
                         iconInfo.status = 0;
                     } else {
                         removeItems.add(iconInfo);
@@ -663,7 +664,7 @@ public abstract class DataLoader {
         if (!updateIds.isEmpty()) {
             Log.d(TAG, "update restored value " + updateIds);
             ContentValues values = new ContentValues();
-            values.put("restored", Integer.valueOf(0));
+            values.put("restored", 0);
             sContentResolver.update(Favorites.CONTENT_URI, values, Utilities.createDbSelectionQuery("_id", updateIds), null);
         }
         return removeItems;
@@ -752,7 +753,7 @@ public abstract class DataLoader {
     protected int isNotAvailableApps(String packageName) {
         boolean internalInstalled = true;
         try {
-            ApplicationInfo appInfo = sPackageManager.getApplicationInfo(packageName, 8192);
+            ApplicationInfo appInfo = sPackageManager.getApplicationInfo(packageName, PackageManager.MATCH_UNINSTALLED_PACKAGES);
             if (appInfo == null) {
                 return 0;
             }
@@ -823,7 +824,7 @@ public abstract class DataLoader {
     private synchronized void updatePackageActivities(String packageName, ArrayList<ItemInfo> currentItems, List<LauncherActivityInfoCompat> activities, UserHandleCompat user) {
         Iterator<ItemInfo> it = currentItems.iterator();
         while (it.hasNext()) {
-            ItemInfo item = (ItemInfo) it.next();
+            ItemInfo item = it.next();
             IconInfo info = (IconInfo) item;
             ComponentName cn = info.componentName;
             if (cn != null) {
@@ -835,17 +836,17 @@ public abstract class DataLoader {
                 }
             }
         }
+
         for (LauncherActivityInfoCompat app : activities) {
             ArrayList<ItemInfo> items = getItemInfoByComponentName(app.getComponentName(), currentItems, user, true);
             if (items.size() > 0) {
-                Iterator it2 = items.iterator();
-                while (it2.hasNext()) {
-                    IconInfo icon = (IconInfo) ((ItemInfo) it2.next());
+                for (Object item : items) {
+                    IconInfo icon = (IconInfo) (item);
                     icon.isDisabled = 0;
                     this.modified.add(icon);
                 }
             } else if (sFavoritesProvider != null) {
-                info = new IconInfo(sContext, app, user, sIconCache, sUserManager.isQuietModeEnabled(user));
+                IconInfo info = new IconInfo(sContext, app, user, sIconCache, sUserManager.isQuietModeEnabled(user));
                 if (!LauncherAppState.getInstance().isHomeOnlyModeEnabled()) {
                     info.container = -102;
                     info.mDirty = true;

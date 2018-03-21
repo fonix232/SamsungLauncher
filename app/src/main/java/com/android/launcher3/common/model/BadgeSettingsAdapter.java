@@ -14,7 +14,7 @@ import com.android.launcher3.util.logging.SALogging;
 import com.sec.android.app.launcher.R;
 import java.util.List;
 
-public class BadgeSettingsAdapter extends Adapter<ViewHolder> {
+public class BadgeSettingsAdapter extends Adapter<BadgeSettingsAdapter.ViewHolder> {
     private static final String TAG = "BadgeSettingsAdapter";
     private Context mContext;
     private OnChangeListener mOnChangeListener;

@@ -45,7 +45,7 @@ import com.android.launcher3.common.deviceprofile.DeviceProfile;
 import com.android.launcher3.common.stage.StageEntry;
 import com.android.launcher3.util.logging.GSIMLogging;
 import com.android.launcher3.util.logging.SALogging;
-import com.samsung.android.graphics.spr.SemPathRenderingDrawable;
+//import com.samsung.android.graphics.spr.SemPathRenderingDrawable;
 import com.sec.android.app.launcher.R;
 
 public class AppsSearchBar extends LinearLayout implements AppsSearchWrapper {
@@ -375,18 +375,20 @@ public class AppsSearchBar extends LinearLayout implements AppsSearchWrapper {
         searchParams.width = backgroudSize;
         int iconSize = res.getDimensionPixelSize(R.dimen.more_icon_btn_width_land);
         Drawable searchDrawable = this.mSearchButtonLand.getDrawable();
-        if (searchDrawable instanceof SemPathRenderingDrawable) {
-            searchBitmap = ((SemPathRenderingDrawable) searchDrawable).getBitmap();
-        } else {
+        // TODO: Samsung specific code
+//        if (searchDrawable instanceof SemPathRenderingDrawable) {
+//            searchBitmap = ((SemPathRenderingDrawable) searchDrawable).getBitmap();
+//        } else {
             searchBitmap = ((BitmapDrawable) searchDrawable).getBitmap();
-        }
+        //}
         this.mSearchButtonLand.setImageDrawable(new BitmapDrawable(res, Bitmap.createScaledBitmap(searchBitmap, iconSize, iconSize, true)));
         Drawable moreDrawable = this.mMoreButtonLand.getDrawable();
-        if (moreDrawable instanceof SemPathRenderingDrawable) {
-            moreBitmap = ((SemPathRenderingDrawable) moreDrawable).getBitmap();
-        } else {
+        // TODO: Samsung specific code
+//        if (moreDrawable instanceof SemPathRenderingDrawable) {
+//            moreBitmap = ((SemPathRenderingDrawable) moreDrawable).getBitmap();
+//        } else {
             moreBitmap = ((BitmapDrawable) moreDrawable).getBitmap();
-        }
+        //}
         this.mMoreButtonLand.setImageDrawable(new BitmapDrawable(res, Bitmap.createScaledBitmap(moreBitmap, iconSize, iconSize, true)));
     }
 }

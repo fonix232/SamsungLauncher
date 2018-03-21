@@ -10,7 +10,7 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFeature;
 import com.android.launcher3.common.compat.UserHandleCompat;
 import com.android.launcher3.common.compat.UserManagerCompat;
-import com.samsung.android.knox.SemPersonaManager;
+//import com.samsung.android.knox.SemPersonaManager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,10 +66,12 @@ public class BadgeCache {
     }
 
     private static boolean isKnoxIdExceptSecurFolder(int userId) {
-        if (SemPersonaManager.isSecureFolderId(userId)) {
-            return false;
-        }
-        return SemPersonaManager.isKnoxId(userId);
+        // TODO: Samsung specific code
+//        if (SemPersonaManager.isSecureFolderId(userId)) {
+//            return false;
+//        }
+//        return SemPersonaManager.isKnoxId(userId);
+        return false;
     }
 
     public static Uri maybeAddUserId(Uri uri, int userId) {

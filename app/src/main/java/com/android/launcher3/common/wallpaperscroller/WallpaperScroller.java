@@ -16,7 +16,7 @@ public class WallpaperScroller {
     private static final boolean FEATURE_IS_WALLPAPER_USE_FIXED_ORIENTATION = LauncherFeature.isWallpaperUseFixedOrientation();
     private static final String TAG = "WallpaperScroller";
     private Context mContext;
-    private VectorListener mGyroListener = new VectorListener() {
+    private GyroForShadow.VectorListener mGyroListener = new GyroForShadow.VectorListener() {
         public void onVectorChanged(float x, float y, float tiltRangeX, float tiltRangeY, float rangeX, float rangeY) {
             if (WallpaperScroller.this.mTiltUpdateHandler != null) {
                 WallpaperScroller.this.mTiltUpdateHandler.update(x, y, tiltRangeX, tiltRangeY, rangeX, rangeY);
@@ -67,7 +67,7 @@ public class WallpaperScroller {
             switch (msg.what) {
                 case 1:
                     if (msg.obj instanceof TiltValue) {
-                        TiltValue info = msg.obj;
+                        TiltValue info = (TiltValue)msg.obj;
                         if (WallpaperScroller.this.mThread != null) {
                             WallpaperScroller.this.mThread.update(info);
                             return;

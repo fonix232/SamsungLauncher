@@ -13,7 +13,7 @@ import com.android.launcher3.common.model.DefaultLayoutParser;
 import com.android.launcher3.common.model.LauncherSettings.Favorites;
 import com.android.launcher3.home.ZeroPageController;
 import com.android.launcher3.util.event.CheckLongPressHelper;
-import com.samsung.context.sdk.samsunganalytics.a.g.c.a.c;
+//import com.samsung.context.sdk.samsunganalytics.a.g.c.a.c;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -143,7 +143,7 @@ public final class GSIMLogging extends Logging {
                     } else {
                         broadcastIntent.setAction("com.samsung.android.providers.context.log.action.USE_APP_FEATURE_SURVEY");
                     }
-                    broadcastIntent.putExtra(c.c, cv);
+                    //broadcastIntent.putExtra(c.c, cv);
                     broadcastIntent.setPackage("com.samsung.android.providers.context");
                     Logging.sContext.sendBroadcast(broadcastIntent);
                 }
@@ -173,7 +173,7 @@ public final class GSIMLogging extends Logging {
                     }
                     Intent broadcastIntent = new Intent();
                     broadcastIntent.setAction("com.samsung.android.providers.context.log.action.REPORT_MULTI_APP_STATUS_SURVEY");
-                    broadcastIntent.putExtra(c.c, cvs);
+                    //broadcastIntent.putExtra(c.c, cvs);
                     broadcastIntent.setPackage("com.samsung.android.providers.context");
                     Logging.sContext.sendBroadcast(broadcastIntent);
                 }
@@ -185,7 +185,7 @@ public final class GSIMLogging extends Logging {
         if (LauncherFeature.supportContextServiceSurveyMode()) {
             runOnLoggingThread(new Runnable() {
                 public void run() {
-                    int weekofyear = Calendar.getInstance().get(3);
+                    int weekofyear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
                     if (PreferencesLogging.getWeekOfYearNumber() != weekofyear) {
                         GSIMLogging.this.homeWidgetListLogging();
                         GSIMLogging.this.homeDefaultPageIndexLogging();

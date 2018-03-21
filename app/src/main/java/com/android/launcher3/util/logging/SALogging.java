@@ -28,10 +28,10 @@ import com.android.launcher3.home.ZeroPageController;
 import com.android.launcher3.util.DualAppUtils;
 import com.android.launcher3.util.ScreenGridUtilities;
 import com.android.launcher3.util.alarm.Alarm;
-import com.samsung.context.sdk.samsunganalytics.Configuration;
-import com.samsung.context.sdk.samsunganalytics.LogBuilders.EventBuilder;
-import com.samsung.context.sdk.samsunganalytics.LogBuilders.SettingPrefBuilder;
-import com.samsung.context.sdk.samsunganalytics.SamsungAnalytics;
+//import com.samsung.context.sdk.samsunganalytics.Configuration;
+//import com.samsung.context.sdk.samsunganalytics.LogBuilders.EventBuilder;
+//import com.samsung.context.sdk.samsunganalytics.LogBuilders.SettingPrefBuilder;
+//import com.samsung.context.sdk.samsunganalytics.SamsungAnalytics;
 import com.sec.android.app.launcher.R;
 import java.io.File;
 import java.util.ArrayList;
@@ -90,37 +90,37 @@ public final class SALogging extends Logging {
     };
     private final Runnable mUpdateStatusLogValuesForHomeItem = new Runnable() {
         public void run() {
-            Log.d(SALogging.TAG, "mUpdateStatusLogValuesForHomeItem - run");
-            Resources res = Logging.sContext.getResources();
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderCount), SALogUtils.getFolderCountInHome(Logging.sContext));
-            ArrayList<String> hotSeatAppList = SALogUtils.getHotseatAppItems(Logging.sContext);
-            for (int i = 0; i < hotSeatAppList.size(); i++) {
-                String detail = (String) hotSeatAppList.get(i);
-                SALogging.this.insertStatusLog(SALogging.this.getHotSeatAppStatusID(i), detail);
-            }
-            Items appShortcuts = SALogUtils.getHomeApps(Logging.sContext, false);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppShortcuts), appShortcuts.itemNames);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppIConCount), appShortcuts.itemcount);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_PairAppsInHome), SALogUtils.getHomePairApps(Logging.sContext).itemcount);
-            Items widgets = SALogUtils.getHomeWidgetList(Logging.sContext, false);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgets), widgets.itemNames);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgetCount), widgets.itemcount);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultPage), Utilities.getHomeDefaultPageKey(Logging.sContext));
-            SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultAppShortcuts), SALogUtils.getHomeApps(Logging.sContext, true).itemNames);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultWidgets), SALogUtils.getHomeWidgetList(Logging.sContext, true).itemNames);
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomePageCount), SALogging.this.getHomePageCount());
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeEmptyPageCount), SALogging.this.getHomeEmptyPageCount());
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeEmptyPageCount), SALogging.this.getHomeEmptyPageCount());
-            SALogging.this.insertStatusLog(res.getString(R.string.status_Home1X1IconCount), SALogUtils.getShortcutOnHomeCount(Logging.sContext));
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFoldersWithoutDefaultColor_Count), SALogUtils.countFolderColorNotDefault(Logging.sContext, true));
-            GSW data = SALogUtils.getGSWData(Logging.sContext);
-            if (data != null) {
-                SALogging.this.insertStatusLog(res.getString(R.string.status_Size_GSW), data.size);
-                SALogging.this.insertStatusLog(res.getString(R.string.status_PageOfGSW), data.page);
-                SALogging.this.insertStatusLog(res.getString(R.string.status_LocationOfGSW), data.location);
-            }
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderAppsCountAndColor), SALogging.this.getFolderAppsCountAndColorDetail(1));
-            SALogging.this.insertStatusLog(res.getString(R.string.status_HomePinnedShortcutsCount), SALogUtils.getPinnedShortcutsCount(Logging.sContext));
+//            Log.d(SALogging.TAG, "mUpdateStatusLogValuesForHomeItem - run");
+//            Resources res = Logging.sContext.getResources();
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderCount), SALogUtils.getFolderCountInHome(Logging.sContext));
+//            ArrayList<String> hotSeatAppList = SALogUtils.getHotseatAppItems(Logging.sContext);
+//            for (int i = 0; i < hotSeatAppList.size(); i++) {
+//                String detail = (String) hotSeatAppList.get(i);
+//                SALogging.this.insertStatusLog(SALogging.this.getHotSeatAppStatusID(i), detail);
+//            }
+//            Items appShortcuts = SALogUtils.getHomeApps(Logging.sContext, false);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppShortcuts), appShortcuts.itemNames);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppIConCount), appShortcuts.itemcount);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_PairAppsInHome), SALogUtils.getHomePairApps(Logging.sContext).itemcount);
+//            Items widgets = SALogUtils.getHomeWidgetList(Logging.sContext, false);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgets), widgets.itemNames);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgetCount), widgets.itemcount);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultPage), Utilities.getHomeDefaultPageKey(Logging.sContext));
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultAppShortcuts), SALogUtils.getHomeApps(Logging.sContext, true).itemNames);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultWidgets), SALogUtils.getHomeWidgetList(Logging.sContext, true).itemNames);
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomePageCount), SALogging.this.getHomePageCount());
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeEmptyPageCount), SALogging.this.getHomeEmptyPageCount());
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeEmptyPageCount), SALogging.this.getHomeEmptyPageCount());
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_Home1X1IconCount), SALogUtils.getShortcutOnHomeCount(Logging.sContext));
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFoldersWithoutDefaultColor_Count), SALogUtils.countFolderColorNotDefault(Logging.sContext, true));
+//            GSW data = SALogUtils.getGSWData(Logging.sContext);
+//            if (data != null) {
+//                SALogging.this.insertStatusLog(res.getString(R.string.status_Size_GSW), data.size);
+//                SALogging.this.insertStatusLog(res.getString(R.string.status_PageOfGSW), data.page);
+//                SALogging.this.insertStatusLog(res.getString(R.string.status_LocationOfGSW), data.location);
+//            }
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderAppsCountAndColor), SALogging.this.getFolderAppsCountAndColorDetail(1));
+//            SALogging.this.insertStatusLog(res.getString(R.string.status_HomePinnedShortcutsCount), SALogUtils.getPinnedShortcutsCount(Logging.sContext));
         }
     };
 
@@ -158,14 +158,14 @@ public final class SALogging extends Logging {
         runOnLoggingThread(new Runnable() {
             public void run() {
                 Log.d(SALogging.TAG, "init SALog");
-                try {
-                    SamsungAnalytics.setConfiguration(application, new Configuration().setTrackingId(SALogging.TRACKING_ID).setVersion(SALogging.VERSION).enableAutoDeviceId());
-                    SamsungAnalytics.getInstance().enableUncaughtExceptionLogging();
-                    SALogging.this.deleteLegacyFileIfExist();
-                    SALogging.this.registerStatusPref();
-                } catch (Exception e) {
-                    Log.w(SALogging.TAG, "init : Exception " + e.toString());
-                }
+//                try {
+//                    SamsungAnalytics.setConfiguration(application, new Configuration().setTrackingId(SALogging.TRACKING_ID).setVersion(SALogging.VERSION).enableAutoDeviceId());
+//                    SamsungAnalytics.getInstance().enableUncaughtExceptionLogging();
+//                    SALogging.this.deleteLegacyFileIfExist();
+//                    SALogging.this.registerStatusPref();
+//                } catch (Exception e) {
+//                    Log.w(SALogging.TAG, "init : Exception " + e.toString());
+//                }
             }
         });
         mMultiSelectCancelAlarm = new Alarm();
@@ -234,7 +234,7 @@ public final class SALogging extends Logging {
                 keySet.add(changeIdByMode(key, mode));
             }
         }
-        SamsungAnalytics.getInstance().registerSettingPref(new SettingPrefBuilder().addKeys(LauncherFiles.SAMSUNG_ANALYTICS_PREFERENCES_KEY, keySet).build());
+        //SamsungAnalytics.getInstance().registerSettingPref(new SettingPrefBuilder().addKeys(LauncherFiles.SAMSUNG_ANALYTICS_PREFERENCES_KEY, keySet).build());
     }
 
     private boolean isBixbyRunning() {
@@ -549,65 +549,65 @@ public final class SALogging extends Logging {
         sIsFinishHomeBinding = true;
         runOnLoggingThread(new Runnable() {
             public void run() {
-                Resources res = context.getResources();
-                char currentMode = LauncherAppState.getInstance().isEasyModeEnabled() ? SALogging.EASY_MODE_ID : LauncherAppState.getInstance().isHomeOnlyModeEnabled() ? SALogging.HOME_ONLY_MODE_ID : SALogging.HOME_APPS_MODE_ID;
-                for (char mode : SALogging.this.mModeList) {
-                    if (currentMode == mode) {
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderCount), SALogUtils.getFolderCountInHome(Logging.sContext));
-                        ArrayList<String> hotSeatAppList = SALogUtils.getHotseatAppItems(context);
-                        for (int i = 0; i < hotSeatAppList.size(); i++) {
-                            SALogging.this.insertStatusLog(SALogging.this.getHotSeatAppStatusID(i), (String) hotSeatAppList.get(i));
-                        }
-                        Items appShortcuts = SALogUtils.getHomeApps(Logging.sContext, false);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppShortcuts), appShortcuts.itemNames);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppIConCount), appShortcuts.itemcount);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_PairAppsInHome), SALogUtils.getHomePairApps(Logging.sContext).itemcount);
-                        Items widgets = SALogUtils.getHomeWidgetList(Logging.sContext, false);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgets), widgets.itemNames);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgetCount), widgets.itemcount);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultPage), Utilities.getHomeDefaultPageKey(Logging.sContext));
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultAppShortcuts), SALogUtils.getHomeApps(Logging.sContext, true).itemNames);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultWidgets), SALogUtils.getHomeWidgetList(Logging.sContext, true).itemNames);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomePageCount), SALogging.this.getHomePageCount());
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeEmptyPageCount), SALogging.this.getHomeEmptyPageCount());
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_Home1X1IconCount), SALogUtils.getShortcutOnHomeCount(Logging.sContext));
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFoldersWithoutDefaultColor_Count), SALogUtils.countFolderColorNotDefault(Logging.sContext, true));
-                        GSW.insertEnterSearchCount(Logging.sContext, false);
-                        GSW data = SALogUtils.getGSWData(Logging.sContext);
-                        if (data != null) {
-                            SALogging.this.insertStatusLog(res.getString(R.string.status_Size_GSW), data.size);
-                            SALogging.this.insertStatusLog(res.getString(R.string.status_PageOfGSW), data.page);
-                            SALogging.this.insertStatusLog(res.getString(R.string.status_LocationOfGSW), data.location);
-                        }
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderAppsCountAndColor), SALogging.this.getFolderAppsCountAndColorDetail(1));
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_zeropagesetting), ZeroPageController.getZeroPageActiveState(context, true) ? "1" : "0");
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_HomeScreenLayout), LauncherAppState.getInstance().isHomeOnlyModeEnabled() ? "2" : "1");
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_AppsButton), LauncherAppState.getInstance().getAppsButtonEnabled() ? 1 : 0);
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_OpenQuickPanel), LauncherAppState.getInstance().getNotificationPanelExpansionEnabled() ? 1 : 0);
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_AddAppsToHome), SessionCommitReceiver.isEnabled(context) ? 1 : 0);
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_PortraitModeOnly), Utilities.isOnlyPortraitMode() ? 1 : 0);
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_AppsInHomeFolder), SALogUtils.getPackageListInFolder(Logging.sContext, -100));
-                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_HomePinnedShortcutsCount), SALogUtils.getPinnedShortcutsCount(Logging.sContext));
-                        int[] gridXY = new int[2];
-                        Utilities.loadCurrentGridSize(Logging.sContext, gridXY);
-                        SALogging.this.insertChangeGridLog(gridXY[0], gridXY[1], true, true);
-                        Pair<Integer, String> info = SALogUtils.getHideApps(Logging.sContext);
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HideAppsCount), ((Integer) info.first).intValue());
-                        SALogging.this.insertStatusLog(res.getString(R.string.status_HideAppsName), (String) info.second);
-                    } else {
-                        Editor prefEditor = context.getSharedPreferences(LauncherFiles.SAMSUNG_ANALYTICS_PREFERENCES_KEY, 0).edit();
-                        for (String statusID : SALogging.this.mStatusIDMap.keySet()) {
-                            if (currentMode == '3') {
-                                prefEditor.remove(SALogging.this.changeIdByMode(statusID, mode));
-                            } else {
-                                if (((String) SALogging.this.mStatusIDMap.get(statusID)).equals(SALogging.STATUS_HOME)) {
-                                    prefEditor.remove(SALogging.this.changeIdByMode(statusID, mode));
-                                }
-                            }
-                        }
-                        prefEditor.apply();
-                    }
-                }
+//                Resources res = context.getResources();
+//                char currentMode = LauncherAppState.getInstance().isEasyModeEnabled() ? SALogging.EASY_MODE_ID : LauncherAppState.getInstance().isHomeOnlyModeEnabled() ? SALogging.HOME_ONLY_MODE_ID : SALogging.HOME_APPS_MODE_ID;
+//                for (char mode : SALogging.this.mModeList) {
+//                    if (currentMode == mode) {
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderCount), SALogUtils.getFolderCountInHome(Logging.sContext));
+//                        ArrayList<String> hotSeatAppList = SALogUtils.getHotseatAppItems(context);
+//                        for (int i = 0; i < hotSeatAppList.size(); i++) {
+//                            SALogging.this.insertStatusLog(SALogging.this.getHotSeatAppStatusID(i), (String) hotSeatAppList.get(i));
+//                        }
+//                        Items appShortcuts = SALogUtils.getHomeApps(Logging.sContext, false);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppShortcuts), appShortcuts.itemNames);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeAppIConCount), appShortcuts.itemcount);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_PairAppsInHome), SALogUtils.getHomePairApps(Logging.sContext).itemcount);
+//                        Items widgets = SALogUtils.getHomeWidgetList(Logging.sContext, false);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgets), widgets.itemNames);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeWidgetCount), widgets.itemcount);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultPage), Utilities.getHomeDefaultPageKey(Logging.sContext));
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultAppShortcuts), SALogUtils.getHomeApps(Logging.sContext, true).itemNames);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_DefaultWidgets), SALogUtils.getHomeWidgetList(Logging.sContext, true).itemNames);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomePageCount), SALogging.this.getHomePageCount());
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeEmptyPageCount), SALogging.this.getHomeEmptyPageCount());
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_Home1X1IconCount), SALogUtils.getShortcutOnHomeCount(Logging.sContext));
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFoldersWithoutDefaultColor_Count), SALogUtils.countFolderColorNotDefault(Logging.sContext, true));
+//                        GSW.insertEnterSearchCount(Logging.sContext, false);
+//                        GSW data = SALogUtils.getGSWData(Logging.sContext);
+//                        if (data != null) {
+//                            SALogging.this.insertStatusLog(res.getString(R.string.status_Size_GSW), data.size);
+//                            SALogging.this.insertStatusLog(res.getString(R.string.status_PageOfGSW), data.page);
+//                            SALogging.this.insertStatusLog(res.getString(R.string.status_LocationOfGSW), data.location);
+//                        }
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HomeFolderAppsCountAndColor), SALogging.this.getFolderAppsCountAndColorDetail(1));
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_zeropagesetting), ZeroPageController.getZeroPageActiveState(context, true) ? "1" : "0");
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_HomeScreenLayout), LauncherAppState.getInstance().isHomeOnlyModeEnabled() ? "2" : "1");
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_AppsButton), LauncherAppState.getInstance().getAppsButtonEnabled() ? 1 : 0);
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_OpenQuickPanel), LauncherAppState.getInstance().getNotificationPanelExpansionEnabled() ? 1 : 0);
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_AddAppsToHome), SessionCommitReceiver.isEnabled(context) ? 1 : 0);
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_PortraitModeOnly), Utilities.isOnlyPortraitMode() ? 1 : 0);
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_AppsInHomeFolder), SALogUtils.getPackageListInFolder(Logging.sContext, -100));
+//                        SALogging.this.insertStatusLog(context.getResources().getString(R.string.status_HomePinnedShortcutsCount), SALogUtils.getPinnedShortcutsCount(Logging.sContext));
+//                        int[] gridXY = new int[2];
+//                        Utilities.loadCurrentGridSize(Logging.sContext, gridXY);
+//                        SALogging.this.insertChangeGridLog(gridXY[0], gridXY[1], true, true);
+//                        Pair<Integer, String> info = SALogUtils.getHideApps(Logging.sContext);
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HideAppsCount), ((Integer) info.first).intValue());
+//                        SALogging.this.insertStatusLog(res.getString(R.string.status_HideAppsName), (String) info.second);
+//                    } else {
+//                        Editor prefEditor = context.getSharedPreferences(LauncherFiles.SAMSUNG_ANALYTICS_PREFERENCES_KEY, 0).edit();
+//                        for (String statusID : SALogging.this.mStatusIDMap.keySet()) {
+//                            if (currentMode == '3') {
+//                                prefEditor.remove(SALogging.this.changeIdByMode(statusID, mode));
+//                            } else {
+//                                if (((String) SALogging.this.mStatusIDMap.get(statusID)).equals(SALogging.STATUS_HOME)) {
+//                                    prefEditor.remove(SALogging.this.changeIdByMode(statusID, mode));
+//                                }
+//                            }
+//                        }
+//                        prefEditor.apply();
+//                    }
+//                }
             }
         });
     }
@@ -679,12 +679,11 @@ public final class SALogging extends Logging {
         if (dragObject == null || !(dragObject.dragInfo instanceof ItemInfo) || packageNameBuilder == null) {
             Log.e(TAG, "analysePackagesOfDragObject : invalid parameter - " + dragObject);
         } else {
-            packageNameBuilder.append(getPackageAndTitleString(dragObject.dragInfo));
-            packagesCount = 0 + 1;
+            //packageNameBuilder.append(getPackageAndTitleString(dragObject.dragInfo));
+            packagesCount = 1;
             if (dragObject.extraDragInfoList != null) {
-                Iterator it = dragObject.extraDragInfoList.iterator();
-                while (it.hasNext()) {
-                    ItemInfo extraItem = ((DragObject) it.next()).dragInfo;
+                for (DragObject anExtraDragInfoList : dragObject.extraDragInfoList) {
+                    ItemInfo extraItem = (ItemInfo)(anExtraDragInfoList).dragInfo;
                     packageNameBuilder.append(",");
                     packageNameBuilder.append(getPackageAndTitleString(extraItem));
                     packagesCount++;
@@ -1172,7 +1171,7 @@ public final class SALogging extends Logging {
             runOnLoggingThread(new Runnable() {
                 public void run() {
                     try {
-                        SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(screenID)).setEventName(SALogging.this.changeIdByMode(eventID)).build());
+                        //SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(screenID)).setEventName(SALogging.this.changeIdByMode(eventID)).build());
                     } catch (Exception e) {
                         Log.w(SALogging.TAG, "insertEventLog : Exception " + e.toString());
                     }
@@ -1189,7 +1188,7 @@ public final class SALogging extends Logging {
             runOnLoggingThread(new Runnable() {
                 public void run() {
                     try {
-                        SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(str2)).setEventName(SALogging.this.changeIdByMode(str)).setEventValue(j).build());
+                        //SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(str2)).setEventName(SALogging.this.changeIdByMode(str)).setEventValue(j).build());
                     } catch (Exception e) {
                         Log.w(SALogging.TAG, "insertEventLog : Exception " + e.toString());
                     }
@@ -1204,7 +1203,7 @@ public final class SALogging extends Logging {
                 public void run() {
                     String changedEventID = SALogging.this.changeIdByMode(eventID);
                     try {
-                        SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(screenID)).setEventName(changedEventID).setEventDetail(SALogging.this.changeEmptyDetail(detail)).build());
+                        //SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(screenID)).setEventName(changedEventID).setEventDetail(SALogging.this.changeEmptyDetail(detail)).build());
                     } catch (Exception e) {
                         Log.w(SALogging.TAG, "insertEventLog : Exception " + e.toString());
                     }
@@ -1223,7 +1222,7 @@ public final class SALogging extends Logging {
                 public void run() {
                     String changedEventID = SALogging.this.changeIdByMode(str);
                     try {
-                        SamsungAnalytics.getInstance().sendLog(((EventBuilder) ((EventBuilder) new EventBuilder().setScreenView(str3)).setEventName(changedEventID).setEventDetail(SALogging.this.changeEmptyDetail(str2)).setDimension(map)).build());
+                        //SamsungAnalytics.getInstance().sendLog(((EventBuilder) ((EventBuilder) new EventBuilder().setScreenView(str3)).setEventName(changedEventID).setEventDetail(SALogging.this.changeEmptyDetail(str2)).setDimension(map)).build());
                     } catch (Exception e) {
                         Log.w(SALogging.TAG, "insertEventLog : Exception " + e.toString());
                     }
@@ -1242,7 +1241,7 @@ public final class SALogging extends Logging {
                 public void run() {
                     String changedEventID = SALogging.this.changeIdByMode(str);
                     try {
-                        SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(str3)).setEventName(changedEventID).setEventValue(j).setEventDetail(SALogging.this.changeEmptyDetail(str2)).build());
+                        //SamsungAnalytics.getInstance().sendLog(((EventBuilder) new EventBuilder().setScreenView(str3)).setEventName(changedEventID).setEventValue(j).setEventDetail(SALogging.this.changeEmptyDetail(str2)).build());
                     } catch (Exception e) {
                         Log.w(SALogging.TAG, "insertEventLog : Exception " + e.toString());
                     }
@@ -1281,7 +1280,6 @@ public final class SALogging extends Logging {
                         }
                         eventID = res.getString(R.string.event_Home_QuickOptionOfApp);
                         break;
-                        break;
                     case 16:
                         if (stageMode != 1) {
                             if (stageMode == 2) {
@@ -1290,7 +1288,6 @@ public final class SALogging extends Logging {
                             }
                         }
                         eventID = res.getString(R.string.event_Home_QuickOptionOfFolder);
-                        break;
                         break;
                     case 17:
                         if (stageMode == 1) {
@@ -1429,7 +1426,7 @@ public final class SALogging extends Logging {
     public void insertGoogleSearchLaunchCount() {
         runOnLoggingThread(new Runnable() {
             public void run() {
-                GSW.insertEnterSearchCount(Logging.sContext, true);
+                //GSW.insertEnterSearchCount(Logging.sContext, true);
             }
         });
     }
@@ -1437,16 +1434,16 @@ public final class SALogging extends Logging {
     public void insertAddPairAppsEventLog(final IconInfo iconInfo) {
         runOnLoggingThread(new Runnable() {
             public void run() {
-                LauncherPairAppsInfo pairInfo = iconInfo;
-                String f_pkgName = pairInfo.mFirstApp.getCN().getPackageName();
-                String s_pkgName = pairInfo.mSecondApp.getCN().getPackageName();
-                Resources res = Logging.sContext.getResources();
-                String screenID = res.getString(R.string.screen_Home_1xxx);
-                String eventID = res.getString(R.string.event_Add_PairApps);
-                Map customDimen = new HashMap();
-                customDimen.put("Package1", f_pkgName);
-                customDimen.put("Package2", s_pkgName);
-                SALogging.this.insertEventLog(screenID, eventID, "", customDimen);
+//                LauncherPairAppsInfo pairInfo = iconInfo;
+//                String f_pkgName = pairInfo.mFirstApp.getCN().getPackageName();
+//                String s_pkgName = pairInfo.mSecondApp.getCN().getPackageName();
+//                Resources res = Logging.sContext.getResources();
+//                String screenID = res.getString(R.string.screen_Home_1xxx);
+//                String eventID = res.getString(R.string.event_Add_PairApps);
+//                Map customDimen = new HashMap();
+//                customDimen.put("Package1", f_pkgName);
+//                customDimen.put("Package2", s_pkgName);
+//                SALogging.this.insertEventLog(screenID, eventID, "", customDimen);
             }
         });
     }

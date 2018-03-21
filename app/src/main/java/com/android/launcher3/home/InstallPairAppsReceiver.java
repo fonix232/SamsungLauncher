@@ -21,7 +21,7 @@ import com.android.launcher3.common.compat.UserManagerCompat;
 import com.android.launcher3.util.DualAppUtils;
 import com.android.launcher3.util.PairAppsUtilities;
 import com.android.launcher3.util.logging.SALogging;
-import com.samsung.android.app.SemDualAppManager;
+//import com.samsung.android.app.SemDualAppManager;
 import com.sec.android.app.launcher.R;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -182,7 +182,8 @@ public class InstallPairAppsReceiver extends BroadcastReceiver {
         if (Utilities.sIsRtl) {
             msg = '‏' + msg;
         }
-        Toast.makeText(new ContextThemeWrapper(context, 16974123), msg, 0).show();
+        // TODO: Get resource
+        //Toast.makeText(new ContextThemeWrapper(context, 16974123), msg, Toast.LENGTH_SHORT).show();
         Log.d(TAG, msg);
     }
 
@@ -202,37 +203,39 @@ public class InstallPairAppsReceiver extends BroadcastReceiver {
         UserManagerCompat userManager = UserManagerCompat.getInstance(context);
         if (this.mFirstCN != null && Utilities.isValidComponent(context, this.mFirstCN)) {
             pkgName = this.mFirstCN.getPackageName();
-            if (SemDualAppManager.isInstalledWhitelistedPackage(pkgName) && DualAppUtils.isDualApp(userManager.getUserForSerialNumber((long) firstId), pkgName)) {
-                profileId = SemDualAppManager.getDualAppProfileId();
-                if (profileId != -10000) {
-                    this.mFirstIntent = new Intent("android.intent.action.MAIN");
-                    this.mFirstIntent.addCategory("android.intent.category.LAUNCHER");
-                    this.mFirstIntent.setComponent(this.mFirstCN);
-                    this.mFirstUser = userManager.getUserForSerialNumber((long) profileId);
-                }
-            } else {
+            // TODO: Samsung specific code
+//            if (SemDualAppManager.isInstalledWhitelistedPackage(pkgName) && DualAppUtils.isDualApp(userManager.getUserForSerialNumber((long) firstId), pkgName)) {
+//                profileId = SemDualAppManager.getDualAppProfileId();
+//                if (profileId != -10000) {
+//                    this.mFirstIntent = new Intent("android.intent.action.MAIN");
+//                    this.mFirstIntent.addCategory("android.intent.category.LAUNCHER");
+//                    this.mFirstIntent.setComponent(this.mFirstCN);
+//                    this.mFirstUser = userManager.getUserForSerialNumber((long) profileId);
+//                }
+//            } else {
                 this.mFirstIntent = new Intent("android.intent.action.MAIN");
                 this.mFirstIntent.addCategory("android.intent.category.LAUNCHER");
                 this.mFirstIntent.setComponent(this.mFirstCN);
                 this.mFirstUser = userManager.getUserForSerialNumber((long) firstId);
-            }
+            //}
         }
         if (this.mSecondCN != null && Utilities.isValidComponent(context, this.mSecondCN)) {
             pkgName = this.mSecondCN.getPackageName();
-            if (SemDualAppManager.isInstalledWhitelistedPackage(pkgName) && DualAppUtils.isDualApp(userManager.getUserForSerialNumber((long) secondId), pkgName)) {
-                profileId = SemDualAppManager.getDualAppProfileId();
-                if (profileId != -10000) {
-                    this.mSecondIntent = new Intent("android.intent.action.MAIN");
-                    this.mSecondIntent.addCategory("android.intent.category.LAUNCHER");
-                    this.mSecondIntent.setComponent(this.mSecondCN);
-                    this.mSecondUser = userManager.getUserForSerialNumber((long) profileId);
-                }
-            } else {
+            // TODO: Samsung specific code
+//            if (SemDualAppManager.isInstalledWhitelistedPackage(pkgName) && DualAppUtils.isDualApp(userManager.getUserForSerialNumber((long) secondId), pkgName)) {
+//                profileId = SemDualAppManager.getDualAppProfileId();
+//                if (profileId != -10000) {
+//                    this.mSecondIntent = new Intent("android.intent.action.MAIN");
+//                    this.mSecondIntent.addCategory("android.intent.category.LAUNCHER");
+//                    this.mSecondIntent.setComponent(this.mSecondCN);
+//                    this.mSecondUser = userManager.getUserForSerialNumber((long) profileId);
+//                }
+//            } else {
                 this.mSecondIntent = new Intent("android.intent.action.MAIN");
                 this.mSecondIntent.addCategory("android.intent.category.LAUNCHER");
                 this.mSecondIntent.setComponent(this.mSecondCN);
                 this.mSecondUser = userManager.getUserForSerialNumber((long) secondId);
-            }
+           // }
         }
         if (this.mFirstIntent == null || this.mSecondIntent == null) {
             return false;
@@ -243,8 +246,8 @@ public class InstallPairAppsReceiver extends BroadcastReceiver {
     static PendingInstallPairAppsInfo decode(String encoded, Context context) {
         try {
             JSONObject object = (JSONObject) new JSONTokener(encoded).nextValue();
-            Intent firstIntent = Intent.parseUri(object.getString(LAUNCH_FIRST_INTENT_KEY), 4);
-            Intent secondIntent = Intent.parseUri(object.getString(LAUNCH_SECOND_INTENT_KEY), 4);
+            Intent firstIntent = Intent.parseUri(object.getString(LAUNCH_FIRST_INTENT_KEY), Intent.URI_ALLOW_UNSAFE);
+            Intent secondIntent = Intent.parseUri(object.getString(LAUNCH_SECOND_INTENT_KEY), Intent.URI_ALLOW_UNSAFE);
             long requestTime = object.getLong("time");
             UserHandleCompat firstUser = UserManagerCompat.getInstance(context).getUserForSerialNumber(object.getLong(EXTRA_FIRST_USER_HANDLE_KEY));
             UserHandleCompat secondUser = UserManagerCompat.getInstance(context).getUserForSerialNumber(object.getLong(EXTRA_SECOND_USER_HANDLE_KEY));

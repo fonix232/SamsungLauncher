@@ -11,7 +11,7 @@ import com.android.launcher3.common.compat.UserHandleCompat;
 import com.android.launcher3.common.compat.UserManagerCompat;
 import com.android.launcher3.util.DualAppUtils;
 import com.android.launcher3.util.PairAppsUtilities;
-import com.samsung.android.app.SemDualAppManager;
+//import com.samsung.android.app.SemDualAppManager;
 
 public class LauncherPairAppsInfo extends IconInfo {
     private static final String TAG = "LauncherPairAppsInfo";
@@ -76,20 +76,21 @@ public class LauncherPairAppsInfo extends IconInfo {
                         } else if (Utilities.isValidComponent(context, CN)) {
                             String pkgName = CN.getPackageName();
                             int userId = Integer.parseInt(items[1]);
-                            if (SemDualAppManager.isInstalledWhitelistedPackage(pkgName) && DualAppUtils.isDualApp(userManager.getUserForSerialNumber((long) userId), pkgName)) {
-                                int profileId = SemDualAppManager.getDualAppProfileId();
-                                if (profileId != -10000) {
-                                    intent = new Intent("android.intent.action.MAIN");
-                                    intent.addCategory("android.intent.category.LAUNCHER");
-                                    intent.setComponent(CN);
-                                    user = userManager.getUserForSerialNumber((long) profileId);
-                                }
-                            } else {
+                            // TODO: Samsung specific code
+//                            if (SemDualAppManager.isInstalledWhitelistedPackage(pkgName) && DualAppUtils.isDualApp(userManager.getUserForSerialNumber((long) userId), pkgName)) {
+//                                int profileId = SemDualAppManager.getDualAppProfileId();
+//                                if (profileId != -10000) {
+//                                    intent = new Intent("android.intent.action.MAIN");
+//                                    intent.addCategory("android.intent.category.LAUNCHER");
+//                                    intent.setComponent(CN);
+//                                    user = userManager.getUserForSerialNumber((long) profileId);
+//                                }
+//                            } else {
                                 intent = new Intent("android.intent.action.MAIN");
                                 intent.addCategory("android.intent.category.LAUNCHER");
                                 intent.setComponent(CN);
                                 user = userManager.getUserForSerialNumber((long) userId);
-                            }
+                            //}
                         }
                     }
                     if (index == 0) {
@@ -108,7 +109,7 @@ public class LauncherPairAppsInfo extends IconInfo {
             Log.d(TAG, "PairApps not add to Database!!");
             return;
         }
-        String firstCN = this.mFirstApp.getCN().flattenToShortString() + ':' + this.mFirstApp.getUserCompat().getUser().semGetIdentifier();
-        values.put("intent", firstCN + ';' + (this.mSecondApp.getCN().flattenToShortString() + ':' + this.mSecondApp.getUserCompat().getUser().semGetIdentifier()));
+        //String firstCN = this.mFirstApp.getCN().flattenToShortString() + ':' + this.mFirstApp.getUserCompat().getUser().semGetIdentifier();
+        //values.put("intent", firstCN + ';' + (this.mSecondApp.getCN().flattenToShortString() + ':' + this.mSecondApp.getUserCompat().getUser().semGetIdentifier()));
     }
 }

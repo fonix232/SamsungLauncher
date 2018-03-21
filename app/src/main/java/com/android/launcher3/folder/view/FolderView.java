@@ -104,10 +104,10 @@ import com.android.launcher3.util.animation.SearchedAppBounceAnimation;
 import com.android.launcher3.util.logging.GSIMLogging;
 import com.android.launcher3.util.logging.SALogging;
 import com.android.launcher3.widget.PendingAddPinShortcutInfo;
-import com.samsung.android.app.SemColorPickerDialog;
-import com.samsung.android.app.SemColorPickerDialog.OnColorSetListener;
-import com.samsung.android.widget.SemColorPicker.OnColorChangedListener;
-import com.samsung.android.widget.SemHoverPopupWindow;
+//import com.samsung.android.app.SemColorPickerDialog;
+//import com.samsung.android.app.SemColorPickerDialog.OnColorSetListener;
+//import com.samsung.android.widget.SemColorPicker.OnColorChangedListener;
+//import com.samsung.android.widget.SemHoverPopupWindow;
 import com.sec.android.app.launcher.R;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -173,48 +173,50 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
     private IconInfo mCurrentDragInfo;
     private View mCurrentDragView;
     private int mCurrentScrollDir = -1;
-    private SemColorPickerDialog mCustomColorPicker;
-    private OnColorChangedListener mCustomColorPickerColorChangedListener = new OnColorChangedListener() {
-        public void onColorChanged(int color) {
-            FolderView.this.mCustomColorPickerCurrentColor = color;
-        }
-    };
+    // TODO: Samsung specific code
+//    private SemColorPickerDialog mCustomColorPicker;
+//    private OnColorChangedListener mCustomColorPickerColorChangedListener = new OnColorChangedListener() {
+//        public void onColorChanged(int color) {
+//            FolderView.this.mCustomColorPickerCurrentColor = color;
+//        }
+//    };
     private int mCustomColorPickerCurrentColor;
-    private OnColorSetListener mCustomColorPickerListener = new OnColorSetListener() {
-        public void onColorSet(int color) {
-            String screenID;
-            if (FolderView.this.mCustomColorPickerCurrentColor != color) {
-                color = FolderView.this.mCustomColorPickerCurrentColor;
-            }
-            FolderView.this.mInfo.setOption(8, true, null);
-            FolderView.this.mInfo.color = FolderColor.FOLDER_COLOR_CUSTOM.ordinal();
-            FolderView.this.mFolderColor.put(FolderColor.FOLDER_COLOR_CUSTOM, Integer.valueOf(color));
-            FolderView.this.toggleColorPicker();
-            FolderView.this.setFolderColor(FolderColor.FOLDER_COLOR_CUSTOM, color, true, false);
-            SharedPreferences prefs = FolderView.this.mLauncher.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0);
-            String[] recent_color_list = prefs.getString(FolderView.RECENTLY_USED_COLOR, "").split(FolderView.RECENTLY_USED_COLOR_REGEX);
-            String recent_color = color + FolderView.RECENTLY_USED_COLOR_REGEX;
-            if (!recent_color.isEmpty() && recent_color_list[0].length() > 0) {
-                int i = 0;
-                while (i < recent_color_list.length && i <= 5) {
-                    if (color != Integer.parseInt(recent_color_list[i])) {
-                        recent_color = recent_color + recent_color_list[i] + FolderView.RECENTLY_USED_COLOR_REGEX;
-                    }
-                    i++;
-                }
-            }
-            Editor editor = prefs.edit();
-            editor.putString(FolderView.RECENTLY_USED_COLOR, recent_color.substring(0, recent_color.length() - 1));
-            editor.apply();
-            Resources res = FolderView.this.getResources();
-            if (FolderView.this.mInfo.isContainApps()) {
-                screenID = res.getString(R.string.screen_AppsFolder_Primary);
-            } else {
-                screenID = res.getString(R.string.screen_HomeFolder_Primary);
-            }
-            SALogging.getInstance().insertEventLog(screenID, res.getString(R.string.event_FolderTransparency), Color.alpha(color) != 255 ? 1 : 0);
-        }
-    };
+    // TODO: Samsung specific code
+//    private OnColorSetListener mCustomColorPickerListener = new OnColorSetListener() {
+//        public void onColorSet(int color) {
+//            String screenID;
+//            if (FolderView.this.mCustomColorPickerCurrentColor != color) {
+//                color = FolderView.this.mCustomColorPickerCurrentColor;
+//            }
+//            FolderView.this.mInfo.setOption(8, true, null);
+//            FolderView.this.mInfo.color = FolderColor.FOLDER_COLOR_CUSTOM.ordinal();
+//            FolderView.this.mFolderColor.put(FolderColor.FOLDER_COLOR_CUSTOM, Integer.valueOf(color));
+//            FolderView.this.toggleColorPicker();
+//            FolderView.this.setFolderColor(FolderColor.FOLDER_COLOR_CUSTOM, color, true, false);
+//            SharedPreferences prefs = FolderView.this.mLauncher.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0);
+//            String[] recent_color_list = prefs.getString(FolderView.RECENTLY_USED_COLOR, "").split(FolderView.RECENTLY_USED_COLOR_REGEX);
+//            String recent_color = color + FolderView.RECENTLY_USED_COLOR_REGEX;
+//            if (!recent_color.isEmpty() && recent_color_list[0].length() > 0) {
+//                int i = 0;
+//                while (i < recent_color_list.length && i <= 5) {
+//                    if (color != Integer.parseInt(recent_color_list[i])) {
+//                        recent_color = recent_color + recent_color_list[i] + FolderView.RECENTLY_USED_COLOR_REGEX;
+//                    }
+//                    i++;
+//                }
+//            }
+//            Editor editor = prefs.edit();
+//            editor.putString(FolderView.RECENTLY_USED_COLOR, recent_color.substring(0, recent_color.length() - 1));
+//            editor.apply();
+//            Resources res = FolderView.this.getResources();
+//            if (FolderView.this.mInfo.isContainApps()) {
+//                screenID = res.getString(R.string.screen_AppsFolder_Primary);
+//            } else {
+//                screenID = res.getString(R.string.screen_HomeFolder_Primary);
+//            }
+//            SALogging.getInstance().insertEventLog(screenID, res.getString(R.string.event_FolderTransparency), Color.alpha(color) != 255 ? 1 : 0);
+//        }
+//    };
     private boolean mDeleteFolderOnDropCompleted = false;
     private Comparator<DragObject> mDescComparator = new Comparator<DragObject>() {
         public int compare(DragObject lhs, DragObject rhs) {
@@ -346,9 +348,9 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         int currentColor = this.mInfo.color;
         if (!this.mInfo.hasOption(8)) {
             if (currentColor < 0) {
-                currentColor = ((Integer) this.mFolderColor.get(FolderColor.values()[0])).intValue();
+                currentColor = this.mFolderColor.get(FolderColor.values()[0]);
             } else {
-                currentColor = ((Integer) this.mFolderColor.get(FolderColor.values()[this.mInfo.color])).intValue();
+                currentColor = this.mFolderColor.get(FolderColor.values()[this.mInfo.color]);
             }
         }
         if (!isRecreate) {
@@ -357,7 +359,8 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         String recent_color = this.mLauncher.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0).getString(RECENTLY_USED_COLOR, "");
         String[] recent_color_list = recent_color.split(RECENTLY_USED_COLOR_REGEX);
         if (recent_color.isEmpty() || recent_color_list.length <= 0) {
-            this.mCustomColorPicker = new SemColorPickerDialog(getContext(), this.mCustomColorPickerListener, currentColor);
+            // TODO: Samsung specific code
+            //this.mCustomColorPicker = new SemColorPickerDialog(getContext(), this.mCustomColorPickerListener, currentColor);
         } else {
             int[] color_list = new int[recent_color_list.length];
             for (int i = 0; i < color_list.length; i++) {
@@ -367,19 +370,21 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                     color_list[i] = -1;
                 }
             }
-            this.mCustomColorPicker = new SemColorPickerDialog(getContext(), this.mCustomColorPickerListener, currentColor, color_list);
+            // TODO: Samsung specific code
+            //this.mCustomColorPicker = new SemColorPickerDialog(getContext(), this.mCustomColorPickerListener, currentColor, color_list);
         }
-        this.mCustomColorPicker.getColorPicker().setOnColorChangedListener(this.mCustomColorPickerColorChangedListener);
-        this.mCustomColorPicker.create();
-        this.mCustomColorPicker.setNewColor(Integer.valueOf(this.mCustomColorPickerCurrentColor));
-        this.mCustomColorPicker.setTransparencyControlEnabled(true);
-        this.mCustomColorPicker.show();
+        // TODO: Samsung specific code
+//        this.mCustomColorPicker.getColorPicker().setOnColorChangedListener(this.mCustomColorPickerColorChangedListener);
+//        this.mCustomColorPicker.create();
+//        this.mCustomColorPicker.setNewColor(Integer.valueOf(this.mCustomColorPickerCurrentColor));
+//        this.mCustomColorPicker.setTransparencyControlEnabled(true);
+//        this.mCustomColorPicker.show();
     }
 
     public FolderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setAlwaysDrawnWithCacheEnabled(false);
-        this.mInputMethodManager = (InputMethodManager) getContext().getSystemService("input_method");
+        this.mInputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         Resources res = getResources();
         if (sDefaultFolderName == null) {
             sDefaultFolderName = res.getString(R.string.folder_name);
@@ -391,12 +396,12 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         this.mFolderColor = new HashMap();
         FolderStyle fs = OpenThemeManager.getInstance().getFolderStyle();
         if (fs != null) {
-            this.mFolderColor.put(FolderColor.FOLDER_COLOR_1, Integer.valueOf(fs.getCloseFolderColor(0)));
-            this.mFolderColor.put(FolderColor.FOLDER_COLOR_2, Integer.valueOf(fs.getCloseFolderColor(1)));
-            this.mFolderColor.put(FolderColor.FOLDER_COLOR_3, Integer.valueOf(fs.getCloseFolderColor(2)));
-            this.mFolderColor.put(FolderColor.FOLDER_COLOR_4, Integer.valueOf(fs.getCloseFolderColor(3)));
-            this.mFolderColor.put(FolderColor.FOLDER_COLOR_5, Integer.valueOf(fs.getCloseFolderColor(4)));
-            this.mFolderColor.put(FolderColor.FOLDER_COLOR_CUSTOM, Integer.valueOf(fs.getCloseFolderColor(0)));
+            this.mFolderColor.put(FolderColor.FOLDER_COLOR_1, fs.getCloseFolderColor(0));
+            this.mFolderColor.put(FolderColor.FOLDER_COLOR_2, fs.getCloseFolderColor(1));
+            this.mFolderColor.put(FolderColor.FOLDER_COLOR_3, fs.getCloseFolderColor(2));
+            this.mFolderColor.put(FolderColor.FOLDER_COLOR_4, fs.getCloseFolderColor(3));
+            this.mFolderColor.put(FolderColor.FOLDER_COLOR_5, fs.getCloseFolderColor(4));
+            this.mFolderColor.put(FolderColor.FOLDER_COLOR_CUSTOM, fs.getCloseFolderColor(0));
         }
         if (LauncherFeature.supportFolderLock()) {
             this.mFolderLock = FolderLock.getInstance();
@@ -408,9 +413,9 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         super.onFinishInflate();
         this.mFolderContainer = findViewById(R.id.folder_container);
         this.mContentContainer = findViewById(R.id.folder_content_container);
-        this.mContent = (FolderPagedView) findViewById(R.id.folder_content);
+        this.mContent = findViewById(R.id.folder_content);
         this.mContent.setFolder(this);
-        this.mFolderName = (FolderNameEditText) findViewById(R.id.folder_name);
+        this.mFolderName = findViewById(R.id.folder_name);
         this.mFolderName.setOnFocusChangeListener(new OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus || FolderView.this.mViewState != 2) {
@@ -445,9 +450,10 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                     FolderView.this.mInputMethodManager.restartInput(FolderView.this.mFolderName);
                 }
                 FolderView.this.mInputMethodManager.viewClicked(FolderView.this.mFolderName);
-                if (!FolderView.this.mInputMethodManager.semIsInputMethodShown()) {
-                    FolderView.this.mInputMethodManager.showSoftInput(FolderView.this.mFolderName, 1);
-                }
+                // TODO: Samsung specific code
+//                if (!FolderView.this.mInputMethodManager.semIsInputMethodShown()) {
+//                    FolderView.this.mInputMethodManager.showSoftInput(FolderView.this.mFolderName, 1);
+//                }
                 FolderView.this.startEditingFolderName();
             }
         });
@@ -461,7 +467,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                 return false;
             }
         });
-        this.mFolderName.setOnEventListener(new OnEventListener() {
+        this.mFolderName.setOnEventListener(new FolderNameEditText.OnEventListener() {
             boolean mBackKeyPressed = false;
 
             public boolean onPreImeBackKey() {
@@ -478,13 +484,14 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
             }
 
             public void onLayoutUpdated() {
-                if (!FolderView.this.mInputMethodManager.semIsInputMethodShown() && this.mBackKeyPressed) {
-                    FolderView.this.post(new Runnable() {
-                        public void run() {
-                            FolderView.this.doneEditingFolderName();
-                        }
-                    });
-                }
+                // TODO: Samsung specific code
+//                if (!FolderView.this.mInputMethodManager.semIsInputMethodShown() && this.mBackKeyPressed) {
+//                    FolderView.this.post(new Runnable() {
+//                        public void run() {
+//                            FolderView.this.doneEditingFolderName();
+//                        }
+//                    });
+//                }
                 this.mBackKeyPressed = false;
             }
         });
@@ -493,7 +500,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         this.mFolderName.setFocusableInTouchMode(true);
         this.mFolderName.setInputType(this.mFolderName.getInputType() | 8192);
         this.mFolderName.setFilters(Utilities.getEditTextMaxLengthFilter(getContext(), 30));
-        this.mFolderOptionButton = (ImageView) findViewById(R.id.folder_option_btn);
+        this.mFolderOptionButton = findViewById(R.id.folder_option_btn);
         this.mColorPickerView = findViewById(R.id.folder_colorpicker);
         this.mFolderOptionButton.setOnClickListener(new OnClickListener() {
             public void onClick(View arg0) {
@@ -502,23 +509,24 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                 }
                 FolderView.this.toggleColorPicker();
                 Resources res = FolderView.this.getResources();
-                SALogging.getInstance().insertEventLog(FolderView.this.mInfo.isContainApps() ? res.getString(R.string.screen_AppsFolder_Primary) : res.getString(R.string.screen_HomeFolder_Primary), FolderView.this.mColorPickerView.getVisibility() == 0 ? res.getString(R.string.event_FolderExitColorList) : res.getString(R.string.event_FolderChangeColor));
+                SALogging.getInstance().insertEventLog(FolderView.this.mInfo.isContainApps() ? res.getString(R.string.screen_AppsFolder_Primary) : res.getString(R.string.screen_HomeFolder_Primary), FolderView.this.mColorPickerView.getVisibility() == View.VISIBLE ? res.getString(R.string.event_FolderExitColorList) : res.getString(R.string.event_FolderChangeColor));
             }
         });
-        try {
-            this.mFolderOptionButton.semSetHoverPopupType(1);
-            SemHoverPopupWindow hover = this.mFolderOptionButton.semGetHoverPopup(true);
-            if (hover != null) {
-                hover.setContent(this.mFolderOptionButton.getContentDescription());
-            }
-        } catch (NoSuchMethodError e) {
-            Log.e(TAG, "Method not found : " + e.toString());
-        }
+        // TODO: Samsung specific code
+//        try {
+//            this.mFolderOptionButton.semSetHoverPopupType(1);
+//            SemHoverPopupWindow hover = this.mFolderOptionButton.semGetHoverPopup(true);
+//            if (hover != null) {
+//                hover.setContent(this.mFolderOptionButton.getContentDescription());
+//            }
+//        } catch (NoSuchMethodError e) {
+//            Log.e(TAG, "Method not found : " + e.toString());
+//        }
         this.mHeader = findViewById(R.id.folder_header);
         this.mHeaderBottomLine = findViewById(R.id.bottom_line_color);
         this.mFooter = findViewById(R.id.folder_footer);
         this.mOuterAddButtonContainer = findViewById(R.id.folder_outer_add_button_container);
-        this.mBorder = (ImageView) findViewById(R.id.folder_border);
+        this.mBorder = findViewById(R.id.folder_border);
         if (LauncherFeature.supportNavigationBar()) {
             this.mBorder.setContentDescription(getResources().getString(R.string.talkback_tab_back_button_to_close_folder));
         }
@@ -557,7 +565,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
 
     private ImageView getColorPickerImageView(FolderColor color) {
         if (this.mColorPickerItems.containsKey(color)) {
-            return (ImageView) this.mColorPickerItems.get(color);
+            return this.mColorPickerItems.get(color);
         }
         return null;
     }
@@ -584,14 +592,14 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         this.mFolderName.setTextSize(0, res.getDimension(R.dimen.open_folder_title_name_text_size_normal));
         View folderNameWrapper = findViewById(R.id.folder_name_wrapper);
         if (!(folderNameWrapper == null || folderNameWrapper.getLayoutParams() == null)) {
-            lp = (MarginLayoutParams) folderNameWrapper.getLayoutParams();
+            MarginLayoutParams lp = (MarginLayoutParams) folderNameWrapper.getLayoutParams();
             lp.bottomMargin = res.getDimensionPixelSize(R.dimen.open_folder_title_name_margin_bottom);
             lp.setMarginStart(res.getDimensionPixelSize(R.dimen.open_folder_title_name_margin_start));
             lp.setMarginEnd(res.getDimensionPixelSize(R.dimen.open_folder_title_name_margin_end));
             folderNameWrapper.setLayoutParams(lp);
         }
         if (this.mFolderOptionButton.getLayoutParams() != null) {
-            lp = (MarginLayoutParams) this.mFolderOptionButton.getLayoutParams();
+            MarginLayoutParams lp = (MarginLayoutParams) this.mFolderOptionButton.getLayoutParams();
             if (LauncherFeature.isSupportFolderColorPicker()) {
                 lp.width = res.getDimensionPixelSize(R.dimen.open_folder_title_option_button_size_new);
                 lp.height = res.getDimensionPixelSize(R.dimen.open_folder_title_option_button_size_new);
@@ -609,7 +617,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
             this.mFolderOptionButton.setPadding(padding, padding, padding, padding);
         }
         if (this.mColorPickerView.getLayoutParams() != null) {
-            lp = (MarginLayoutParams) this.mColorPickerView.getLayoutParams();
+            MarginLayoutParams lp = (MarginLayoutParams) this.mColorPickerView.getLayoutParams();
             if (LauncherFeature.isSupportFolderColorPicker()) {
                 lp.setMarginEnd(res.getDimensionPixelSize(R.dimen.open_folder_title_colorpicker_layout_margin_end_new));
                 lp.bottomMargin = res.getDimensionPixelSize(R.dimen.open_folder_title_colorpicker_layout_margin_bottom_new);
@@ -622,7 +630,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         if (this.mColorPickerItems != null && this.mColorPickerItems.size() > 0) {
             for (ImageView colorView : this.mColorPickerItems.values()) {
                 if (!(colorView == null || colorView.getLayoutParams() == null)) {
-                    lp = (MarginLayoutParams) colorView.getLayoutParams();
+                    MarginLayoutParams lp = (MarginLayoutParams) colorView.getLayoutParams();
                     if (LauncherFeature.isSupportFolderColorPicker()) {
                         lp.width = res.getDimensionPixelSize(R.dimen.open_folder_title_colorpicker_img_size_new);
                         lp.height = res.getDimensionPixelSize(R.dimen.open_folder_title_colorpicker_img_size_new);
@@ -650,7 +658,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         this.mHeaderHeight = this.mHeader.getMeasuredHeight();
         this.mFooter.measure(0, 0);
         this.mFooterHeight = this.mFooter.getMeasuredHeight();
-        TextView addButtonText = (TextView) findViewById(R.id.folder_add_button_text);
+        TextView addButtonText = findViewById(R.id.folder_add_button_text);
         if (!(addButtonText == null || addButtonText.getLayoutParams() == null)) {
             addButtonText.setTextSize(0, res.getDimension(R.dimen.open_folder_outer_add_button_text_size));
             ((MarginLayoutParams) addButtonText.getLayoutParams()).height = res.getDimensionPixelSize(R.dimen.open_folder_outer_add_button_height);
@@ -663,9 +671,9 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
     public void onClick(View v) {
         if (this.mViewState == 2) {
             stopBounceAnimation();
-            IconInfo tag = v.getTag();
+            ItemInfo tag = (ItemInfo)v.getTag();
             if (tag instanceof IconInfo) {
-                IconInfo shortcut = tag;
+                IconInfo shortcut = (IconInfo)tag;
                 if (shortcut.isDisabled == 0 || ((shortcut.isDisabled & -5) & -9) == 0) {
                     CellLayout currentPage = (CellLayout) this.mContent.getChildAt(this.mContent.getCurrentPage());
                     if (currentPage != null && currentPage.isReorderAnimating()) {
@@ -681,13 +689,13 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                     if ((shortcut.isDisabled & 1) != 0) {
                         error = R.string.safemode_shortcut_error;
                     }
-                    Toast.makeText(this.mLauncher, error, 0).show();
+                    Toast.makeText(this.mLauncher, error, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this.mLauncher, shortcut.disabledMessage, 0).show();
+                    Toast.makeText(this.mLauncher, shortcut.disabledMessage, Toast.LENGTH_SHORT).show();
                 }
             } else if (v.getId() == R.id.folder_add_button_text) {
                 StageEntry data = new StageEntry();
-                data.putExtras(AppsPickerController.KEY_PICKER_MODE, Integer.valueOf(0));
+                data.putExtras(AppsPickerController.KEY_PICKER_MODE, 0);
                 data.putExtras(FolderController.KEY_FOLDER_ICON_VIEW, this.mFolderIconView);
                 this.mLauncher.getStageManager().startStage(6, data);
                 Resources res = getResources();
@@ -718,17 +726,18 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
 
     public void onConfigurationChangedIfNeeded() {
         this.mContent.onConfigurationChangedIfNeeded();
-        if (this.mCustomColorPicker != null && this.mCustomColorPicker.isShowing()) {
-            this.mCustomColorPicker.dismiss();
-            showSemColorPickerDialog(true);
-        }
+        // TODO: Samsung specific code
+//        if (this.mCustomColorPicker != null && this.mCustomColorPicker.isShowing()) {
+//            this.mCustomColorPicker.dismiss();
+//            showSemColorPickerDialog(true);
+//        }
         updateFolderLayout();
     }
 
     private boolean beginDrag(View v, boolean allowQuickOption) {
-        IconInfo tag = v.getTag();
+        ItemInfo tag = (ItemInfo)v.getTag();
         if (tag instanceof IconInfo) {
-            IconInfo item = tag;
+            IconInfo item = (IconInfo)tag;
             if (!Utilities.ATLEAST_O && !v.isInTouchMode()) {
                 return false;
             }
@@ -920,9 +929,10 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
             this.mInfo.remove(item);
             this.mController.deleteItemFromDb(item);
         }
-        if (((LayoutParams) getLayoutParams()) == null) {
+        if (getLayoutParams() == null) {
             LayoutParams lp = new LayoutParams(0, 0);
-            lp.customPosition = true;
+            // TODO: Samsung specific code
+            //lp.customPosition = true;
             setLayoutParams(lp);
         }
         centerAboutIcon();
@@ -949,7 +959,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
 
     public void updateFolderColor() {
         if (this.mInfo.hasOption(8)) {
-            this.mFolderColor.put(FolderColor.FOLDER_COLOR_CUSTOM, Integer.valueOf(this.mInfo.color));
+            this.mFolderColor.put(FolderColor.FOLDER_COLOR_CUSTOM, this.mInfo.color);
             setFolderColor(FolderColor.FOLDER_COLOR_CUSTOM, this.mInfo.color, true, true);
             return;
         }
@@ -1073,7 +1083,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         this.mHeaderBottomLine.setBackgroundColor(FOLDER_NAME_BAR_COLOR_ALPHA_MASK & bgColor);
         this.mContent.onChangeFolderIconTextColor();
         if (this.mAddButton != null) {
-            TextView addButtonText = (TextView) this.mAddButton.findViewById(R.id.folder_add_button_text);
+            TextView addButtonText = this.mAddButton.findViewById(R.id.folder_add_button_text);
             if (addButtonText != null) {
                 addButtonText.setTextColor(bgColor);
                 if (addButtonText.getCompoundDrawablesRelative()[0] == null) {
@@ -1284,7 +1294,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                 }
                 info2 = info;
             } else {
-                info2 = d.dragInfo;
+                info2 = (ItemInfo)d.dragInfo;
             }
             if (info2 == null) {
                 Log.e(TAG, "onDrop() info is null");
@@ -1305,7 +1315,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                         throw new IllegalStateException("Not supported item type: " + info2.itemType);
                 }
             }
-            info = info2;
+            info = (ItemInfo)info2;
             currentDragView = this.mContent.createNewView(info);
             hasMovedLayout = true;
         } else {
@@ -1392,7 +1402,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                 dropItem.dragView = d.dragView;
                 dropItem.iconView = view;
                 dropItem.targetPageIndex = this.mTargetRank / this.mContent.itemsPerPage();
-                if (((DragObject) extraDragObjects.get(extraDragObjects.size() - 1)).equals(d)) {
+                if (extraDragObjects.get(extraDragObjects.size() - 1).equals(d)) {
                     dropItem.fromApps = addItemFromApps;
                 }
                 if (dropItem.targetPageIndex == this.mContent.getCurrentPage()) {
@@ -1403,7 +1413,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
             }
         }
         if (!items.isEmpty()) {
-            this.mInfo.add((ArrayList) items);
+            this.mInfo.add(items);
         }
         this.mSuppressOnAdd = false;
         rearrangeChildren();
@@ -1412,7 +1422,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         Iterator it2 = dropItems.iterator();
         while (it2.hasNext()) {
             int translatedX;
-            dropItem = (DropItem) it2.next();
+            final DropItem dropItem = (DropItem) it2.next();
             final View iconView = dropItem.iconView;
             View page = this.mContent.getPageAt(dropItem.targetPageIndex);
             if (page != null) {
@@ -1431,7 +1441,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                         arrayList.remove(dropItem);
                     }
                     if (iconView instanceof IconViewStub) {
-                        IconViewStub stub = iconView;
+                        IconViewStub stub = (IconViewStub)iconView;
                         stub.inflateInBackgroundUrgent((IconInfo) stub.getTag());
                     }
                     if (dropItem.fromApps && FolderView.this.isAppsAlphabeticViewType()) {
@@ -1501,7 +1511,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                 } else {
                     data.setInternalStateTo(2);
                 }
-                data.putExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, Integer.valueOf(1));
+                data.putExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, 1);
             }
             if (this.mLauncher.isFolderStage()) {
                 this.mLauncher.getStageManager().finishStage(5, data);
@@ -1532,7 +1542,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         boolean needToMakeClone = isNeedToMakeClone(target);
         if (!success || needToMakeClone) {
             View icon;
-            IconInfo info = d.dragInfo;
+            IconInfo info = (IconInfo)d.dragInfo;
             if (this.mCurrentDragView == null || this.mCurrentDragView.getTag() != info) {
                 icon = this.mContent.createNewView(info);
             } else {
@@ -1674,7 +1684,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
             if (!(this.mCurrentDragInfo == null || this.mCurrentDragInfo.rank == this.mEmptyCellRank || this.mCurrentDragInfo.rank >= views.size())) {
                 lastRank = views.size() - 1;
                 int adjustedRank = this.mEmptyCellRank > lastRank ? lastRank : this.mEmptyCellRank;
-                views.add(adjustedRank, (View) views.remove(this.mCurrentDragInfo.rank));
+                views.add(adjustedRank, views.remove(this.mCurrentDragInfo.rank));
                 this.mContent.realTimeReorder(this.mCurrentDragInfo.rank, adjustedRank, false);
             }
             this.mContent.arrangeChildren(views, views.size());
@@ -1703,7 +1713,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         ArrayList<View> list = getItemsInReadingOrder();
         ArrayList<ItemInfo> items = new ArrayList();
         for (int i = 0; i < list.size(); i++) {
-            View v = (View) list.get(i);
+            View v = list.get(i);
             if (v.getTag() instanceof ItemInfo) {
                 ItemInfo info = (ItemInfo) v.getTag();
                 info.rank = i;
@@ -1736,7 +1746,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                 items.add(info);
             }
             if (!items.isEmpty()) {
-                this.mInfo.add((ArrayList) items);
+                this.mInfo.add(items);
             }
             this.mSuppressOnAdd = false;
             rearrangeChildren();
@@ -1808,7 +1818,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         addButtonLp.topMargin = 0;
         addButtonLp.bottomMargin = this.mFooterHeight;
         addButtonLp.leftMargin = 0;
-        LinearLayout outerAddButtonLayout = (LinearLayout) findViewById(R.id.folder_add_button_container);
+        LinearLayout outerAddButtonLayout = findViewById(R.id.folder_add_button_container);
         if (outerAddButtonLayout != null && outerAddButtonLayout.getLayoutParams() != null) {
             ((LinearLayout.LayoutParams) outerAddButtonLayout.getLayoutParams()).height = res.getDimensionPixelOffset(R.dimen.open_folder_outer_add_button_container_height);
             outerAddButtonLayout.setPadding(0, 0, 0, res.getDimensionPixelSize(R.dimen.open_folder_outer_add_button_container_margin_bottom));
@@ -2150,7 +2160,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
     }
 
     String getFolderColorDescription(FolderColor color, boolean isDefaultTheme) {
-        String themeColorDescription = getResources().getString(R.string.folder_color_pd, new Object[]{Integer.valueOf(color.ordinal() + 1)});
+        String themeColorDescription = getResources().getString(R.string.folder_color_pd, new Object[]{color.ordinal() + 1});
         switch (color) {
             case FOLDER_COLOR_1:
                 return getResources().getString(R.string.folder_color_default);
@@ -2231,7 +2241,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         if (color_idx == FolderColor.FOLDER_COLOR_CUSTOM) {
             openFolderColor = color;
         } else {
-            openFolderColor = ((Integer) this.mFolderColor.get(color_idx)).intValue();
+            openFolderColor = this.mFolderColor.get(color_idx);
         }
         if (LauncherFeature.isSupportFolderColorPicker()) {
             iconResId = R.drawable.folder_colorpicker_selected_shape;
@@ -2255,8 +2265,8 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
                 for (FolderColor folderColor2 : FolderColor.values()) {
                     colorView = getColorPickerImageView(folderColor2);
                     if (colorView != null) {
-                        int itemColor = ((Integer) this.mFolderColor.get(folderColor2)).intValue();
-                        Drawable itemImage = (Drawable) sColorPickerImages.get(itemColor);
+                        int itemColor = this.mFolderColor.get(folderColor2);
+                        Drawable itemImage = sColorPickerImages.get(itemColor);
                         Drawable strokebase = res.getDrawable(R.drawable.folder_picker_stroke_white_ring);
                         if (folderColor2 == FolderColor.FOLDER_COLOR_CUSTOM) {
                             Bitmap customColor = ThemeUtils.roundBitmap(res.getDrawable(R.drawable.folder_colorpicker_color), iconSize, iconSize, roundSize / 2, strokebase);
@@ -2412,7 +2422,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
 
     private AnimatorSet getAppearButtonAnimatorSet(boolean isOpen) {
         AnimatorSet scaleAnimSet = LauncherAnimUtils.createAnimatorSet();
-        r1 = new Animator[3];
+        Animator[] r1 = new Animator[3];
         r1[0] = LauncherAnimUtils.ofFloat(this.mFolderOptionButton, "scaleX", 1.0f);
         r1[1] = LauncherAnimUtils.ofFloat(this.mFolderOptionButton, "scaleY", 1.0f);
         r1[2] = LauncherAnimUtils.ofFloat(this.mFolderOptionButton, "alpha", 1.0f);
@@ -2425,7 +2435,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
 
     private AnimatorSet getDimissButtonAnimatorSet() {
         AnimatorSet scaleAnimSet = LauncherAnimUtils.createAnimatorSet();
-        r1 = new Animator[3];
+        Animator[] r1 = new Animator[3];
         r1[0] = LauncherAnimUtils.ofFloat(this.mFolderOptionButton, "scaleX", 0.0f);
         r1[1] = LauncherAnimUtils.ofFloat(this.mFolderOptionButton, "scaleY", 0.0f);
         r1[2] = LauncherAnimUtils.ofFloat(this.mFolderOptionButton, "alpha", 0.0f);
@@ -2480,7 +2490,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
 
     private View createAddButton() {
         View buttonView = ((ViewStub) findViewById(R.id.folder_outer_add_button_stub)).inflate();
-        TextView addButtonText = (TextView) buttonView.findViewById(R.id.folder_add_button_text);
+        TextView addButtonText = buttonView.findViewById(R.id.folder_add_button_text);
         if (addButtonText != null) {
             if (Utilities.isEnableBtnBg(getContext())) {
                 addButtonText.setBackgroundResource(R.drawable.panel_btn_bg);
@@ -2513,7 +2523,7 @@ public class FolderView extends FrameLayout implements DragSource, OnClickListen
         if (animate) {
             animateDismiss(this.mAddButton, true);
         } else {
-            this.mAddButton.setVisibility(4);
+            this.mAddButton.setVisibility(View.INVISIBLE);
         }
     }
 

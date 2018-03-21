@@ -63,9 +63,9 @@ import com.android.launcher3.util.logging.GSIMLogging;
 import com.android.launcher3.util.logging.SALogging;
 import com.android.vcard.VCardConfig;
 //import com.samsung.android.feature.SemCscFeature;
-import com.samsung.android.sdk.virtualscreen.SVirtualScreen;
-import com.samsung.android.sdk.virtualscreen.SVirtualScreenManager;
-import com.samsung.android.sdk.virtualscreen.SVirtualScreenManager.LaunchParams;
+//import com.samsung.android.sdk.virtualscreen.SVirtualScreen;
+//import com.samsung.android.sdk.virtualscreen.SVirtualScreenManager;
+//import com.samsung.android.sdk.virtualscreen.SVirtualScreenManager.LaunchParams;
 import com.sec.android.app.launcher.R;
 import java.lang.ref.WeakReference;
 
@@ -90,7 +90,7 @@ public class ZeroPageController {
     private static boolean sEnableZeroPage = supportVirtualScreen();
     private static boolean sSupportVirtualScreen = false;
     private static boolean sVirtualScreenAvailableChecked = false;
-    private static SVirtualScreenManager sVirtualScreenManager;
+    //private static SVirtualScreenManager sVirtualScreenManager;
     public static ComponentName sZeroPageCompName = new ComponentName(Utilities.DAYLITE_PACKAGE_NAME, Utilities.DAYLITE_CLASS_NAME_MAIN);
     private static boolean sZeroPageDefaultOnOffState = true;
     private String mAppName;
@@ -114,7 +114,7 @@ public class ZeroPageController {
     private int mTouchSlop;
     private ValueAnimator mValueAnimator = new ValueAnimator();
     private VelocityTracker mVelocityTracker;
-    private VirtualScreenHandler mVirtualScreenHandler;
+    //private VirtualScreenHandler mVirtualScreenHandler;
     private HandlerThread mVirtualScreenThread;
     private final Workspace mWorkspace;
     private LinearLayout mZeroPageBgView = null;
@@ -183,10 +183,10 @@ public class ZeroPageController {
                                             Log.e(ZeroPageController.TAG, "handleMessage - InterruptedException");
                                         }
                                         if (this.mStop) {
+                                            this.mPreOffset = offset;
+                                            ZeroPageController.this.mThreadExitAlarm.cancelAlarm();
+                                            break;
                                         }
-                                        this.mPreOffset = offset;
-                                        ZeroPageController.this.mThreadExitAlarm.cancelAlarm();
-                                        return;
                                     } while (!ZeroPageController.this.mLauncher.isPaused());
                                     this.mPreOffset = offset;
                                     ZeroPageController.this.mThreadExitAlarm.cancelAlarm();
@@ -319,8 +319,8 @@ public class ZeroPageController {
             this.mVirtualScreenThread = new HandlerThread("VirtualScreenThread");
             this.mVirtualScreenThread.setPriority(10);
             this.mVirtualScreenThread.start();
-            this.mVirtualScreenHandler = new VirtualScreenHandler(this, this.mVirtualScreenThread.getLooper());
-            sVirtualScreenManager = new SVirtualScreenManager(this.mLauncher);
+            //this.mVirtualScreenHandler = new VirtualScreenHandler(this, this.mVirtualScreenThread.getLooper());
+            //sVirtualScreenManager = new SVirtualScreenManager(this.mLauncher);
             if (Utilities.isDeskTopMode(this.mLauncher)) {
                 Log.e(TAG, "DeX mode - do not startActivityInVirtualScreen");
             } else if (getZeroPageActiveState(this.mLauncher, false)) {
@@ -370,7 +370,8 @@ public class ZeroPageController {
 
     private Bitmap getPreviewFromPackageManager(PackageManager pm) {
         try {
-            return BitmapFactory.decodeResource(pm.getResourcesForApplication(pm.getActivityInfo(sZeroPageCompName, 640).applicationInfo), this.mAppPrevResId);
+            // TODO: Fix PackageManager flag
+            return BitmapFactory.decodeResource(pm.getResourcesForApplication(pm.getActivityInfo(sZeroPageCompName, PackageManager.MATCH_DISABLED_COMPONENTS | PackageManager.GET_META_DATA).applicationInfo), this.mAppPrevResId);
         } catch (NameNotFoundException e) {
             Log.e(TAG, "getPreviewFromPackageManager(): NameNotFoundException: " + e.getMessage());
             return null;
@@ -380,7 +381,7 @@ public class ZeroPageController {
     private void loadZeroPagePreviewBitmap() {
         cancelZeroPagePreviewTask();
         this.mZeroPagePreviewTask = new ZeroPagePreviewTask();
-        this.mZeroPagePreviewTask.execute(new Void[0]);
+        this.mZeroPagePreviewTask.execute();
     }
 
     private void cancelZeroPagePreviewTask() {
@@ -390,21 +391,14 @@ public class ZeroPageController {
         }
     }
 
-    void onDestroy() {
-        if (this.mVirtualScreenHandler != null) {
-            this.mVirtualScreenHandler.removeCallbacksAndMessages(null);
-        }
-        if (this.mVirtualScreenThread != null) {
-            this.mVirtualScreenThread.quitSafely();
-        }
-    }
-
     public static boolean supportVirtualScreen() {
-        if (!(sVirtualScreenAvailableChecked || LauncherAppState.getInstance().getContext() == null || LauncherAppState.getInstance().getContext().getPackageManager().isSafeMode())) {
-            sSupportVirtualScreen = new SVirtualScreen().isFeatureEnabled(1);
-            sVirtualScreenAvailableChecked = true;
-        }
-        return sSupportVirtualScreen;
+        return false;
+        // TODO: Samsung specific code
+//        if (!(sVirtualScreenAvailableChecked || LauncherAppState.getInstance().getContext() == null || LauncherAppState.getInstance().getContext().getPackageManager().isSafeMode())) {
+//            sSupportVirtualScreen = new SVirtualScreen().isFeatureEnabled(1);
+//            sVirtualScreenAvailableChecked = true;
+//        }
+//        return sSupportVirtualScreen;
     }
 
     public static boolean isActiveZeroPage(Context context, boolean getPreferences) {
@@ -415,7 +409,8 @@ public class ZeroPageController {
         ComponentName componentName = null;
         int i = 0;
         if (supportVirtualScreen()) {
-            String cscFeatureZeroPageApp = SemCscFeature.getInstance().getString("CscFeature_Launcher_ConfigZeroPageApp", null);
+            // TODO: Samsung specific code
+            String cscFeatureZeroPageApp = null; // SemCscFeature.getInstance().getString("CscFeature_Launcher_ConfigZeroPageApp", null);
             componentName = new ComponentName(Utilities.DAYLITE_PACKAGE_NAME, Utilities.DAYLITE_CLASS_NAME_MAIN);
             ComponentName[] componentNameArr;
             int length;
@@ -457,8 +452,8 @@ public class ZeroPageController {
     }
 
     private void init() {
-        String cscFeatureZeroPageApp = SemCscFeature.getInstance().getString("CscFeature_Launcher_ConfigZeroPageApp", null);
-        String cscFeatureZeroPageEnable = SemCscFeature.getInstance().getString("CscFeature_Launcher_ConfigMagazineHome", null);
+        String cscFeatureZeroPageApp = null; // SemCscFeature.getInstance().getString("CscFeature_Launcher_ConfigZeroPageApp", null);
+        String cscFeatureZeroPageEnable = null; // SemCscFeature.getInstance().getString("CscFeature_Launcher_ConfigMagazineHome", null);
         boolean isDeletable = false;
         this.mInstalled = false;
         sZeroPageDefaultOnOffState = !"off".equalsIgnoreCase(cscFeatureZeroPageEnable);
@@ -503,7 +498,7 @@ public class ZeroPageController {
         try {
             Exception e;
             PackageManager pm = this.mLauncher.getPackageManager();
-            ActivityInfo info = pm.getActivityInfo(componentName, 640);
+            ActivityInfo info = pm.getActivityInfo(componentName, PackageManager.MATCH_DISABLED_COMPONENTS | PackageManager.GET_META_DATA);
             XmlResourceParser parser = info.loadXmlMetaData(pm, METADATA_ZEROPAGE);
             if (parser == null) {
                 Log.e(TAG, "parser is null");
@@ -554,15 +549,11 @@ public class ZeroPageController {
                     }
                 }
             } catch (Exception e3) {
-                e = e3;
-            } catch (Exception e32) {
-                e = e32;
-            } catch (Exception e322) {
-                e = e322;
+                Log.e(TAG, "exception on updateZeroPageAppMetadata : " + e3.getMessage());
             }
             setZeroPagePackageName(componentName.getPackageName());
             setZeroPageClassName(componentName.getClassName());
-            Log.e(TAG, "exception on updateZeroPageAppMetadata : " + e.getMessage());
+
             setZeroPagePackageName(componentName.getPackageName());
             setZeroPageClassName(componentName.getClassName());
         } catch (NameNotFoundException e4) {
@@ -605,7 +596,8 @@ public class ZeroPageController {
         Log.i(TAG, "setZeroPageActiveState, active: " + active + ", enable: " + sEnableZeroPage);
         if (sEnableZeroPage) {
             Intent intent = new Intent(ACTION_INTENT_ACTIVE_ZEROPAGE);
-            intent.addFlags(32);
+            // TODO: Fix intent flags
+            // intent.addFlags(32);
             intent.putExtra("active", active);
             context.sendBroadcast(intent);
             Editor editor = context.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0).edit();
@@ -627,70 +619,78 @@ public class ZeroPageController {
     }
 
     private void startActivityInVirtualScreen(boolean changeActivity, boolean created) {
-        Log.d(TAG, "startActivityInVirtualScreen - changeActivity = " + changeActivity + ", created = " + created);
-        if (sVirtualScreenManager == null) {
-            Log.e(TAG, "startActivityInVirtualScreen - return by sVirtualScreenManager is null");
-            return;
-        }
-        Intent intent = new Intent();
-        intent.setComponent(new ComponentName(getZeroPagePackageName(), getZeroPageClassName()));
-        intent.addFlags(VCardConfig.FLAG_APPEND_TYPE_PARAM);
-        intent.putExtra("fromHome", true);
-        intent.putExtra("fingerSwipe", true);
-        intent.putExtra("supportRtl", Utilities.sIsRtl);
-        LaunchParams params = new LaunchParams();
-        if (Utilities.sIsRtl) {
-            params.bounds = new Rect(this.mRealMetric.widthPixels, 0, this.mRealMetric.widthPixels * 2, this.mRealMetric.heightPixels);
-        } else {
-            params.bounds = new Rect(-this.mRealMetric.widthPixels, 0, 0, this.mRealMetric.heightPixels);
-        }
-        params.flags |= LaunchParams.FLAG_BASE_ACTIVITY;
-        params.flags |= LaunchParams.FLAG_ZEROPAGE_POLICY;
-        if (changeActivity) {
-            params.flags |= LaunchParams.FLAG_CLEAR_TASKS;
-        }
-        if (created) {
-            params.flags |= LaunchParams.FLAG_RECREATE_VIRTUALSCREEN;
-        }
-        sVirtualScreenManager.startActivity(intent, null, params);
+        // TODO: Samsung specific code
+//        Log.d(TAG, "startActivityInVirtualScreen - changeActivity = " + changeActivity + ", created = " + created);
+//        if (sVirtualScreenManager == null) {
+//            Log.e(TAG, "startActivityInVirtualScreen - return by sVirtualScreenManager is null");
+//            return;
+//        }
+//        Intent intent = new Intent();
+//        intent.setComponent(new ComponentName(getZeroPagePackageName(), getZeroPageClassName()));
+//        intent.addFlags(VCardConfig.FLAG_APPEND_TYPE_PARAM);
+//        intent.putExtra("fromHome", true);
+//        intent.putExtra("fingerSwipe", true);
+//        intent.putExtra("supportRtl", Utilities.sIsRtl);
+//        LaunchParams params = new LaunchParams();
+//        if (Utilities.sIsRtl) {
+//            params.bounds = new Rect(this.mRealMetric.widthPixels, 0, this.mRealMetric.widthPixels * 2, this.mRealMetric.heightPixels);
+//        } else {
+//            params.bounds = new Rect(-this.mRealMetric.widthPixels, 0, 0, this.mRealMetric.heightPixels);
+//        }
+//        params.flags |= LaunchParams.FLAG_BASE_ACTIVITY;
+//        params.flags |= LaunchParams.FLAG_ZEROPAGE_POLICY;
+//        if (changeActivity) {
+//            params.flags |= LaunchParams.FLAG_CLEAR_TASKS;
+//        }
+//        if (created) {
+//            params.flags |= LaunchParams.FLAG_RECREATE_VIRTUALSCREEN;
+//        }
+//        sVirtualScreenManager.startActivity(intent, null, params);
     }
 
     private void bindVirtualScreen() {
-        if (sVirtualScreenManager != null) {
-            sVirtualScreenManager.bindVirtualScreen();
-        }
+        // TODO: Samsung specific code
+//        if (sVirtualScreenManager != null) {
+//            sVirtualScreenManager.bindVirtualScreen();
+//        }
     }
 
     private void unBindVirtualScreen() {
-        if (sVirtualScreenManager != null) {
-            sVirtualScreenManager.unBindVirtualScreen();
-        }
+        // TODO: Samsung specific code
+//        if (sVirtualScreenManager != null) {
+//            sVirtualScreenManager.unBindVirtualScreen();
+//        }
     }
 
     private boolean setOffset(int offsetX, int offsetY, boolean force) {
-        Log.d(TAG, "setOffset - offsetX = " + offsetX + ", force = " + force);
-        return sVirtualScreenManager != null && sVirtualScreenManager.setOffset(offsetX, offsetY, force);
+        // TODO: Samsung specific code
+        return false;
+//        Log.d(TAG, "setOffset - offsetX = " + offsetX + ", force = " + force);
+//        return sVirtualScreenManager != null && sVirtualScreenManager.setOffset(offsetX, offsetY, force);
     }
 
     private void setOffsetMsg(int offsetX, int offsetY, boolean force, long interval) {
-        Log.d(TAG, "setOffsetMsg - offsetX = " + offsetX + ", force = " + force);
-        Bundle options = new Bundle();
-        options.putInt("offsetX", offsetX);
-        options.putBoolean("force", force);
-        options.putLong("interval", interval);
-        if (this.mVirtualScreenHandler != null) {
-            this.mVirtualScreenHandler.setOffsetHandler(options);
-        }
+        // TODO: Samsung specific code
+//        Log.d(TAG, "setOffsetMsg - offsetX = " + offsetX + ", force = " + force);
+//        Bundle options = new Bundle();
+//        options.putInt("offsetX", offsetX);
+//        options.putBoolean("force", force);
+//        options.putLong("interval", interval);
+//        if (this.mVirtualScreenHandler != null) {
+//            this.mVirtualScreenHandler.setOffsetHandler(options);
+//        }
     }
 
     public static boolean isMoving() {
-        return sVirtualScreenManager != null && sVirtualScreenManager.isMoving();
+        // TODO: Samsung specific code
+        return false; // sVirtualScreenManager != null && sVirtualScreenManager.isMoving();
     }
 
     Point getOffset() {
-        if (sVirtualScreenManager != null) {
-            return sVirtualScreenManager.getOffset();
-        }
+        // TODO: Samsung specific code
+//        if (sVirtualScreenManager != null) {
+//            return sVirtualScreenManager.getOffset();
+//        }
         return null;
     }
 
@@ -1563,11 +1563,11 @@ public class ZeroPageController {
     }
 
     private void resetOffset() {
-        this.mVirtualScreenHandler.post(new Runnable() {
-            public void run() {
-                ZeroPageController.this.setOffset(0, 0, true);
-            }
-        });
+//        this.mVirtualScreenHandler.post(new Runnable() {
+//            public void run() {
+//                ZeroPageController.this.setOffset(0, 0, true);
+//            }
+//        });
     }
 
     private void cancelAnimation() {
@@ -1604,16 +1604,17 @@ public class ZeroPageController {
     }
 
     private void removeMsg() {
-        if (this.mVirtualScreenHandler != null) {
-            this.mVirtualScreenHandler.removeMsg();
-        }
+//        if (this.mVirtualScreenHandler != null) {
+//            this.mVirtualScreenHandler.removeMsg();
+//        }
     }
 
     public boolean hasMessages() {
-        if (this.mVirtualScreenHandler == null || !this.mVirtualScreenHandler.hasMessages(1)) {
-            return false;
-        }
-        return true;
+//        if (this.mVirtualScreenHandler == null || !this.mVirtualScreenHandler.hasMessages(1)) {
+//            return false;
+//        }
+//        return true;
+        return false;
     }
 
     boolean canScroll() {
@@ -1675,7 +1676,7 @@ public class ZeroPageController {
                 if (ZeroPageController.this.mInstalled || !isChecked) {
                     ZeroPageController.setZeroPageActiveState(ZeroPageController.this.mLauncher, isChecked);
                     ZeroPageController.this.updateZeroPageBg(isChecked, WhiteBgManager.isWhiteBg());
-                    if (zeroPageScreen.getZeroPageSwitchLayout().getVisibility() == 0) {
+                    if (zeroPageScreen.getZeroPageSwitchLayout().getVisibility() == View.VISIBLE) {
                         GSIMLogging.getInstance().insertLogging(GSIMLogging.FEATURE_NAME_HOME_EDIT_OPTION, GSIMLogging.HOME_EDIT_OPTION_ZEROPAGE, -1, false);
                     }
                     if (isChecked) {
@@ -1687,7 +1688,8 @@ public class ZeroPageController {
                         if (ZeroPageController.this.mWorkspace.getScreenIdForPageIndex(ZeroPageController.this.mWorkspace.getDefaultPage()) == -301) {
                             ZeroPageController.this.mWorkspace.updateDefaultHome(ZeroPageController.this.mWorkspace.getDefaultPage(), ZeroPageController.this.mWorkspace.getDefaultPage() + 1);
                         }
-                        ((ActivityManager) ZeroPageController.this.mLauncher.getSystemService("activity")).semForceStopPackage(ZeroPageController.this.getZeroPagePackageName());
+                        // TODO: Samsung specific code
+                        //((ActivityManager) ZeroPageController.this.mLauncher.getSystemService(Context.ACTIVITY_SERVICE)).semForceStopPackage(ZeroPageController.this.getZeroPagePackageName());
                         return;
                     } catch (Exception e) {
                         Log.e(ZeroPageController.TAG, "forceStopPackage exception for zero page - onCheckedChanged");
@@ -1783,35 +1785,36 @@ public class ZeroPageController {
     public void startZeroPage() {
         RuntimeException e;
         Log.d(TAG, "launch zeropage Activity.");
-        try {
-            int displayId = sVirtualScreenManager.getDisplayIdByPackage(this.mLauncher.getPackageName());
-            if (displayId > -1) {
-                Intent intent = new Intent();
-                intent.setClassName(getZeroPagePackageName(), getZeroPageClassName());
-                intent.setFlags(VCardConfig.FLAG_REFRAIN_QP_TO_NAME_PROPERTIES);
-                LaunchParams params = new LaunchParams();
-                params.flags |= LaunchParams.FLAG_BASE_ACTIVITY;
-                params.displayId = 0;
-                params.baseDisplayId = displayId;
-                intent = sVirtualScreenManager.updateMultiScreenLaunchParams(intent, params);
-                intent.putExtra("fromHome", true);
-                sVirtualScreenManager.startActivity(intent, null, params);
-                bindVirtualScreen();
-                this.mLauncher.getHomeController().enterNormalState(false, true);
-                if (LauncherFeature.supportZeroPageHome()) {
-                    Utilities.setZeroPageKey(this.mLauncher, true, ZeroPageProvider.START_FROM_ZEROPAGE);
-                    ZeroPageProvider.notifyChange(this.mLauncher);
-                }
-                GSIMLogging.getInstance().insertLogging(GSIMLogging.FEATURE_NAME_ENTER_ZEROPAGE, null, -1, false);
-                GSIMLogging.getInstance().setZeroPageStartTime();
-            }
-        } catch (ActivityNotFoundException e2) {
-            e = e2;
-            Log.e(TAG, "startZeroPage:" + e.toString());
-        } catch (NullPointerException e3) {
-            e = e3;
-            Log.e(TAG, "startZeroPage:" + e.toString());
-        }
+        // TODO: Samsung specific code
+//        try {
+//            int displayId = sVirtualScreenManager.getDisplayIdByPackage(this.mLauncher.getPackageName());
+//            if (displayId > -1) {
+//                Intent intent = new Intent();
+//                intent.setClassName(getZeroPagePackageName(), getZeroPageClassName());
+//                intent.setFlags(VCardConfig.FLAG_REFRAIN_QP_TO_NAME_PROPERTIES);
+//                LaunchParams params = new LaunchParams();
+//                params.flags |= LaunchParams.FLAG_BASE_ACTIVITY;
+//                params.displayId = 0;
+//                params.baseDisplayId = displayId;
+//                intent = sVirtualScreenManager.updateMultiScreenLaunchParams(intent, params);
+//                intent.putExtra("fromHome", true);
+//                sVirtualScreenManager.startActivity(intent, null, params);
+//                bindVirtualScreen();
+//                this.mLauncher.getHomeController().enterNormalState(false, true);
+//                if (LauncherFeature.supportZeroPageHome()) {
+//                    Utilities.setZeroPageKey(this.mLauncher, true, ZeroPageProvider.START_FROM_ZEROPAGE);
+//                    ZeroPageProvider.notifyChange(this.mLauncher);
+//                }
+//                GSIMLogging.getInstance().insertLogging(GSIMLogging.FEATURE_NAME_ENTER_ZEROPAGE, null, -1, false);
+//                GSIMLogging.getInstance().setZeroPageStartTime();
+//            }
+//        } catch (ActivityNotFoundException e2) {
+//            e = e2;
+//            Log.e(TAG, "startZeroPage:" + e.toString());
+//        } catch (NullPointerException e3) {
+//            e = e3;
+//            Log.e(TAG, "startZeroPage:" + e.toString());
+//        }
     }
 
     public boolean isCurrentZeroPage() {
@@ -1924,7 +1927,8 @@ public class ZeroPageController {
         if (packageName != null) {
             intent.setData(Uri.parse("samsungapps://ProductDetail/" + packageName));
             intent.putExtra("type", "cover");
-            intent.addFlags(335544352);
+            // TODO: Fix intent flags
+            //intent.addFlags(335544352);
             this.mLauncher.startActivity(intent);
         }
     }

@@ -18,6 +18,6 @@ public abstract class AbstractUserComparator<T extends ItemInfo> implements Comp
         if (this.mMyUser.equals(lhs.user)) {
             return -1;
         }
-        return Long.valueOf(this.mUserManager.getSerialNumberForUser(lhs.user)).compareTo(Long.valueOf(this.mUserManager.getSerialNumberForUser(rhs.user)));
+        return Long.valueOf(this.mUserManager.getSerialNumberForUser(lhs.user)).compareTo(this.mUserManager.getSerialNumberForUser(rhs.user));
     }
 }

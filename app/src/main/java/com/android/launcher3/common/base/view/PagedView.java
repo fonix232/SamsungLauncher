@@ -297,11 +297,12 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
         this.mScrollState = -1;
         this.mIsShowingHintPages = false;
         this.mContinuallyScroll = false;
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PagedView, defStyle, 0);
-        this.mPageLayoutWidthGap = a.getDimensionPixelSize(0, 0);
-        this.mPageLayoutHeightGap = a.getDimensionPixelSize(1, 0);
-        this.mPageIndicatorViewId = a.getResourceId(2, -1);
-        a.recycle();
+        // TODO: Samsung specific code
+//        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PagedView, defStyle, 0);
+//        this.mPageLayoutWidthGap = a.getDimensionPixelSize(0, 0);
+//        this.mPageLayoutHeightGap = a.getDimensionPixelSize(1, 0);
+//        this.mPageIndicatorViewId = a.getResourceId(2, -1);
+//        a.recycle();
         setHapticFeedbackEnabled(false);
         init();
     }
@@ -696,7 +697,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
             int childCount = getChildCount();
             for (int i = 0; i < childCount; i++) {
                 View child = getPageAt(i);
-                if (child.getVisibility() != 8) {
+                if (child.getVisibility() != View.GONE) {
                     int childWidthMode;
                     int childHeightMode;
                     LayoutParams lp = (LayoutParams) child.getLayoutParams();
@@ -744,7 +745,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
             }
             for (int i = startIndex; i != endIndex; i += delta) {
                 View child = getPageAt(i);
-                if (child.getVisibility() != 8) {
+                if (child.getVisibility() != View.GONE) {
                     int childTop = (getPaddingTop() + offsetY) + this.mInsets.top;
                     if (this.mCenterPagesVertically) {
                         childTop += ((((getViewportHeight() - this.mInsets.top) - this.mInsets.bottom) - verticalPadding) - child.getMeasuredHeight()) / 2;
@@ -936,7 +937,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
     }
 
     protected boolean shouldDrawChild(View child) {
-        return child.getVisibility() == 0;
+        return child.getVisibility() == View.VISIBLE;
     }
 
     protected void dispatchDraw(Canvas canvas) {
@@ -1489,7 +1490,6 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
                     break;
                 }
                 return scrollPageOnMoveEvent(ev);
-                break;
             case 3:
                 if (this.mTouchState == 1) {
                     snapToDestination();
@@ -1834,7 +1834,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
         if (!testTouchState) {
             return state;
         }
-        return state & (this.mTouchState == 2 ? 1 : 0);
+        return state & (this.mTouchState == 2);
     }
 
     void endReordering() {
@@ -1914,7 +1914,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
     }
 
     protected String getCurrentPageDescription() {
-        return String.format(getContext().getString(R.string.default_scroll_format), new Object[]{Integer.valueOf(getNextPage() + 1), Integer.valueOf(getChildCount())});
+        return String.format(getContext().getString(R.string.default_scroll_format), new Object[]{getNextPage() + 1, getChildCount()});
     }
 
     public boolean onHoverEvent(MotionEvent event) {
@@ -1933,13 +1933,13 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
         if (isContentsRefreshable() && isDataReady()) {
             this.mDirtyPageContent.clear();
             syncPages();
-            measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), 1073741824), MeasureSpec.makeMeasureSpec(getMeasuredHeight(), 1073741824));
+            measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
             if (page > -1) {
                 setCurrentPage(Math.min(getPageCount() - 1, page));
             }
             int count = getChildCount();
             for (int i = 0; i < count; i++) {
-                this.mDirtyPageContent.add(Boolean.valueOf(true));
+                this.mDirtyPageContent.add(Boolean.TRUE);
             }
             loadAssociatedPages(this.mCurrentPage, immediateAndOnly);
             requestLayout();
@@ -1969,7 +1969,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
     }
 
     private boolean isActivePage(int page) {
-        return this.mActivePages.contains(Integer.valueOf(page));
+        return this.mActivePages.contains(page);
     }
 
     public void loadAssociatedPages(int page) {
@@ -1981,7 +1981,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
             int i;
             int count = getChildCount();
             for (i = this.mDirtyPageContent.size(); i < count; i++) {
-                this.mDirtyPageContent.add(Boolean.valueOf(true));
+                this.mDirtyPageContent.add(Boolean.TRUE);
             }
             if (page >= 0 && page < count) {
                 setActivePages(page);
@@ -1996,8 +1996,8 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
                                 if (pageLayout.getPageItemCount() > 0) {
                                     pageLayout.removeAllViewsOnPage();
                                 }
-                                this.mDirtyPageContent.set(i, Boolean.valueOf(true));
-                                getPageAt(i).setVisibility(4);
+                                this.mDirtyPageContent.set(i, Boolean.TRUE);
+                                getPageAt(i).setVisibility(View.INVISIBLE);
                             }
                         }
                     }
@@ -2009,13 +2009,13 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
     protected void setActivePages(int currentPageIndex) {
         this.mActivePages.clear();
         ArrayList<Integer> activePages = this.mActivePages;
-        activePages.add(Integer.valueOf(currentPageIndex));
+        activePages.add(currentPageIndex);
         int cacheSize = getPageCacheSize();
         int pageCount = getPageCount();
         int i;
         if (cacheSize >= pageCount) {
             for (i = 0; i < pageCount; i++) {
-                activePages.add(Integer.valueOf(i));
+                activePages.add(i);
             }
             return;
         }
@@ -2025,13 +2025,13 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
         for (i = 1; i <= pagesToLeft; i++) {
             int leftIndex = currentPageIndex - i;
             if (leftIndex >= 0) {
-                activePages.add(Integer.valueOf(leftIndex));
+                activePages.add(leftIndex);
             }
         }
         for (i = 1; i <= pagesToRight; i++) {
             int rightIndex = currentPageIndex + i;
             if (rightIndex < pageCount) {
-                activePages.add(Integer.valueOf(rightIndex));
+                activePages.add(rightIndex);
             }
         }
     }
@@ -2040,7 +2040,7 @@ public abstract class PagedView extends ViewGroup implements OnHierarchyChangeLi
         if (((Boolean) this.mDirtyPageContent.get(page)).booleanValue()) {
             syncPageItems(page, immediateAndOnly);
             getPageAt(page).setVisibility(View.VISIBLE);
-            this.mDirtyPageContent.set(page, Boolean.valueOf(false));
+            this.mDirtyPageContent.set(page, Boolean.FALSE);
         }
     }
 

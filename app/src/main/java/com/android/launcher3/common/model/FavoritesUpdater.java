@@ -108,7 +108,7 @@ public class FavoritesUpdater extends DataUpdater implements UpdaterInterface {
                             }
                         } else if (item instanceof FolderInfo) {
                             PostPositionController pp = PostPositionController.getInstance(DataUpdater.sContext);
-                            FolderInfo folder = item;
+                            FolderInfo folder = (FolderInfo)item;
                             if (folder.contents.size() == 1) {
                                 pp.writeFolderReadyIdForNoFDR(item.container, folder.title.toString(), ((IconInfo) folder.contents.get(0)).id);
                             } else {

@@ -10,8 +10,8 @@ import android.widget.FrameLayout.LayoutParams;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.common.base.item.PendingAddItemInfo;
 import com.android.launcher3.util.UninstallAppUtils;
-import com.android.launcher3.widget.controller.WidgetState.State;
-import com.samsung.android.widget.SemHoverPopupWindow;
+//import com.android.launcher3.widget.controller.WidgetState.State;
+//import com.samsung.android.widget.SemHoverPopupWindow;
 import com.sec.android.app.launcher.R;
 
 public class WidgetStateUninstall extends WidgetState implements OnClickListener {
@@ -63,11 +63,12 @@ public class WidgetStateUninstall extends WidgetState implements OnClickListener
         View backButton = titleBar.findViewById(R.id.menu_selected_back_down);
         if (backButton != null) {
             backButton.setOnClickListener(this);
-            backButton.semSetHoverPopupType(1);
-            SemHoverPopupWindow hover = backButton.semGetHoverPopup(true);
-            if (hover != null) {
-                hover.setContent(this.mContext.getResources().getString(R.string.menu_navigate_up));
-            }
+            // TODO: Samsung specific code
+//            backButton.semSetHoverPopupType(1);
+//            SemHoverPopupWindow hover = backButton.semGetHoverPopup(true);
+//            if (hover != null) {
+//                hover.setContent(this.mContext.getResources().getString(R.string.menu_navigate_up));
+//            }
         }
     }
 
@@ -80,9 +81,9 @@ public class WidgetStateUninstall extends WidgetState implements OnClickListener
     }
 
     private void uninstallWidget(View view) {
-        PendingAddItemInfo tag = view.getTag();
+        Object tag = view.getTag();
         if (tag instanceof PendingAddItemInfo) {
-            PendingAddItemInfo info = tag;
+            PendingAddItemInfo info = (PendingAddItemInfo)tag;
             if (info.uninstallable(this.mContext)) {
                 UninstallAppUtils.startUninstallActivity(this.mContext, info.user, info.componentName);
             }

@@ -53,7 +53,7 @@ import com.android.launcher3.util.MainThreadExecutor;
 import com.android.launcher3.util.StringJoiner;
 import com.android.launcher3.util.TestHelper;
 import com.android.launcher3.util.WhiteBgManager;
-import com.samsung.android.feature.SemCscFeature;
+//import com.samsung.android.feature.SemCscFeature;
 import com.sec.android.app.launcher.R;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -66,7 +66,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class FavoritesProvider extends DataProvider implements DataInterface {
+public class FavoritesProvider extends DataProvider implements DataProvider.DataInterface {
     private static final String CHECK_CHANGED_COMPONENT_EXITST = "checkChangedComponentVersion";
     private static final String CLOCK_WIDGET_EASY_PACKAGE = "com.sec.android.daemonapp";
     private static final String CONTACT_WIDGET_EASY_CLASS = "com.sec.android.widgetapp.easymodecontactswidget.SeniorFavoriteWidgetProviderLarge";
@@ -1298,7 +1298,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     while (true) {
                         AppWidgetProviderInfo provider = widgets.getAppWidgetInfo((int) ti.getLong(0));
                         if (provider != null) {
-                            widgetList.add(Pair.create(provider.provider, Long.valueOf(ti.getLong(0))));
+                            widgetList.add(Pair.create(provider.provider, ti.getLong(0)));
                         }
                         if (!ti.moveToNext()) {
                             break;
@@ -1328,7 +1328,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 if (prefs.getInt("screencount.briefing", 0) > 0 && pageCount > 0) {
                     pageCount--;
                     defaultPageIndex--;
-                    sDb.execSQL("UPDATE " + escapedTableName + " SET " + "screen" + '=' + "screen" + "-1 WHERE " + "container" + '=' + -100);
+                    sDb.execSQL("UPDATE " + escapedTableName + " SET screen=screen-1 WHERE container= + -100");
                 }
             }
             String str = convertAppOrder ? LauncherFiles.HOME_DEFAULT_PAGE_KEY : LauncherFiles.HOMEONLY_DEFAULT_PAGE_KEY;
@@ -1623,7 +1623,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         Uri uri = Favorites.getContentUri(id);
                         values.put("intent", intent);
                         if (isEmptyDb) {
-                            values.put("itemType", Integer.valueOf(0));
+                            values.put("itemType", 0);
                         }
                         cr.update(uri, values, null, null);
                         Log.d(TAG, "Changed component updated : " + before + " to " + after);
@@ -1731,7 +1731,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         if (LauncherFeature.supportSprintExtension()) {
             Log.d(TAG, " [SPRINT] - skip generating new ID for new rows as it's already created");
         } else {
-            values.put("_id", Long.valueOf(generateNewItemId()));
+            values.put("_id", generateNewItemId());
         }
         Integer itemType = values.getAsInteger("itemType");
         if (!(itemType == null || itemType.intValue() != 4 || values.containsKey(Favorites.APPWIDGET_ID))) {
@@ -1742,7 +1742,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             }
             try {
                 int appWidgetId = this.mAppWidgetHost.allocateAppWidgetId();
-                values.put(Favorites.APPWIDGET_ID, Integer.valueOf(appWidgetId));
+                values.put(Favorites.APPWIDGET_ID, appWidgetId);
                 if (!appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId, cn)) {
                     return false;
                 }
@@ -1764,8 +1764,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         if (!hasScreenId(screenId)) {
             int rank = getMaxScreenRank() + 1;
             ContentValues v = new ContentValues();
-            v.put("_id", Long.valueOf(screenId));
-            v.put(WorkspaceScreens.SCREEN_RANK, Integer.valueOf(rank));
+            v.put("_id", screenId);
+            v.put(WorkspaceScreens.SCREEN_RANK, rank);
             if (LauncherProvider.dbInsertAndCheck(sDb, "workspaceScreens", null, v) < 0) {
                 return false;
             }
@@ -1845,12 +1845,12 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         }
     }
 
-    public void applyHideItem(Set<String> hideItems) {
+    public void applyHideItem(Set<String> hideItems) throws Throwable {
         int idIndex;
         String[] strArr;
         HashMap<String, Boolean> hideItemsMap = new HashMap();
         for (String item : hideItems) {
-            hideItemsMap.put(item, Boolean.valueOf(false));
+            hideItemsMap.put(item, Boolean.FALSE);
         }
         sDb.beginTransaction();
         Cursor c = sDb.query("favorites", new String[]{"_id", "container", "intent", BaseLauncherColumns.PROFILE_ID, "hidden"}, "itemType=?", new String[]{String.valueOf(0)}, null, null, null);
@@ -1868,12 +1868,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             while (c.moveToNext()) {
                 String intentDescription = c.getString(intentIndex);
                 if (intentDescription != null) {
-                    Intent intent;
-                    try {
-                        intent = Intent.parseUri(intentDescription, 0);
-                    } catch (Throwable e) {
-                        Log.e(TAG, "Unable to parse intent", e);
-                    }
+                    Intent intent = Intent.parseUri(intentDescription, 0);
                     try {
                         long id = c.getLong(idIndex);
                         long container = c.getLong(containerIndex);
@@ -1881,20 +1876,20 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         int hidden = c.getInt(hiddenIndex);
                         String componentAndProfile = intent.getComponent().flattenToShortString() + "," + String.valueOf(profile);
                         if (hideItemsMap.containsKey(componentAndProfile)) {
-                            hideItemsMap.put(componentAndProfile, Boolean.valueOf(true));
+                            hideItemsMap.put(componentAndProfile, Boolean.TRUE);
                             if (hidden == 0) {
                                 if (isHomeOnly) {
-                                    hideDesktopItemList.add(Long.valueOf(id));
+                                    hideDesktopItemList.add(id);
                                 } else if (container == -100 || container == -101) {
-                                    deleteItemList.add(Long.valueOf(id));
+                                    deleteItemList.add(id);
                                 } else if (container == -102) {
-                                    hideAppsItemList.add(Long.valueOf(id));
+                                    hideAppsItemList.add(id);
                                 } else {
-                                    folderItemList.put(id, Long.valueOf(container));
+                                    folderItemList.put(id, container);
                                 }
                             }
                         } else if (hidden == 2) {
-                            deleteItemList.add(Long.valueOf(id));
+                            deleteItemList.add(id);
                         }
                     } catch (Throwable th) {
                         Throwable th2 = th;
@@ -1921,7 +1916,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             if (c != null) {
                 idIndex = c.getColumnIndexOrThrow("_id");
                 while (c.moveToNext()) {
-                    foldersInApps.add(Long.valueOf(c.getLong(idIndex)));
+                    foldersInApps.add(c.getLong(idIndex));
                 }
                 c.close();
             }
@@ -1929,13 +1924,13 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             if (c != null) {
                 idIndex = c.getColumnIndexOrThrow("_id");
                 while (c.moveToNext()) {
-                    foldersInHome.add(Long.valueOf(c.getLong(idIndex)));
+                    foldersInHome.add(c.getLong(idIndex));
                 }
                 c.close();
             }
             int folderListSize = folderItemList.size();
             for (int i = 0; i < folderListSize; i++) {
-                Long key = Long.valueOf(folderItemList.keyAt(i));
+                Long key = folderItemList.keyAt(i);
                 Long container2 = (Long) folderItemList.get(key.longValue());
                 if (foldersInApps.contains(container2)) {
                     hideAppsItemList.add(key);
@@ -1948,11 +1943,11 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             sDb.setTransactionSuccessful();
             sDb.endTransaction();
         } catch (Throwable th4) {
-            th2 = th4;
-            String[] strArr2 = selectionArg;
+            //th2 = th4;
+            //String[] strArr2 = selectionArg;
             strArr = columns;
             sDb.endTransaction();
-            throw th2;
+            throw th4;
         }
     }
 
@@ -1962,17 +1957,17 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             sDb.delete("favorites", Utilities.createDbSelectionQuery("_id", deleteItemList), null);
         }
         ContentValues values = new ContentValues();
-        values.put("hidden", Integer.valueOf(2));
+        values.put("hidden", 2);
         if (!hideAppsItemList.isEmpty()) {
             Log.d(TAG, "update hideItmes for Apps " + TextUtils.join(", ", hideAppsItemList));
-            values.put("container", Integer.valueOf(Favorites.CONTAINER_APPS));
-            values.put("screen", Integer.valueOf(0));
+            values.put("container", Favorites.CONTAINER_APPS);
+            values.put("screen", 0);
             sDb.update("favorites", values, Utilities.createDbSelectionQuery("_id", hideAppsItemList), null);
         }
         if (!hideDesktopItemList.isEmpty()) {
             Log.d(TAG, "update hideItmes for Home" + TextUtils.join(", ", hideDesktopItemList));
-            values.put("container", Integer.valueOf(-100));
-            values.put("screen", Integer.valueOf(-1));
+            values.put("container", -100);
+            values.put("screen", -1);
             sDb.update("favorites", values, Utilities.createDbSelectionQuery("_id", hideDesktopItemList), null);
         }
     }
@@ -1987,7 +1982,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 String[] arr = key.split(",");
                 if (arr.length == 2) {
                     component = arr[0];
-                    profile = Long.valueOf(arr[1]).longValue();
+                    profile = Long.valueOf(arr[1]);
                 }
                 if (isHomeOnly) {
                     container = -100;
@@ -2003,9 +1998,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
 
     private String makeFoldersIdToString(ArrayList<Long> folders) {
         StringJoiner joiner = new StringJoiner(",");
-        Iterator it = folders.iterator();
-        while (it.hasNext()) {
-            joiner.append(((Long) it.next()).longValue());
+        for (Long folder : folders) {
+            joiner.append(folder);
         }
         return joiner.toString();
     }
@@ -2020,7 +2014,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             cursor = sDb.query("favorites", new String[]{"_id"}, "itemType=? AND (container=? OR container=?)", selectionArg, null, null, null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
-                    folderIds.add(Long.valueOf(cursor.getLong(0)));
+                    folderIds.add(cursor.getLong(0));
                 }
                 cursor.close();
             }
@@ -2067,10 +2061,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     if (appWidgetProvider != null) {
                         ComponentName cn = ComponentName.unflattenFromString(appWidgetProvider);
                         if (appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId, userManager.getUserForSerialNumber(profileId).getUser(), cn, null)) {
-                            updateWidgets.put(id, Integer.valueOf(appWidgetId));
+                            updateWidgets.put(id, appWidgetId);
                         } else {
                             Log.e(TAG, "Unable to bind app widget during copy for homeonly " + cn);
-                            removeWidgets.add(Long.valueOf(id));
+                            removeWidgets.add(id);
                         }
                     }
                 } finally {
@@ -2109,7 +2103,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         UserHandleCompat user = userManager.getUserForSerialNumber(cursor.getLong(2));
                         for (LauncherActivityInfoCompat app : launcherApps.getActivityList(cn.getPackageName(), user)) {
                             if (cn.equals(app.getComponentName())) {
-                                appShortcutIds.add(Long.valueOf(cursor.getLong(0)));
+                                appShortcutIds.add(cursor.getLong(0));
                                 break;
                             }
                         }
@@ -2145,7 +2139,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         long id = cursor.getLong(0);
                         ComponentKey cmpKey = new ComponentKey(cmp, userManager.getUserForSerialNumber(cursor.getLong(2)));
                         if (cmpList.contains(cmpKey)) {
-                            duplicateItemIds.add(Long.valueOf(id));
+                            duplicateItemIds.add(id);
                         } else {
                             cmpList.add(cmpKey);
                         }
@@ -2200,19 +2194,19 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         }
         it = addItems.iterator();
         while (it.hasNext()) {
-            info = (ItemInfo) it.next();
+            ItemInfo info = (ItemInfo) it.next();
             if (needScreenAdd) {
                 maxScreenId++;
                 maxScreenRank++;
-                values = new ContentValues();
-                values.put("_id", Long.valueOf(maxScreenId));
-                values.put(WorkspaceScreens.SCREEN_RANK, Integer.valueOf(maxScreenRank));
+                ContentValues values = new ContentValues();
+                values.put("_id", maxScreenId);
+                values.put(WorkspaceScreens.SCREEN_RANK, maxScreenRank);
                 sDb.insert("workspaceScreens_homeOnly", null, values);
                 needScreenAdd = false;
             }
             itemId++;
             if (info instanceof FolderInfo) {
-                folderIdMap.put(info.id, Long.valueOf(itemId));
+                folderIdMap.put(info.id, itemId);
             }
             info.id = itemId;
             info.screenId = maxScreenId;
@@ -2231,7 +2225,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 cellY = 0;
                 needScreenAdd = true;
             }
-            values = new ContentValues();
+            ContentValues values = new ContentValues();
             info.onAddToDatabase(sContext, values);
             ops.add(ContentProviderOperation.newInsert(Favorites_HomeOnly.CONTENT_URI).withValues(values).build());
         }
@@ -2242,11 +2236,11 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             if (infoList != null) {
                 it = infoList.iterator();
                 while (it.hasNext()) {
-                    info = (ItemInfo) it.next();
+                    ItemInfo info = (ItemInfo) it.next();
                     itemId++;
                     info.id = itemId;
                     info.container = newFolderId;
-                    values = new ContentValues();
+                    ContentValues values = new ContentValues();
                     info.onAddToDatabase(sContext, values);
                     ops.add(ContentProviderOperation.newInsert(Favorites_HomeOnly.CONTENT_URI).withValues(values).build());
                 }
@@ -2325,7 +2319,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         for (int j = 0; j < folderCount; j++) {
             int childCount = 0;
             String[] folderChildColumns = new String[]{"_id", "intent", "screen", BaseLauncherColumns.PROFILE_ID};
-            Long folderId = Long.valueOf(folders.keyAt(j));
+            Long folderId = folders.keyAt(j);
             cursor = sDb.query("favorites", folderChildColumns, "container=?", new String[]{String.valueOf(folderId)}, null, null, null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
@@ -2476,8 +2470,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             Log.i(TAG, "defaultScreenCount : " + defaultScreenCount + " cscScreenCount : " + cscScreenCount);
             if (defaultScreenCount < cscScreenCount) {
                 for (int i = 0; i < cscScreenCount; i++) {
-                    if (!screenIds.contains(Long.valueOf((long) i))) {
-                        screenIds.add(i, Long.valueOf((long) i));
+                    if (!screenIds.contains((long) i)) {
+                        screenIds.add(i, (long) i);
                     }
                 }
             }
@@ -2488,7 +2482,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 Long id = (Long) it.next();
                 values.clear();
                 values.put("_id", id);
-                values.put(WorkspaceScreens.SCREEN_RANK, Integer.valueOf(rank));
+                values.put(WorkspaceScreens.SCREEN_RANK, rank);
                 if (LauncherProvider.dbInsertAndCheck(sDb, "workspaceScreens", null, values) < 0) {
                     throw new RuntimeException("Failed initialize screen tablefrom default layout");
                 }
@@ -2524,8 +2518,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         ContentValues values = new ContentValues();
         for (int rank = 0; rank < pageCount; rank++) {
             values.clear();
-            values.put("_id", Integer.valueOf(rank));
-            values.put(WorkspaceScreens.SCREEN_RANK, Integer.valueOf(rank));
+            values.put("_id", rank);
+            values.put(WorkspaceScreens.SCREEN_RANK, rank);
             if (LauncherProvider.dbInsertAndCheck(sDb, tableName, null, values) < 0) {
                 throw new RuntimeException("Failed restore screens");
             }
@@ -2570,10 +2564,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     ContentValues values = new ContentValues();
                     values.put("intent", intentWithProfile.toUri(0));
                     values.put("title", "");
-                    values.put("screen", Integer.valueOf(0));
-                    values.put("itemType", Integer.valueOf(0));
-                    values.put(BaseLauncherColumns.PROFILE_ID, Integer.valueOf(0));
-                    values.put("hidden", Integer.valueOf(1));
+                    values.put("screen", 0);
+                    values.put("itemType", 0);
+                    values.put(BaseLauncherColumns.PROFILE_ID, 0);
+                    values.put("hidden", 1);
                     Iterator it2 = restoredTables.iterator();
                     while (it2.hasNext()) {
                         long id;
@@ -2584,10 +2578,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         } else {
                             id = getMaxId(tableName) + 1;
                         }
-                        values.put("_id", Long.valueOf(id));
-                        values.put("container", Integer.valueOf(Favorites.CONTAINER_APPS));
+                        values.put("_id", id);
+                        values.put("container", Favorites.CONTAINER_APPS);
                         if (tableName.equals("favorites_homeOnly") || ((tableName.equals("favorites_standard") && LauncherAppState.getInstance().isHomeOnlyModeEnabled(false)) || (tableName.equals("favorites") && LauncherAppState.getInstance().isHomeOnlyModeEnabled()))) {
-                            values.put("container", Integer.valueOf(-100));
+                            values.put("container", -100);
                         }
                         sDb.insert(tableName, null, values);
                         Log.d(TAG, "insert hidden app(" + cn + ") to " + tableName);
@@ -2609,7 +2603,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             Cursor c = sDb.query("favorites", new String[]{"_id"}, "itemType = 2 AND _id NOT IN (SELECT container FROM favorites)", null, null, null, null);
             PostPositionController postPosition = PostPositionController.getInstance(sContext);
             while (c.moveToNext()) {
-                folderIds.add(Long.valueOf(c.getLong(0)));
+                folderIds.add(c.getLong(0));
                 postPosition.deleteFolder(c.getLong(0));
             }
             c.close();
@@ -2640,7 +2634,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 int TitleIndex = cursor.getColumnIndexOrThrow("title");
                 while (cursor.moveToNext()) {
                     FolderDbInfo info = new FolderDbInfo();
-                    info.id = Long.valueOf(cursor.getLong(idIndex));
+                    info.id = cursor.getLong(idIndex);
                     info.rank = cursor.getInt(rankIndex);
                     info.screen = cursor.getInt(screenIndex);
                     info.cellX = cursor.getInt(cellXIndex);
@@ -2669,18 +2663,18 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                                 cursor.moveToNext();
                                 Log.i(TAG, "deleteInvalidFolders folderId=" + folderDbId + " has only 1 item, so we delete this folder");
                                 ContentValues values = new ContentValues();
-                                Long childDbId = Long.valueOf(cursor.getLong(0));
+                                Long childDbId = cursor.getLong(0);
                                 int rank = ((FolderDbInfo) folders.get(i)).rank;
                                 int screen = ((FolderDbInfo) folders.get(i)).screen;
                                 int cellX = ((FolderDbInfo) folders.get(i)).cellX;
                                 int cellY = ((FolderDbInfo) folders.get(i)).cellY;
-                                values.put("container", Integer.valueOf(Favorites.CONTAINER_APPS));
-                                values.put("screen", Integer.valueOf(screen));
-                                values.put("cellX", Integer.valueOf(cellX));
-                                values.put("cellY", Integer.valueOf(cellY));
-                                values.put("spanX", Integer.valueOf(1));
-                                values.put("spanY", Integer.valueOf(1));
-                                values.put(BaseLauncherColumns.RANK, Integer.valueOf(rank));
+                                values.put("container", Favorites.CONTAINER_APPS);
+                                values.put("screen", screen);
+                                values.put("cellX", cellX);
+                                values.put("cellY", cellY);
+                                values.put("spanX", 1);
+                                values.put("spanY", 1);
+                                values.put(BaseLauncherColumns.RANK, rank);
                                 sDb.update("favorites", values, "_id=" + childDbId, null);
                                 sDb.delete("favorites", "_id=" + folderDbId, null);
                                 postPosition.writeFolderReadyIdForNoFDR(-102, ((FolderDbInfo) folders.get(i)).title, childDbId.longValue());
@@ -2755,7 +2749,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             try {
                 int idIndex = sc.getColumnIndexOrThrow("_id");
                 while (sc.moveToNext()) {
-                    screenIds.add(Long.valueOf(sc.getLong(idIndex)));
+                    screenIds.add(sc.getLong(idIndex));
                 }
                 if (sc != null) {
                     if (null != null) {
@@ -3424,26 +3418,26 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         int idx_appIcon = cr.getColumnIndexOrThrow("appIcon");
         if (!cr.getString(idx_packageName).isEmpty() && !cr.getString(idx_className).isEmpty()) {
             ContentValues values = new ContentValues();
-            values.put("_id", Long.valueOf(cr.getLong(idx_Id)));
+            values.put("_id", cr.getLong(idx_Id));
             values.put("title", (Byte) null);
             if (cr.getInt(idx_screen) != 2 || cr.getInt(idx_position) > 1) {
-                values.put("container", Integer.valueOf(-100));
-                values.put("cellX", Integer.valueOf(cr.getInt(idx_position) % 3));
+                values.put("container", -100);
+                values.put("cellX", cr.getInt(idx_position) % 3);
                 String str = "cellY";
                 int i = cr.getInt(idx_position) / 3;
                 int i2 = cr.getInt(idx_screen) == 2 ? getSoftKeyForEasy() ? 2 : 1 : 0;
-                values.put(str, Integer.valueOf(i2 + i));
-                values.put("screen", Integer.valueOf(cr.getInt(idx_screen) - contactCount));
+                values.put(str, i2 + i);
+                values.put("screen", cr.getInt(idx_screen) - contactCount);
             } else {
-                values.put("container", Integer.valueOf(Favorites.CONTAINER_HOTSEAT));
+                values.put("container", Favorites.CONTAINER_HOTSEAT);
                 values.put("cellX", (Byte) null);
                 values.put("cellY", (Byte) null);
-                values.put("screen", Integer.valueOf(cr.getInt(idx_position)));
+                values.put("screen", cr.getInt(idx_position));
             }
-            values.put("spanX", Integer.valueOf(1));
-            values.put("spanY", Integer.valueOf(1));
+            values.put("spanX", 1);
+            values.put("spanY", 1);
             if (cr.getInt(idx_appWidgetID) > 0) {
-                values.put("itemType", Integer.valueOf(4));
+                values.put("itemType", 4);
                 values.put("intent", (Byte) null);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(sContext);
                 ComponentName cn;
@@ -3454,11 +3448,11 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         appWidgetId = this.mAppWidgetHost.allocateAppWidgetId();
                         if (appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId, cn)) {
                             values.put(Favorites.APPWIDGET_PROVIDER, cn.flattenToString());
-                            values.put("spanX", Integer.valueOf(3));
-                            values.put("spanY", Integer.valueOf(1));
-                            values.put("cellX", Integer.valueOf(0));
-                            values.put("cellY", Integer.valueOf(0));
-                            values.put(Favorites.APPWIDGET_ID, Integer.valueOf(appWidgetId));
+                            values.put("spanX", 3);
+                            values.put("spanY", 1);
+                            values.put("cellX", 0);
+                            values.put("cellY", 0);
+                            values.put(Favorites.APPWIDGET_ID, appWidgetId);
                         } else {
                             Log.e(TAG, "Failed to initialize external widget");
                             return;
@@ -3477,11 +3471,11 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         options.putInt("New_WidgetId", appWidgetId);
                         if (appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId, cn, options)) {
                             values.put(Favorites.APPWIDGET_PROVIDER, cn.flattenToString());
-                            values.put("spanX", Integer.valueOf(3));
-                            values.put("spanY", Integer.valueOf(4));
-                            values.put("cellX", Integer.valueOf(0));
-                            values.put("cellY", Integer.valueOf(0));
-                            values.put(Favorites.APPWIDGET_ID, Integer.valueOf(appWidgetId));
+                            values.put("spanX", 3);
+                            values.put("spanY", 4);
+                            values.put("cellX", 0);
+                            values.put("cellY", 0);
+                            values.put(Favorites.APPWIDGET_ID, appWidgetId);
                         } else {
                             Log.e(TAG, "Failed to initialize external widget");
                             return;
@@ -3492,7 +3486,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     }
                 }
             }
-            values.put("itemType", Integer.valueOf(0));
+            values.put("itemType", 0);
             values.put("intent", IconInfo.makeLaunchIntent(ComponentName.createRelative(cr.getString(idx_packageName), cr.getString(idx_className)), userSerial).toUri(0));
             values.put(Favorites.APPWIDGET_PROVIDER, (Byte) null);
             values.put(BaseLauncherColumns.ICON_TYPE, (Byte) null);
@@ -3507,29 +3501,29 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         ContentValues values = new ContentValues();
         long id = generateNewItemId();
         Intent intent = IconInfo.makeLaunchIntent(ComponentName.unflattenFromString(component), profile);
-        values.put("_id", Long.valueOf(id));
+        values.put("_id", id);
         values.put("intent", intent.toUri(0));
-        values.put("container", Long.valueOf(container));
+        values.put("container", container);
         values.put("title", "");
-        values.put("screen", Long.valueOf(screen));
-        values.put("itemType", Integer.valueOf(0));
-        values.put(BaseLauncherColumns.PROFILE_ID, Long.valueOf(profile));
-        values.put("hidden", Integer.valueOf(2));
+        values.put("screen", screen);
+        values.put("itemType", 0);
+        values.put(BaseLauncherColumns.PROFILE_ID, profile);
+        values.put("hidden", 2);
         insertAndCheck(sDb, "favorites", values);
     }
 
     private void addAppsButton(String tableName, long maxID, long screen) {
         Log.d(TAG, "addAppsButton tableName : " + tableName + " maxID : " + maxID + " screen : " + screen);
         ContentValues values = new ContentValues();
-        values.put("_id", Long.valueOf(maxID + 1));
+        values.put("_id", maxID + 1);
         values.put("title", "Apps");
-        values.put("container", Integer.valueOf(Favorites.CONTAINER_HOTSEAT));
+        values.put("container", Favorites.CONTAINER_HOTSEAT);
         values.put("cellX", (Byte) null);
         values.put("cellY", (Byte) null);
-        values.put("screen", Long.valueOf(screen));
-        values.put("spanX", Integer.valueOf(1));
-        values.put("spanY", Integer.valueOf(1));
-        values.put("itemType", Integer.valueOf(1));
+        values.put("screen", screen);
+        values.put("spanX", 1);
+        values.put("spanY", 1);
+        values.put("itemType", 1);
         values.put("intent", new Intent(Utilities.ACTION_SHOW_APPS_VIEW).toUri(0));
         values.put(Favorites.APPWIDGET_PROVIDER, (Byte) null);
         sDb.insert(tableName, null, values);

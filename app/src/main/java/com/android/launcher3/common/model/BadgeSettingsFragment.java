@@ -346,7 +346,7 @@ public class BadgeSettingsFragment extends Fragment {
             this.progressDialog.setIndeterminate(true);
             this.progressDialog.show();
         }
-        this.recyclerView.setVisibility(4);
+        this.recyclerView.setVisibility(View.INVISIBLE);
     }
 
     private void dismissProgress() {
@@ -460,7 +460,7 @@ public class BadgeSettingsFragment extends Fragment {
     }
 
     public void enableAllAppsbadge(boolean enable) {
-        if ((enable ^ this.mAllSwitch.isChecked()) != 0) {
+        if ((enable && this.mAllSwitch.isChecked())) {
             this.allSwitchLayout.performClick();
         }
     }

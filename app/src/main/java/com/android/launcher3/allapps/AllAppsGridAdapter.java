@@ -45,7 +45,7 @@ import com.sec.android.app.launcher.R;
 import java.util.HashMap;
 import java.util.List;
 
-public class AllAppsGridAdapter extends Adapter<ViewHolder> {
+public class AllAppsGridAdapter extends Adapter<AllAppsGridAdapter.ViewHolder> {
     public static final int APPS_ALL_LIST_HEADER_VIEW_TYPE = 11;
     private static final long DEALYMILLISEC = 700;
     public static final int EMPTY_SEARCH_VIEW_TYPE = 3;
@@ -71,8 +71,9 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
             Intent intent = new Intent("android.intent.action.VIEW");
             intent.setData(Uri.parse("samsungapps://SearchResult/"));
             intent.putExtra("sKeyword", title);
-            intent.addFlags(270532608);
-            intent.addFlags(65536);
+            // TODO: Fix intent flags
+            //intent.addFlags(270532608);
+            //intent.addFlags(65536);
             try {
                 AllAppsGridAdapter.this.mLauncher.startActivity(intent);
             } catch (ActivityNotFoundException e) {
@@ -87,8 +88,9 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
             String string_of_uri = "samsungapps://ProductDetail/" + ((ItemDetails) v.getTag()).getPkgName();
             Intent intent = new Intent("android.intent.action.VIEW");
             intent.setData(Uri.parse(string_of_uri));
-            intent.addFlags(270532608);
-            intent.addFlags(65536);
+            // TODO: Fix intent flags
+//            intent.addFlags(270532608);
+//            intent.addFlags(65536);
             try {
                 AllAppsGridAdapter.this.mLauncher.startActivity(intent);
             } catch (ActivityNotFoundException e) {
@@ -113,8 +115,9 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
             String title = AllAppsGridAdapter.this.mSearchText.toString();
             Intent intent = new Intent("android.intent.action.VIEW");
             intent.setData(Uri.parse("market://search?q=" + title));
-            intent.addFlags(270532608);
-            intent.addFlags(65536);
+            // TODO: Fix intent flags
+//            intent.addFlags(270532608);
+//            intent.addFlags(65536);
             try {
                 AllAppsGridAdapter.this.mLauncher.startActivity(intent);
             } catch (ActivityNotFoundException e) {
@@ -309,7 +312,7 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
         this.mPredictedAppsDividerPaint.setAntiAlias(true);
         this.mPredictionBarDividerOffset = ((-res.getDimensionPixelSize(R.dimen.all_apps_prediction_icon_bottom_padding)) + res.getDimensionPixelSize(R.dimen.all_apps_icon_top_bottom_padding)) / 2;
         PackageManager pm = launcher.getPackageManager();
-        ResolveInfo marketInfo = pm.resolveActivity(createMarketSearchIntent(""), 65536);
+        ResolveInfo marketInfo = pm.resolveActivity(createMarketSearchIntent(""), PackageManager.MATCH_DEFAULT_ONLY);
         if (marketInfo != null) {
             this.mMarketAppName = marketInfo.loadLabel(pm).toString();
         }
@@ -410,7 +413,7 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
         switch (holder.getItemViewType()) {
             case 1:
                 IconInfo info = ((AdapterItem) this.mApps.getAdapterItems().get(position)).iconInfo;
-                IconView icon = holder.mContent;
+                IconView icon = (IconView)holder.mContent;
                 icon.applyFromApplicationInfo(info);
                 if (!this.mSearchText.isEmpty()) {
                     displayHighlightedName(icon, info.title.toString());
@@ -421,7 +424,7 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
                 ((IconView) holder.mContent).applyFromApplicationInfo(((AdapterItem) this.mApps.getAdapterItems().get(position)).iconInfo);
                 return;
             case 3:
-                TextView emptyViewText = holder.mContent;
+                TextView emptyViewText = (TextView)holder.mContent;
                 emptyViewText.setText(this.mEmptySearchMessage);
                 emptyViewText.setGravity(this.mApps.hasNoFilteredResults() ? 17 : 8388627);
                 return;
@@ -437,7 +440,7 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
                 searchView.setVisibility(View.GONE);
                 return;
             case 6:
-                TextView notiText = holder.mContent;
+                TextView notiText = (TextView)holder.mContent;
                 if (this.mApps.size() > 0) {
                     notiText.setVisibility(View.VISIBLE);
                     return;
@@ -506,7 +509,7 @@ public class AllAppsGridAdapter extends Adapter<ViewHolder> {
         int indexOf;
         int highlightStrLength = this.mSearchText.length();
         Spannable highLightText = new SpannableString(appName);
-        char[] iQueryForIndian = TextUtils.semGetPrefixCharForSpan(view.getPaint(), appName, this.mSearchText.toCharArray());
+        char[] iQueryForIndian = null; // TODO: Samsung specific code  // TextUtils.semGetPrefixCharForSpan(view.getPaint(), appName, this.mSearchText.toCharArray());
         if (iQueryForIndian != null) {
             String s = new String(iQueryForIndian);
             indexOf = appName.toLowerCase().indexOf(s.toLowerCase());

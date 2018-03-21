@@ -16,7 +16,7 @@ import android.util.Log;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.SecureFolderHelper;
-import com.samsung.android.feature.SemCscFeature;
+//import com.samsung.android.feature.SemCscFeature;
 import com.sec.android.app.launcher.R;
 import java.io.File;
 import java.io.FileReader;
@@ -35,12 +35,12 @@ public class DisableableAppCache {
     private static final boolean DEBUG = false;
     private static final Object DISABLEABLE_APP_UPDATE_TOKEN = new Object();
     private static final String RIGHT_BRAIN = "Kr.co.rightbrain.RetailMode";
-    private static final String[] SELECTION_ARGS = new String[]{UNINSTALL_BLACKLIST};
-    private static final String[] SELECTION_ARGS_WHITELIST = new String[]{UNINSTALL_WHITELIST};
     private static final String TAG = "DisableableAppCache";
     private static final String UNBLOCK_DISABLE_METADATA_NAME = "com.sec.android.app.unblockdisabling";
     private static final String UNINSTALL_BLACKLIST = "UninstallationBlacklist";
     private static final String UNINSTALL_WHITELIST = "UninstallationWhitelist";
+    private static final String[] SELECTION_ARGS = new String[]{UNINSTALL_BLACKLIST};
+    private static final String[] SELECTION_ARGS_WHITELIST = new String[]{UNINSTALL_WHITELIST};
     public static ArrayList<String> mDisableBlockedItems = new ArrayList();
     public static ArrayList<String> mDisableableItems = new ArrayList();
     public static ArrayList<String> mUninstallBlockedItems = new ArrayList();
@@ -62,7 +62,7 @@ public class DisableableAppCache {
         public void run() {
             if (!this.mAppsToMakeList.isEmpty()) {
                 try {
-                    ApplicationInfo info = DisableableAppCache.this.mPackageManager.getApplicationInfo(((ResolveInfo) this.mAppsToMakeList.pop()).activityInfo.packageName, 128);
+                    ApplicationInfo info = DisableableAppCache.this.mPackageManager.getApplicationInfo(((ResolveInfo) this.mAppsToMakeList.pop()).activityInfo.packageName, PackageManager.GET_META_DATA);
                     Bundle md = info.metaData;
                     boolean unblock = false;
                     boolean block = false;
@@ -325,10 +325,11 @@ public class DisableableAppCache {
                         throw th;
                     }
                 } catch (XmlPullParserException e4) {
-                    e = e4;
-                    cscFile = cscFile2;
-                    e222 = e;
-                    e222.printStackTrace();
+                    e.printStackTrace();
+//                    e = e4;
+//                    cscFile = cscFile2;
+//                    e222 = e;
+//                    e222.printStackTrace();
                     if (cscFile == null) {
                         cscFile.close();
                     }

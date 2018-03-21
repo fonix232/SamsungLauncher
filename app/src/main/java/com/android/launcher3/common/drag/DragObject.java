@@ -22,6 +22,8 @@ public class DragObject {
     public DragObject(DragObject info) {
         copyFrom(info);
     }
+    public DragObject() {
+    }
 
     public void copyFrom(DragObject info) {
         this.x = info.x;

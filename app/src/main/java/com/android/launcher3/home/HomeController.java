@@ -122,7 +122,7 @@ import com.android.launcher3.util.logging.SALogging;
 import com.android.launcher3.widget.PendingAddWidgetInfo;
 import com.android.launcher3.widget.PinItemDragListener;
 import com.android.launcher3.widget.PinShortcutRequestActivityInfo;
-import com.samsung.android.feature.SemGateConfig;
+//import com.samsung.android.feature.SemGateConfig;
 import com.sec.android.app.launcher.R;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -419,9 +419,10 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 updateNotificationHelp(false);
             }
         }
-        if (SemGateConfig.isGateEnabled() && isHomeStage) {
-            Log.i("GATE", "<GATE-M>SCREEN_LOADED_HOME</GATE-M>");
-        }
+        // TODO: Samsung specific code
+//        if (SemGateConfig.isGateEnabled() && isHomeStage) {
+//            Log.i("GATE", "<GATE-M>SCREEN_LOADED_HOME</GATE-M>");
+//        }
         if (isHomeStage && this.mState.equal(4)) {
             LauncherAppState.getInstance().getTopViewChangedMessageHandler().sendMessage(5);
         }
@@ -501,9 +502,9 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     public void restoreState(Bundle savedState, boolean isOnTop) {
         if (!isOnTop) {
             boolean accessibilityEnabled = Talk.INSTANCE.isAccessibilityEnabled();
-            this.mHomeContainer.setVisibility(accessibilityEnabled ? 8 : 4);
+            this.mHomeContainer.setVisibility(accessibilityEnabled ? View.GONE : View.INVISIBLE);
             if (!(this.mPageIndicatorView == null || this.mHomeContainer.equals(this.mPageIndicatorView.getParent()))) {
-                this.mPageIndicatorView.setVisibility(accessibilityEnabled ? 8 : 4);
+                this.mPageIndicatorView.setVisibility(accessibilityEnabled ? View.GONE : View.INVISIBLE);
             }
         }
         int currentScreen = savedState.getInt(RUNTIME_HOME_STATE_CURRENT_SCREEN, -1001);
@@ -553,7 +554,8 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
             this.mWorkspace = null;
         }
         if (this.mZeroPageController != null) {
-            this.mZeroPageController.onDestroy();
+            // TODO: This call is no longer needed
+            //this.mZeroPageController.onDestroy();
         }
         if (this.mMultiSelectManager != null) {
             this.mMultiSelectManager.removeMultiSelectCallbacks(this);
@@ -590,7 +592,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
             int fromViewMode = data.fromStage;
             HashMap<View, Integer> layerViews = data.getLayerViews();
             boolean animated = data.enableAnimation;
-            if ((((Integer) data.getExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, Integer.valueOf(0))).intValue() > 0) && this.mTrayManager != null) {
+            if ((((Integer) data.getExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, 0)).intValue() > 0) && this.mTrayManager != null) {
                 this.mTrayManager.setSuppressChangeStageOnce();
             }
             this.mWorkspace.setVisibility(View.VISIBLE);
@@ -620,15 +622,16 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 if (toState == 1) {
                     Talk.INSTANCE.say(this.mLauncher.getResources().getString(R.string.home_screen) + ", " + this.mWorkspace.getCurrentPageDescription());
                 } else if (toState == 2) {
-                    Talk.INSTANCE.say(this.mLauncher.getResources().getString(R.string.home_screen) + ", " + String.format(this.mLauncher.getResources().getString(R.string.default_scroll_format), new Object[]{Integer.valueOf(this.mWorkspace.getCurrentPage() + 1), Integer.valueOf(this.mWorkspace.getPageCount())}));
+                    Talk.INSTANCE.say(this.mLauncher.getResources().getString(R.string.home_screen) + ", " + String.format(this.mLauncher.getResources().getString(R.string.default_scroll_format), this.mWorkspace.getCurrentPage() + 1, this.mWorkspace.getPageCount()));
                 }
             } else if (fromViewMode == 5 || fromViewMode == 6) {
                 View anchorView = (View) data.getExtras(FolderController.KEY_FOLDER_ICON_VIEW);
                 Animator animatorSet = new AnimatorSet();
-                animatorSet.play(this.mHomeAnimation.getEnterFromFolderAnimation(animated, layerViews, anchorView));
-                if (this.mHomeContainer.getTranslationY() != 0.0f) {
-                    animatorSet.play(this.mHomeAnimation.getEnterFromAppsAnimation(animated, layerViews));
-                }
+                // TODO: Samsung specific code
+//                animatorSet.play(this.mHomeAnimation.getEnterFromFolderAnimation(animated, layerViews, anchorView));
+//                if (this.mHomeContainer.getTranslationY() != 0.0f) {
+//                    animatorSet.play(this.mHomeAnimation.getEnterFromAppsAnimation(animated, layerViews));
+//                }
                 enterAnim = animatorSet;
                 toState = getAdjustedInternalState(data.getInternalStateTo());
                 fromState = getAdjustedInternalState(data.getInternalStateFrom());
@@ -653,7 +656,8 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                     if (toState == 1 && fromState == 4) {
                         this.mState.set(toState);
                         switchInternalStateChange(fromState, toState);
-                        animatorSet.play(this.mHomeAnimation.getEnterFromAppsPickerAnimation(animated, layerViews));
+                        // TODO: Samsung specific code
+                        // animatorSet.play(this.mHomeAnimation.getEnterFromAppsPickerAnimation(animated, layerViews));
                         enterAnim = animatorSet;
                     } else if (toState == 1) {
                         enterAnim = animatorSet;
@@ -1325,7 +1329,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 return true;
             }
             if (this.mLauncher.isSafeModeEnabled()) {
-                Toast.makeText(this.mLauncher, R.string.safemode_widget_error, 0).show();
+                Toast.makeText(this.mLauncher, R.string.safemode_widget_error, Toast.LENGTH_SHORT).show();
             }
             onClickPendingWidget((PendingAppWidgetHostView) v);
             return true;
@@ -1333,9 +1337,9 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     private void onClickAppShortcut(View v) {
-        IconInfo tag = v.getTag();
+        ItemInfo tag = (ItemInfo)v.getTag();
         if (tag instanceof IconInfo) {
-            IconInfo shortcut = tag;
+            IconInfo shortcut = (IconInfo)tag;
             if (shortcut.isAppsButton) {
                 this.mLauncher.showAppsView(true, false);
                 Resources res = this.mLauncher.getResources();
@@ -1350,10 +1354,10 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 if ((shortcut.isDisabled & 1) != 0) {
                     error = R.string.safemode_shortcut_error;
                 }
-                Toast.makeText(this.mLauncher, error, 0).show();
+                Toast.makeText(this.mLauncher, error, Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                Toast.makeText(this.mLauncher, shortcut.disabledMessage, 0).show();
+                Toast.makeText(this.mLauncher, shortcut.disabledMessage, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -1470,7 +1474,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
         }
         boolean isHotseat;
         boolean z;
-        child.setVisibility(4);
+        child.setVisibility(View.INVISIBLE);
         if (cellInfo.container == -101) {
             isHotseat = true;
         } else {
@@ -1719,47 +1723,49 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     private AppWidgetHostView completeAddAppWidget(int appWidgetId, long container, long screenId, AppWidgetHostView hostView, LauncherAppWidgetProviderInfo appWidgetInfo) {
-        AppWidgetProviderInfo appWidgetProviderInfo = this.mAppWidgetManager.getAppWidgetInfo(appWidgetId);
-        if (appWidgetProviderInfo == null) {
-            Log.d(TAG, "App widget provider info is null. AppWidgetID = " + appWidgetId);
-            return null;
-        }
-        AppWidgetProviderInfo appWidgetInfo2;
-        ItemInfo info = this.mPendingAddInfo;
-        if (appWidgetInfo == null) {
-            appWidgetInfo2 = LauncherAppWidgetProviderInfo.fromProviderInfo(this.mLauncher, appWidgetProviderInfo);
-        }
-        if (appWidgetInfo2.isCustomWidget) {
-            appWidgetId = -100;
-        }
-        LauncherAppWidgetInfo launcherInfo = new LauncherAppWidgetInfo(appWidgetId, appWidgetInfo2.provider);
-        launcherInfo.spanX = info.spanX;
-        launcherInfo.spanY = info.spanY;
-        launcherInfo.minSpanX = info.minSpanX;
-        launcherInfo.minSpanY = info.minSpanY;
-        launcherInfo.user = this.mAppWidgetManager.getUser(appWidgetInfo2);
-        addItemToDb(launcherInfo, container, screenId, info.cellX, info.cellY);
-        if (!this.mRestoring) {
-            if (hostView == null) {
-                launcherInfo.hostView = this.mAppWidgetHost.createView(this.mLauncher, appWidgetId, appWidgetInfo2);
-            } else {
-                launcherInfo.hostView = hostView;
-            }
-            launcherInfo.hostView.setTag(launcherInfo);
-            launcherInfo.hostView.setVisibility(View.VISIBLE);
-            launcherInfo.notifyWidgetSizeChanged(this.mLauncher);
-            addInScreen(launcherInfo.hostView, container, screenId, info.cellX, info.cellY, launcherInfo.spanX, launcherInfo.spanY);
-            this.mHomeBindController.addWidgetToAutoAdvanceIfNeeded(launcherInfo.hostView, appWidgetInfo2);
-        }
-        resetAddInfo();
-        String packageName = launcherInfo.providerName.getPackageName();
-        if (sSingleInstanceAppWidgetList.containsKey(launcherInfo.providerName.flattenToShortString())) {
-            ((LongSparseArray) sSingleInstanceAppWidgetList.get(launcherInfo.providerName.flattenToShortString())).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(launcherInfo.user)).longValue(), Integer.valueOf(1));
-        } else if (sSingleInstanceAppWidgetPackageList.containsKey(packageName)) {
-            ((LongSparseArray) sSingleInstanceAppWidgetPackageList.get(packageName)).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(launcherInfo.user)).longValue(), Integer.valueOf(1));
-        }
-        GSIMLogging.getInstance().insertLogging(GSIMLogging.FEATURE_NAME_WIDGET_ADD, packageName, -1, false);
-        return launcherInfo.hostView;
+        // TODO: Samsung specific code
+//        AppWidgetProviderInfo appWidgetProviderInfo = this.mAppWidgetManager.getAppWidgetInfo(appWidgetId);
+//        if (appWidgetProviderInfo == null) {
+//            Log.d(TAG, "App widget provider info is null. AppWidgetID = " + appWidgetId);
+//            return null;
+//        }
+//        AppWidgetProviderInfo appWidgetInfo2;
+//        ItemInfo info = this.mPendingAddInfo;
+//        if (appWidgetInfo == null) {
+//            appWidgetInfo2 = LauncherAppWidgetProviderInfo.fromProviderInfo(this.mLauncher, appWidgetProviderInfo);
+//        }
+//        if (appWidgetInfo2.isCustomWidget) {
+//            appWidgetId = -100;
+//        }
+//        LauncherAppWidgetInfo launcherInfo = new LauncherAppWidgetInfo(appWidgetId, appWidgetInfo2.provider);
+//        launcherInfo.spanX = info.spanX;
+//        launcherInfo.spanY = info.spanY;
+//        launcherInfo.minSpanX = info.minSpanX;
+//        launcherInfo.minSpanY = info.minSpanY;
+//        launcherInfo.user = this.mAppWidgetManager.getUser(appWidgetInfo2);
+//        addItemToDb(launcherInfo, container, screenId, info.cellX, info.cellY);
+//        if (!this.mRestoring) {
+//            if (hostView == null) {
+//                launcherInfo.hostView = this.mAppWidgetHost.createView(this.mLauncher, appWidgetId, appWidgetInfo2);
+//            } else {
+//                launcherInfo.hostView = hostView;
+//            }
+//            launcherInfo.hostView.setTag(launcherInfo);
+//            launcherInfo.hostView.setVisibility(View.VISIBLE);
+//            launcherInfo.notifyWidgetSizeChanged(this.mLauncher);
+//            addInScreen(launcherInfo.hostView, container, screenId, info.cellX, info.cellY, launcherInfo.spanX, launcherInfo.spanY);
+//            this.mHomeBindController.addWidgetToAutoAdvanceIfNeeded(launcherInfo.hostView, appWidgetInfo2);
+//        }
+//        resetAddInfo();
+//        String packageName = launcherInfo.providerName.getPackageName();
+//        if (sSingleInstanceAppWidgetList.containsKey(launcherInfo.providerName.flattenToShortString())) {
+//            ((LongSparseArray) sSingleInstanceAppWidgetList.get(launcherInfo.providerName.flattenToShortString())).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(launcherInfo.user)).longValue(), Integer.valueOf(1));
+//        } else if (sSingleInstanceAppWidgetPackageList.containsKey(packageName)) {
+//            ((LongSparseArray) sSingleInstanceAppWidgetPackageList.get(packageName)).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(launcherInfo.user)).longValue(), Integer.valueOf(1));
+//        }
+//        GSIMLogging.getInstance().insertLogging(GSIMLogging.FEATURE_NAME_WIDGET_ADD, packageName, -1, false);
+//        return launcherInfo.hostView;
+        return null;
     }
 
     private void resetAddInfo() {
@@ -1897,19 +1903,19 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     private void showOutOfSpaceMessage() {
-        Toast.makeText(this.mLauncher, R.string.out_of_space, 0).show();
+        Toast.makeText(this.mLauncher, R.string.out_of_space, Toast.LENGTH_SHORT).show();
     }
 
     void showNoSpacePage(boolean isFromApps) {
         if (isFromApps) {
-            Toast.makeText(this.mLauncher, this.mLauncher.getString(R.string.no_space_page), 0).show();
+            Toast.makeText(this.mLauncher, this.mLauncher.getString(R.string.no_space_page), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this.mLauncher, this.mLauncher.getString(R.string.no_space_page_for_widget), 0).show();
+            Toast.makeText(this.mLauncher, this.mLauncher.getString(R.string.no_space_page_for_widget), Toast.LENGTH_SHORT).show();
         }
     }
 
     void showNoSpacePageforHotseat() {
-        Toast.makeText(this.mLauncher, this.mLauncher.getString(R.string.no_space_page_for_hotseat), 0).show();
+        Toast.makeText(this.mLauncher, this.mLauncher.getString(R.string.no_space_page_for_hotseat), Toast.LENGTH_SHORT).show();
     }
 
     public CellLayout getCellLayout(long container, long screenId) {
@@ -2046,10 +2052,10 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     ValueAnimator createNewAppBounceAnimation(final View v, int i) {
-        r1 = new PropertyValuesHolder[3];
-        r1[0] = PropertyValuesHolder.ofFloat("alpha", new float[]{1.0f});
-        r1[1] = PropertyValuesHolder.ofFloat("scaleX", new float[]{1.0f});
-        r1[2] = PropertyValuesHolder.ofFloat("scaleY", new float[]{1.0f});
+        PropertyValuesHolder[] r1 = new PropertyValuesHolder[3];
+        r1[0] = PropertyValuesHolder.ofFloat("alpha", 1.0f);
+        r1[1] = PropertyValuesHolder.ofFloat("scaleX", 1.0f);
+        r1[2] = PropertyValuesHolder.ofFloat("scaleY", 1.0f);
         ValueAnimator bounceAnim = LauncherAnimUtils.ofPropertyValuesHolder(v, r1);
         bounceAnim.setDuration(450);
         bounceAnim.setStartDelay((long) (i * 85));
@@ -2065,7 +2071,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     boolean canRunNewAppsAnimation() {
-        return System.currentTimeMillis() - this.mDragMgr.getLastGestureUpTime() > 5000;
+        return java.lang.System.currentTimeMillis() - this.mDragMgr.getLastGestureUpTime() > 5000;
     }
 
     void removeHomeItem(View v) {
@@ -2094,7 +2100,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                         HomeController.this.mAppWidgetHost.deleteAppWidgetId(widget.appWidgetId);
                         return null;
                     }
-                }.executeOnExecutor(Utilities.THREAD_POOL_EXECUTOR, new Void[0]);
+                }.executeOnExecutor(Utilities.THREAD_POOL_EXECUTOR);
             }
             removeHomeItem(widget.hostView);
             this.mHomeBindController.removeAppWidget(widget);
@@ -2245,12 +2251,12 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                         HomeController.this.mAppWidgetHost.deleteAppWidgetId(widget.appWidgetId);
                         return null;
                     }
-                }.executeOnExecutor(Utilities.THREAD_POOL_EXECUTOR, new Void[0]);
+                }.executeOnExecutor(Utilities.THREAD_POOL_EXECUTOR);
             }
             if (widget.providerName != null && sSingleInstanceAppWidgetList.containsKey(widget.providerName.flattenToShortString())) {
-                ((LongSparseArray) sSingleInstanceAppWidgetList.get(widget.providerName.flattenToShortString())).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(widget.user)).longValue(), Integer.valueOf(0));
+                ((LongSparseArray) sSingleInstanceAppWidgetList.get(widget.providerName.flattenToShortString())).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(widget.user)).longValue(), 0);
             } else if (widget.providerName != null && sSingleInstanceAppWidgetPackageList.containsKey(widget.providerName.getPackageName())) {
-                ((LongSparseArray) sSingleInstanceAppWidgetPackageList.get(widget.providerName.getPackageName())).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(widget.user)).longValue(), Integer.valueOf(0));
+                ((LongSparseArray) sSingleInstanceAppWidgetPackageList.get(widget.providerName.getPackageName())).put(Long.valueOf(UserManagerCompat.getInstance(this.mLauncher).getSerialNumberForUser(widget.user)).longValue(), 0);
             }
         }
         if (view != null) {
@@ -2362,10 +2368,8 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     void removeItemsByComponentName(HashSet<ComponentName> componentNames, UserHandleCompat user) {
-        Iterator it = getWorkspaceAndHotseatCellLayouts().iterator();
-        while (it.hasNext()) {
+        for (CellLayout layoutParent : getWorkspaceAndHotseatCellLayouts()) {
             Iterator it2;
-            View layoutParent = (CellLayout) it.next();
             ViewGroup layout = layoutParent.getCellLayoutChildren();
             final HashMap<ItemInfo, View> children = new HashMap();
             for (int j = 0; j < layout.getChildCount(); j++) {
@@ -2409,7 +2413,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
             boolean needToVI = this.mWorkspace.getCurrentPage() == this.mWorkspace.indexOfChild(layoutParent);
             it2 = childrenToRemove.iterator();
             while (it2.hasNext()) {
-                ItemInfo item;
+                final ItemInfo item;
                 final View child = (View) it2.next();
                 if (child == null) {
                     item = null;
@@ -2459,10 +2463,8 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     void removeItemsByMatcher(ItemInfoMatcher matcher) {
-        Iterator it = getWorkspaceAndHotseatCellLayouts().iterator();
-        while (it.hasNext()) {
+        for (CellLayout layoutParent : getWorkspaceAndHotseatCellLayouts()) {
             Iterator it2;
-            View layoutParent = (CellLayout) it.next();
             ViewGroup layout = layoutParent.getCellLayoutChildren();
             final HashMap<ItemInfo, View> children = new HashMap();
             for (int j = 0; j < layout.getChildCount(); j++) {
@@ -2512,7 +2514,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                     Animator animator = AnimatorInflater.loadAnimator(this.mWorkspace.getContext(), R.animator.icon_view_remove);
                     animator.setTarget(child);
                     animator.setDuration(200);
-                    final View view2 = layoutParent;
+                    final CellLayout view2 = layoutParent;
                     animator.addListener(new AnimatorListener() {
                         public void onAnimationStart(Animator animator) {
                         }
@@ -2568,7 +2570,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                     } else {
                         oldPromiseState = false;
                     }
-                    IconCache iconCache = iconCache;
+                    //IconCache iconCache = iconCache;
                     if (iconInfo.isPromise() == oldPromiseState) {
                         z = false;
                     }
@@ -2704,7 +2706,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
 
     public void replaceFolderWithFinalItem(ItemInfo info, int itemCount, View folderIcon) {
         if (info instanceof FolderInfo) {
-            ItemInfo folderInfo = (FolderInfo) info;
+            FolderInfo folderInfo = (FolderInfo) info;
             CellLayout cellLayout = getCellLayout(folderInfo.container, folderInfo.screenId);
             View child = null;
             if (itemCount <= 1) {
@@ -2881,15 +2883,15 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
         }
         item.hidden = hidden;
         ContentValues values = new ContentValues();
-        values.put("container", Long.valueOf(item.container));
-        values.put("cellX", Integer.valueOf(item.cellX));
-        values.put("cellY", Integer.valueOf(item.cellY));
-        values.put(BaseLauncherColumns.RANK, Integer.valueOf(item.rank));
-        values.put("screen", Long.valueOf(item.screenId));
-        values.put("hidden", Integer.valueOf(item.hidden));
+        values.put("container", item.container);
+        values.put("cellX", item.cellX);
+        values.put("cellY", item.cellY);
+        values.put(BaseLauncherColumns.RANK, item.rank);
+        values.put("screen", item.screenId);
+        values.put("hidden", item.hidden);
         if (spanX > -1 && spanY > -1) {
-            values.put("spanX", Integer.valueOf(item.spanX));
-            values.put("spanY", Integer.valueOf(item.spanY));
+            values.put("spanX", item.spanX);
+            values.put("spanY", item.spanY);
         }
         this.mFavoritesUpdater.updateItem(values, item);
     }
@@ -2906,11 +2908,11 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 item.screenId = (long) this.mHotseat.getOrderInHotseat(item.cellX, item.cellY);
             }
             ContentValues values = new ContentValues();
-            values.put("container", Long.valueOf(item.container));
-            values.put("cellX", Integer.valueOf(item.cellX));
-            values.put("cellY", Integer.valueOf(item.cellY));
-            values.put(BaseLauncherColumns.RANK, Integer.valueOf(item.rank));
-            values.put("screen", Long.valueOf(item.screenId));
+            values.put("container", item.container);
+            values.put("cellX", item.cellX);
+            values.put("cellY", item.cellY);
+            values.put(BaseLauncherColumns.RANK, item.rank);
+            values.put("screen", item.screenId);
             contentValues.add(values);
         }
         this.mFavoritesUpdater.updateItemsInDatabaseHelper(this.mLauncher, contentValues, items);
@@ -3084,9 +3086,10 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     public void startTrayMove() {
-        if (Talk.INSTANCE.isAccessibilityEnabled()) {
-            this.mHomeContainer.semClearAccessibilityFocus();
-        }
+        // TODO: Samsung specific code
+//        if (Talk.INSTANCE.isAccessibilityEnabled()) {
+//            this.mHomeContainer.semClearAccessibilityFocus();
+//        }
     }
 
     public float getTrayScale() {
@@ -3132,7 +3135,8 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                         returnAnimator.addListener(new AnimatorListenerAdapter() {
                             public void onAnimationEnd(Animator animation) {
                                 if (HomeController.this.mTrayManager != null) {
-                                    HomeController.this.mTrayManager.trayMoveEnd(finalStageMode);
+                                    // TODO: Samsung specific code
+                                    // HomeController.this.mTrayManager.trayMoveEnd(finalStageMode);
                                 }
                             }
                         });
@@ -3155,7 +3159,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 if (this.mLauncher.isAppsStage()) {
                     onStagePreEnter();
                 }
-                if (this.mHomeContainer.getVisibility() != 0) {
+                if (this.mHomeContainer.getVisibility() != View.VISIBLE) {
                     this.mHomeContainer.setVisibility(View.VISIBLE);
                     this.mHomeContainer.setAlpha(0.0f);
                 }
@@ -3184,7 +3188,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                     data = new StageEntry();
                     data.enableAnimation = true;
                     data.setInternalStateTo(1);
-                    data.putExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, Integer.valueOf(1));
+                    data.putExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, 1);
                     getStageManager().startStage(2, data);
                     return;
                 }
@@ -3195,7 +3199,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 } else {
                     data.setInternalStateTo(1);
                 }
-                data.putExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, Integer.valueOf(1));
+                data.putExtras(TrayManager.KEY_SUPPRESS_CHANGE_STAGE_ONCE, 1);
                 getStageManager().finishAllStage(data);
                 return;
             default:
@@ -3408,7 +3412,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
         }
         if (enter) {
             enterSelectState(animated);
-            Talk.INSTANCE.postSay(this.mLauncher.getResources().getString(R.string.tts_changed_to_home_screen_edit_mode) + " " + String.format(this.mLauncher.getResources().getString(R.string.default_scroll_format), new Object[]{Integer.valueOf(this.mWorkspace.getCurrentPage() + 1), Integer.valueOf(this.mWorkspace.getPageCount())}));
+            Talk.INSTANCE.postSay(this.mLauncher.getResources().getString(R.string.tts_changed_to_home_screen_edit_mode) + " " + String.format(this.mLauncher.getResources().getString(R.string.default_scroll_format), this.mWorkspace.getCurrentPage() + 1, this.mWorkspace.getPageCount()));
             return;
         }
         this.mMultiSelectManager.clearCheckedApps();
@@ -3465,10 +3469,10 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
         Iterator it = appsViewList.iterator();
         while (it.hasNext()) {
             View v = (View) it.next();
-            Animator scaleAnimator = ObjectAnimator.ofPropertyValuesHolder(v, new PropertyValuesHolder[]{PropertyValuesHolder.ofFloat(View.SCALE_X, new float[]{1.0f, 0.5f}), PropertyValuesHolder.ofFloat(View.SCALE_Y, new float[]{1.0f, 0.5f})});
+            Animator scaleAnimator = ObjectAnimator.ofPropertyValuesHolder(v, PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 0.5f), PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 0.5f));
             scaleAnimator.setInterpolator(ViInterpolator.getInterploator(34));
             animatorSet.play(scaleAnimator);
-            Animator alphaAnimator = ObjectAnimator.ofPropertyValuesHolder(v, new PropertyValuesHolder[]{PropertyValuesHolder.ofFloat(View.ALPHA, new float[]{1.0f, 0.0f})});
+            Animator alphaAnimator = ObjectAnimator.ofPropertyValuesHolder(v, PropertyValuesHolder.ofFloat(View.ALPHA, 1.0f, 0.0f));
             alphaAnimator.setInterpolator(ViInterpolator.getInterploator(30));
             animatorSet.play(alphaAnimator);
         }
@@ -3489,11 +3493,11 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 Log.e(TAG, "onClickCreateFolder : targetView is null");
                 return;
             }
-            ItemInfo targetItem = (IconInfo) targetView.getTag();
+            IconInfo targetItem = (IconInfo) targetView.getTag();
             CellLayout targetCellLayout = (CellLayout) targetView.getParent().getParent();
             if (targetItem != null) {
                 int toPage;
-                FolderIconView folder;
+                final FolderIconView folder;
                 int delayToOpenFolder = this.mLauncher.isFolderStage() ? this.mLauncher.getResources().getInteger(R.integer.config_folderCloseDuration) : 500;
                 boolean isHotseat = targetItem.container == -101;
                 if (isHotseat) {
@@ -3513,7 +3517,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                 } else {
                     folder = this.mWorkspace.getDragController().addFolder(targetCellLayout, targetItem);
                 }
-                folder.setVisibility(4);
+                folder.setVisibility(View.INVISIBLE);
                 ArrayList<IconInfo> items = new ArrayList();
                 Iterator it = appsViewList.iterator();
                 while (it.hasNext()) {
@@ -3909,7 +3913,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                         screenId = this.mHomeLoader.insertWorkspaceScreen(this.mLauncher, screenCount, -1);
                     }
                 }
-                View v = homeBindController.createShortcut(info);
+                View v = homeBindController.createShortcut((IconInfo)info);
                 if (folder.contents.size() < 1) {
                     info.cellX = folder.cellX;
                     info.cellY = folder.cellY;
@@ -3952,17 +3956,15 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     public void addOrMoveItems(ArrayList<IconInfo> changedItems, long container, long screenId) {
         ArrayList<IconInfo> items = changedItems;
         HashMap<Long, ArrayList<IconInfo>> itemMap = new HashMap();
-        Iterator it = items.iterator();
-        while (it.hasNext()) {
-            ItemInfo item = (ItemInfo) it.next();
-            if (!itemMap.containsKey(Long.valueOf(item.container))) {
-                itemMap.put(Long.valueOf(item.container), new ArrayList());
+        for (ItemInfo item : items) {
+            if (!itemMap.containsKey(item.container)) {
+                itemMap.put(item.container, new ArrayList());
             }
-            ((ArrayList) itemMap.get(Long.valueOf(item.container))).add((IconInfo) item);
+            ((ArrayList) itemMap.get(item.container)).add((IconInfo) item);
         }
         if (LauncherAppState.getInstance().isHomeOnlyModeEnabled()) {
             boolean hasHotseatItems = false;
-            it = items.iterator();
+            Iterator it = items.iterator();
             while (it.hasNext()) {
                 IconInfo item2 = (IconInfo) it.next();
                 if (!isItemInFolder(item2)) {
@@ -3989,28 +3991,27 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
         ArrayList<ContentValues> contentValues = new ArrayList();
         for (Long longValue : keys) {
             long containerId = longValue.longValue();
-            ArrayList itemsInContainer = (ArrayList) itemMap.get(Long.valueOf(containerId));
+            ArrayList itemsInContainer = (ArrayList) itemMap.get(containerId);
             if (LauncherAppState.getInstance().isHomeOnlyModeEnabled() && containerId != container && containerId > 0) {
                 FolderIconView iconView2 = (FolderIconView) getHomescreenIconByItemId(containerId);
                 if (iconView2 != null) {
                     iconView2.getFolderInfo().remove(itemsInContainer);
                 }
             }
-            it = itemsInContainer.iterator();
-            while (it.hasNext()) {
-                IconInfo info = (IconInfo) it.next();
+            for (Object anItemsInContainer : itemsInContainer) {
+                IconInfo info = (IconInfo) anItemsInContainer;
                 info.container = container;
                 info.screenId = screenId;
                 if (!LauncherAppState.getInstance().isHomeOnlyModeEnabled()) {
                     this.mFavoritesUpdater.addItem(info);
                 }
                 ContentValues values = new ContentValues();
-                values.put("container", Long.valueOf(info.container));
-                values.put(BaseLauncherColumns.RANK, Integer.valueOf(info.rank));
-                values.put("cellX", Integer.valueOf(info.cellX));
-                values.put("cellY", Integer.valueOf(info.cellY));
-                values.put("screen", Long.valueOf(info.screenId));
-                values.put("hidden", Integer.valueOf(info.hidden));
+                values.put("container", info.container);
+                values.put(BaseLauncherColumns.RANK, info.rank);
+                values.put("cellX", info.cellX);
+                values.put("cellY", info.cellY);
+                values.put("screen", info.screenId);
+                values.put("hidden", info.hidden);
                 updateItems.add(info);
                 contentValues.add(values);
             }
@@ -4084,7 +4085,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
                     StageEntry data = new StageEntry();
                     data.enableAnimation = true;
                     data.fromStage = 1;
-                    data.putExtras(AppsPickerController.KEY_PICKER_MODE, Integer.valueOf(1));
+                    data.putExtras(AppsPickerController.KEY_PICKER_MODE, 1);
                     data.putExtras(AppsPickerController.KEY_BOUNCED_ITEM, this.mLauncher.getSearchedApp());
                     data.putExtras(AppsPickerController.KEY_BOUNCED_ITEM_USER, this.mLauncher.getSearchedAppUser());
                     getStageManager().startStage(6, data);
@@ -4176,7 +4177,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     void updateCountBadge(View view, boolean animate) {
         if (view instanceof IconView) {
             TextView countBadge = ((IconView) view).getCountBadgeView();
-            if (countBadge != null && countBadge.getVisibility() == 0) {
+            if (countBadge != null && countBadge.getVisibility() == View.VISIBLE) {
                 ((IconView) view).updateCountBadge(false, animate);
             }
         }
@@ -4211,7 +4212,7 @@ public class HomeController extends Stage implements ControllerBase, OnLongClick
     }
 
     public void requestBlurChange(boolean show, Window dest, float amount, long duration) {
-        if (this.mLauncher.isPaused() || this.mHomeContainer.getVisibility() != 0) {
+        if (this.mLauncher.isPaused() || this.mHomeContainer.getVisibility() != View.VISIBLE) {
             BlurUtils.blurByWindowManager(show, dest, amount, duration);
             return;
         }

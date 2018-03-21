@@ -1,7 +1,7 @@
 package com.android.launcher3.util.locale.hanzi;
 
 import com.android.launcher3.util.locale.hanzi.HanziToPinyin.Token;
-import com.samsung.android.util.SemLog;
+//import com.samsung.android.util.SemLog;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -191,10 +191,10 @@ public class ChineseHighlightHelper {
                 tAddr += ((Token) targetToken.get(count)).source.length();
                 count++;
             } catch (RuntimeException e) {
-                SemLog.secE(TAG, "search highlight RuntimeException!");
+                //SemLog.secE(TAG, "search highlight RuntimeException!");
                 return false;
             } catch (Exception e2) {
-                SemLog.secE(TAG, "search highlight exception!");
+                //SemLog.secE(TAG, "search highlight exception!");
                 return false;
             }
         }

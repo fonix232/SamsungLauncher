@@ -41,7 +41,7 @@ import com.android.launcher3.util.SecureFolderHelper;
 import com.android.launcher3.util.logging.GSIMLogging;
 import com.android.launcher3.util.logging.SALogging;
 import com.android.launcher3.widget.PendingAddShortcutInfo;
-import com.samsung.android.knox.SemPersonaManager;
+//import com.samsung.android.knox.SemPersonaManager;
 import com.sec.android.app.launcher.BuildConfig;
 import com.sec.android.app.launcher.R;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class QuickOptionManager {
     List<QuickOptionListItem> getOptions(DragObject dragObject, int flags) {
         boolean isSupportNotiPreview = LauncherFeature.supportNotificationPreview();
         this.mController = dragObject.dragSource.getController();
-        ItemInfo itemInfo = dragObject.dragInfo;
+        ItemInfo itemInfo = (ItemInfo)dragObject.dragInfo;
         this.mOptionOfHomeItem = this.mController instanceof HomeController;
         ComponentName componentName = null;
         String packageName = null;
@@ -232,7 +232,7 @@ public class QuickOptionManager {
                 if (itemInfo instanceof IconInfo) {
                     Utilities.clearBadge(QuickOptionManager.this.mLauncher, componentName, itemInfo.user);
                 } else if (itemInfo instanceof FolderInfo) {
-                    Iterator it = itemInfo.contents.iterator();
+                    Iterator it = ((FolderInfo)itemInfo).contents.iterator();
                     while (it.hasNext()) {
                         IconInfo iconInfo = (IconInfo) it.next();
                         if (iconInfo.mBadgeCount != 0) {
@@ -354,7 +354,7 @@ public class QuickOptionManager {
                 dimmedDisable.setTtsTitleRsrId(R.string.tts_quick_option_disable);
                 dimmedDisable.setCallback(new Runnable() {
                     public void run() {
-                        Toast.makeText(QuickOptionManager.this.mLauncher, String.format(QuickOptionManager.this.mLauncher.getString(R.string.quick_option_cant_disable), new Object[]{iconInfo.title.toString()}), 0).show();
+                        Toast.makeText(QuickOptionManager.this.mLauncher, String.format(QuickOptionManager.this.mLauncher.getString(R.string.quick_option_cant_disable), new Object[]{iconInfo.title.toString()}), Toast.LENGTH_SHORT).show();
                     }
                 });
                 return dimmedDisable;
@@ -507,21 +507,22 @@ public class QuickOptionManager {
     }
 
     private QuickOptionListItem getOptionAddToPersonal(final IconInfo iconInfo, final ComponentName componentName) {
-        if (!(!Utilities.isKnoxMode() || SemPersonaManager.isKioskModeEnabled(this.mLauncher.getApplicationContext()) || componentName == null)) {
-            final String packageName = componentName.getPackageName();
-            if (SemPersonaManager.isPossibleAddToPersonal(packageName)) {
-                QuickOptionListItem addToPersonal = new QuickOptionListItem();
-                addToPersonal.setIconRsrId(R.drawable.quick_ic_add_to_personal);
-                addToPersonal.setTitleRsrId(R.string.quick_option_add_to_personal);
-                addToPersonal.setCallback(new Runnable() {
-                    public void run() {
-                        Utilities.addToPersonal(QuickOptionManager.this.mLauncher, packageName, componentName, iconInfo.title.toString(), iconInfo.mIcon);
-                        GSIMLogging.getInstance().insertLogging(QuickOptionManager.this.mOptionOfHomeItem ? GSIMLogging.FEATURE_NAME_HOME_QUICK_OPTION : GSIMLogging.FEATURE_NAME_APPS_QUICK_OPTION, "Add to personal", -1, false);
-                    }
-                });
-                return addToPersonal;
-            }
-        }
+        // TODO: Samsung specific code
+//        if (!(!Utilities.isKnoxMode() || SemPersonaManager.isKioskModeEnabled(this.mLauncher.getApplicationContext()) || componentName == null)) {
+//            final String packageName = componentName.getPackageName();
+//            if (SemPersonaManager.isPossibleAddToPersonal(packageName)) {
+//                QuickOptionListItem addToPersonal = new QuickOptionListItem();
+//                addToPersonal.setIconRsrId(R.drawable.quick_ic_add_to_personal);
+//                addToPersonal.setTitleRsrId(R.string.quick_option_add_to_personal);
+//                addToPersonal.setCallback(new Runnable() {
+//                    public void run() {
+//                        Utilities.addToPersonal(QuickOptionManager.this.mLauncher, packageName, componentName, iconInfo.title.toString(), iconInfo.mIcon);
+//                        GSIMLogging.getInstance().insertLogging(QuickOptionManager.this.mOptionOfHomeItem ? GSIMLogging.FEATURE_NAME_HOME_QUICK_OPTION : GSIMLogging.FEATURE_NAME_APPS_QUICK_OPTION, "Add to personal", -1, false);
+//                    }
+//                });
+//                return addToPersonal;
+//            }
+//        }
         return null;
     }
 

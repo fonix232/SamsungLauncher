@@ -24,7 +24,7 @@ import com.android.launcher3.notification.NotificationInfo;
 import com.android.launcher3.util.ViInterpolator;
 import com.sec.android.app.launcher.R;
 
-public class NotificationMainView extends FrameLayout implements Callback {
+public class NotificationMainView extends FrameLayout implements SwipeHelper.Callback {
     private final int NOTIFICATION_MAIN_VIEW_ALPHA_DURATION;
     private int mBackgroundColor;
     private NotificationInfo mNotificationInfo;
