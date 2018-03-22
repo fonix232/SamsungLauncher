@@ -30,7 +30,7 @@ import com.android.launcher3.LauncherProvider;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.common.base.item.IconInfo;
 import com.android.launcher3.common.base.item.ItemInfo;
-import com.android.launcher3.common.bnr.scloud.SCloudBnr;
+//import com.android.launcher3.common.bnr.scloud.SCloudBnr;
 import com.android.launcher3.common.compat.LauncherActivityInfoCompat;
 import com.android.launcher3.common.compat.LauncherAppsCompat;
 import com.android.launcher3.common.compat.PackageInstallerCompat;
@@ -710,7 +710,8 @@ public abstract class DataLoader {
                 info.title = Utilities.trim(title);
             }
         } else {
-            SCloudBnr.getRestoreDummyInfo(sContext, cn, info);
+            // TODO: Samsung specific code
+            //SCloudBnr.getRestoreDummyInfo(sContext, cn, info);
             if (info.mIcon == null) {
                 Log.i(TAG, "getRestoredItemInfo SCloud dummy icon is null cn = " + cn);
                 return null;

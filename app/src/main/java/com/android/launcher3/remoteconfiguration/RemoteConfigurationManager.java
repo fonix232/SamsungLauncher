@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Point;
 import android.os.Binder;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.os.SystemClock;
 import android.util.Log;
+
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherModel;
@@ -29,6 +31,7 @@ import com.android.launcher3.proxy.LauncherProxy;
 import com.android.launcher3.util.ScreenGridUtilities;
 import com.android.launcher3.util.logging.SALogging;
 import com.sec.android.app.launcher.R;
+
 import java.util.ArrayList;
 
 public class RemoteConfigurationManager {
@@ -57,7 +60,7 @@ public class RemoteConfigurationManager {
                 return false;
             }
             boolean hasGrantPermission;
-            if (this.mContext.checkCallingPermission("com.samsung.android.launcher.permission.WRITE_SETTINGS") == 0) {
+            if (this.mContext.checkCallingPermission("com.samsung.android.launcher.permission.WRITE_SETTINGS") == PackageManager.PERMISSION_GRANTED) {
                 hasGrantPermission = true;
             } else {
                 hasGrantPermission = false;
@@ -221,180 +224,54 @@ public class RemoteConfigurationManager {
     }
 
     private Bundle handleGetMethods(String method, Bundle extras) {
-        Object obj = -1;
-        switch (method.hashCode()) {
-            case -1936631047:
-                if (method.equals("get_hotseat_item_count")) {
-                    obj = 3;
-                    break;
-                }
-                break;
-            case -1373031109:
-                if (method.equals("get_supplement_service_page_visibility")) {
-                    obj = 5;
-                    break;
-                }
-                break;
-            case -567588439:
-                if (method.equals("get_hotseat_item")) {
-                    obj = 2;
-                    break;
-                }
-                break;
-            case -155552832:
-                if (method.equals("get_home_cell_dimension")) {
-                    obj = null;
-                    break;
-                }
-                break;
-            case 259074897:
-                if (method.equals(" get_hotseat_maxitem_count")) {
-                    obj = 4;
-                    break;
-                }
-                break;
-            case 1317382297:
-                if (method.equals("get_rotation_state")) {
-                    obj = 7;
-                    break;
-                }
-                break;
-            case 1671128525:
-                if (method.equals("get_apps_cell_dimension")) {
-                    obj = 1;
-                    break;
-                }
-                break;
-            case 1848695112:
-                if (method.equals("get_apps_button_state")) {
-                    obj = 6;
-                    break;
-                }
-                break;
-        }
-        switch (obj) {
-            case null:
-                return getHomeCellDimension();
-            case 1:
-                return getAppsCellDimension();
-            case 2:
-                return getHotseatItem(extras);
-            case 3:
+        switch (method) {
+            case "get_hotseat_item_count":
                 return getHotseatItemCount();
-            case 4:
-                return getHotseatMaxItemCount();
-            case 5:
+            case "get_supplement_service_page_visibility":
                 return getSupplementServicePageVisibility();
-            case 6:
-                return getAppsButtonState();
-            case 7:
+            case "get_hotseat_item":
+                return getHotseatItem(extras);
+            case "get_home_cell_dimension":
+                return getHomeCellDimension();
+            case "get_hotseat_maxitem_count":
+                return getHotseatMaxItemCount();
+            case "get_rotation_state":
                 return getRotationState();
+            case "get_apps_cell_dimension":
+                return getAppsCellDimension();
+            case "get_apps_button_state":
+                return getAppsButtonState();
             default:
                 return null;
         }
     }
 
     private Bundle handleSetMethods(String method, Bundle extras) {
-        boolean z = true;
-        switch (method.hashCode()) {
-            case -2130962526:
-                if (method.equals("add_widget")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case -144348767:
-                if (method.equals("remove_shortcut")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 74802111:
-                if (method.equals("remove_page_from_home")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 487068222:
-                if (method.equals("add_hotseat_item")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 571390779:
-                if (method.equals("remove_hotseat_item")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 1040747695:
-                if (method.equals("set_supplement_service_page_visibility")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 1125972556:
-                if (method.equals("make_empty_position")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 1451262559:
-                if (method.equals("remove_widget")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 1828090296:
-                if (method.equals("switch_home_mode")) {
-                    z = false;
-                    break;
-                }
-                break;
-            case 1901115940:
-                if (method.equals("add_shortcut")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 1901624008:
-                if (method.equals("disable_apps_button")) {
-                    z = true;
-                    break;
-                }
-                break;
-            case 1966173411:
-                if (method.equals("enable_apps_button")) {
-                    z = true;
-                    break;
-                }
-                break;
-        }
-        switch (z) {
-            case false:
-                return switchHomeMode(extras);
-            case true:
-                return addHotseatItem(extras);
-            case true:
-                return removeHotseatItem(extras);
-            case true:
+        switch (method) {
+            case "add_widget":
                 return addWorkspaceItem(extras, true);
-            case true:
-                return removeWorkspaceItem(extras, true);
-            case true:
-                return addWorkspaceItem(extras, false);
-            case true:
-                return makeEmptyPosition(extras);
-            case true:
+            case "remove_shortcut":
                 return removeWorkspaceItem(extras, false);
-            case true:
+            case "remove_page_from_home":
                 return removePageFromHome(extras);
-            case true:
+            case "add_hotseat_item":
+                return addHotseatItem(extras);
+            case "remove_hotseat_item":
+                return removeHotseatItem(extras);
+            case "set_supplement_service_page_visibility":
                 return setSupplementServicePageVisibility(extras);
-            case true:
-                return setAppsButton(true, method);
-            case true:
+            case "make_empty_position":
+                return makeEmptyPosition(extras);
+            case "remove_widget":
+                return removeWorkspaceItem(extras, true);
+            case "switch_home_mode":
+                return switchHomeMode(extras);
+            case "add_shortcut":
+                return addWorkspaceItem(extras, false);
+            case "disable_apps_button":
                 return setAppsButton(false, method);
+            case "enable_apps_button":
+                return setAppsButton(true, method);
             default:
                 return null;
         }
@@ -418,26 +295,10 @@ public class RemoteConfigurationManager {
         Bundle result = new Bundle();
         int resultValue = -4;
         if (param != null) {
-            String requestMode = param.getString("home_mode");
-            int i = -1;
-            switch (requestMode.hashCode()) {
-                case -360750346:
-                    if (requestMode.equals(LauncherAppState.HOME_ONLY_MODE)) {
-                        i = 0;
-                        break;
-                    }
-                    break;
-                case 1742701552:
-                    if (requestMode.equals(LauncherAppState.HOME_APPS_MODE)) {
-                        boolean z = true;
-                        break;
-                    }
-                    break;
-            }
-            switch (i) {
-                case 0:
-                case 1:
-                    this.mContext.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0).edit().putBoolean(Utilities.HOMESCREEN_MODE_PREFERENCE_KEY, requestMode.equals(LauncherAppState.HOME_ONLY_MODE)).apply();
+            switch (param.getString("home_mode")) {
+                case LauncherAppState.HOME_ONLY_MODE:
+                case LauncherAppState.HOME_APPS_MODE:
+                    this.mContext.getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0).edit().putBoolean(Utilities.HOMESCREEN_MODE_PREFERENCE_KEY, param.getString("home_mode").equals(LauncherAppState.HOME_ONLY_MODE)).apply();
                     if (this.mListener != null) {
                         this.mListener.onSettingsChanged(Utilities.HOMESCREEN_MODE_PREFERENCE_KEY, true);
                     }
@@ -970,7 +831,8 @@ public class RemoteConfigurationManager {
                             cursor.close();
                         }
                     }
-                } while (!cnFromParam.equals(ComponentName.unflattenFromString(cursor.getString(0))));
+                }
+                while (!cnFromParam.equals(ComponentName.unflattenFromString(cursor.getString(0))));
                 if (cursor.isClosed()) {
                     return true;
                 }

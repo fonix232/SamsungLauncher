@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
+
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.common.model.IconCache;
@@ -420,7 +421,7 @@ public class OpenThemeManager {
         ALL(0),
         UNASSIGNED(1),
         NOTHING(2);
-        
+
         private final int value;
 
         private IconBgScope(int value) {
@@ -481,7 +482,7 @@ public class OpenThemeManager {
         OPEN_FOLDER_TITLE_COLOR(38),
         OPEN_FOLDER_TEXT_COLOR(39),
         PAGEINDICATOR_FESTIVAL(40);
-        
+
         private final int value;
 
         private ThemeItems(int value) {
@@ -500,7 +501,7 @@ public class OpenThemeManager {
         EVENT(3),
         WINSET(4),
         BADGE(5);
-        
+
         private final int value;
 
         private ThemeType(int value) {
@@ -948,231 +949,47 @@ public class OpenThemeManager {
     }
 
     private int getThemeType(String intId) {
-        int type = ThemeType.DEFAULT.value();
-        Object obj = -1;
-        switch (intId.hashCode()) {
-            case -1735252490:
-                if (intId.equals("open_folder_type")) {
-                    obj = 4;
-                    break;
-                }
-                break;
-            case -1602711204:
-                if (intId.equals("icon_scale_size")) {
-                    obj = 1;
-                    break;
-                }
-                break;
-            case -1549057161:
-                if (intId.equals("close_folder_shape")) {
-                    obj = 5;
-                    break;
-                }
-                break;
-            case -1227406312:
-                if (intId.equals("close_folder_color1")) {
-                    obj = 12;
-                    break;
-                }
-                break;
-            case -1227406311:
-                if (intId.equals("close_folder_color2")) {
-                    obj = 13;
-                    break;
-                }
-                break;
-            case -1227406310:
-                if (intId.equals("close_folder_color3")) {
-                    obj = 14;
-                    break;
-                }
-                break;
-            case -1227406309:
-                if (intId.equals("close_folder_color4")) {
-                    obj = 15;
-                    break;
-                }
-                break;
-            case -1227406308:
-                if (intId.equals("close_folder_color5")) {
-                    obj = 16;
-                    break;
-                }
-                break;
-            case -1019754332:
-                if (intId.equals("close_folder_type")) {
-                    obj = 3;
-                    break;
-                }
-                break;
-            case -1006616232:
-                if (intId.equals("home_folder_bg_default")) {
-                    obj = 26;
-                    break;
-                }
-                break;
-            case -951635840:
-                if (intId.equals("open_folder_title_color")) {
-                    obj = 10;
-                    break;
-                }
-                break;
-            case -829751021:
-                if (intId.equals("homescreen_menu_page_navi_default_f")) {
-                    obj = 22;
-                    break;
-                }
-                break;
-            case -769629765:
-                if (intId.equals("homescreen_menu_page_navi_home_f")) {
-                    obj = 21;
-                    break;
-                }
-                break;
-            case -622029819:
-                if (intId.equals("badge_bg_color")) {
-                    obj = 17;
-                    break;
-                }
-                break;
-            case -556956306:
-                if (intId.equals("ic_allapps")) {
-                    obj = 27;
-                    break;
-                }
-                break;
-            case -543784691:
-                if (intId.equals("folder_popup_bg_color")) {
-                    obj = 9;
-                    break;
-                }
-                break;
-            case -458259455:
-                if (intId.equals("homescreen_ic_folder_default")) {
-                    obj = 25;
-                    break;
-                }
-                break;
-            case -372171891:
-                if (intId.equals("open_folder_text_color")) {
-                    obj = 11;
-                    break;
-                }
-                break;
-            case -338915492:
-                if (intId.equals("home_title_color")) {
-                    obj = 6;
-                    break;
-                }
-                break;
-            case 57287029:
-                if (intId.equals("title_background")) {
-                    obj = 24;
-                    break;
-                }
-                break;
-            case 65071151:
-                if (intId.equals("counter_bubble")) {
-                    obj = 29;
-                    break;
-                }
-                break;
-            case 75922374:
-                if (intId.equals("material_blue_grey_900")) {
-                    obj = 7;
-                    break;
-                }
-                break;
-            case 250842569:
-                if (intId.equals("icon_bg_range")) {
-                    obj = null;
-                    break;
-                }
-                break;
-            case 472316337:
-                if (intId.equals("homescreen_menu_page_navi_headlines_f")) {
-                    obj = 23;
-                    break;
-                }
-                break;
-            case 692702134:
-                if (intId.equals("enable_text_shadow")) {
-                    obj = 20;
-                    break;
-                }
-                break;
-            case 952759819:
-                if (intId.equals("page_transition_effect")) {
-                    obj = 2;
-                    break;
-                }
-                break;
-            case 992897366:
-                if (intId.equals("text_shadow_color")) {
-                    obj = 8;
-                    break;
-                }
-                break;
-            case 1259710300:
-                if (intId.equals("enable_shadow")) {
-                    obj = 19;
-                    break;
-                }
-                break;
-            case 1664329709:
-                if (intId.equals("badge_text_color")) {
-                    obj = 18;
-                    break;
-                }
-                break;
-            case 1993584550:
-                if (intId.equals("ic_icon_bg")) {
-                    obj = 28;
-                    break;
-                }
-                break;
-        }
-        switch (obj) {
-            case null:
-            case 1:
+        switch (intId) {
+            case "icon_bg_range": /* null */
+            case "icon_scale_size": /* 1*/
                 return ThemeType.APP_ICON.value();
-            case 2:
-            case 3:
-            case 4:
-            case 5:
+            case "page_transition_effect": /* 2 */
+            case "close_folder_type": /* 3 */
+            case "open_folder_type": /* 4 */
+            case "close_folder_shape": /* 5 */
                 return ThemeType.HOME.value();
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
+            case "home_title_color": /* 6 */
+            case "material_blue_grey_900": /* 7 */
+            case "text_shadow_color": /* 8 */
+            case "folder_popup_bg_color": /* 9 */
+            case "open_folder_title_color": /* 10 */
+            case "open_folder_text_color": /* 11 */
+            case "close_folder_color1": /* 12 */
+            case "close_folder_color2": /* 13 */
+            case "close_folder_color3": /* 14 */
+            case "close_folder_color4": /* 15 */
+            case "close_folder_color5": /* 16 */
                 return ThemeType.HOME.value();
-            case 17:
-            case 18:
+            case "badge_bg_color": /* 17 */
+            case "badge_text_color": /* 18 */
                 return ThemeType.BADGE.value();
-            case 19:
-            case 20:
+            case "enable_shadow": /* 19 */
+            case "enable_text_shadow": /* 20 */
                 return ThemeType.HOME.value();
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-            case 25:
-            case MotionEventCompat.AXIS_SCROLL /*26*/:
+            case "homescreen_menu_page_navi_home_f": /* 21 */
+            case "homescreen_menu_page_navi_default_f": /* 22 */
+            case "homescreen_menu_page_navi_headlines_f": /* 23 */
+            case "title_background": /* 24 */
+            case "homescreen_ic_folder_default": /* 25 */
+            case "home_folder_bg_default": /* 26 */
                 return ThemeType.HOME.value();
-            case MotionEventCompat.AXIS_RELATIVE_X /*27*/:
-            case MotionEventCompat.AXIS_RELATIVE_Y /*28*/:
+            case "ic_allapps": /* 27 */
+            case "ic_icon_bg": /* 28 */
                 return ThemeType.APP_ICON.value();
-            case 29:
+            case "counter_bubble": /* 29 */
                 return ThemeType.BADGE.value();
             default:
-                return type;
+                return ThemeType.DEFAULT.value();
         }
     }
 }

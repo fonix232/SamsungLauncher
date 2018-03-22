@@ -115,7 +115,7 @@ public abstract class DataProvider implements LayoutParserCallback {
         }
         while (c.moveToNext()) {
             try {
-                id = c.getLong(0);
+                long id = c.getLong(0);
                 Log.e(TAG, "id = " + id + " screenRank = " + c.getLong(1) + "\n");
             } catch (Exception e2) {
                 Log.e(TAG, "Exception e = " + e2);

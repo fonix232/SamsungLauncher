@@ -193,11 +193,11 @@ public interface ILauncherOverlay extends IInterface {
                     }
                     _reply.recycle();
                     _data.recycle();
-                    return _result;
                 } catch (Throwable th) {
                     _reply.recycle();
                     _data.recycle();
                 }
+                return _result;
             }
 
             public boolean hasOverlayContent() throws RemoteException {
@@ -213,11 +213,11 @@ public interface ILauncherOverlay extends IInterface {
                     }
                     _reply.recycle();
                     _data.recycle();
-                    return _result;
                 } catch (Throwable th) {
                     _reply.recycle();
                     _data.recycle();
                 }
+                return _result;
             }
         }
 
@@ -242,7 +242,7 @@ public interface ILauncherOverlay extends IInterface {
 
         public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
             int _arg0 = 0;
-            boolean _arg02;
+            boolean _arg02 = false;
             boolean _result;
             switch (code) {
                 case 1:

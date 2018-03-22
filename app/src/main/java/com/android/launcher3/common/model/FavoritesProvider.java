@@ -1906,13 +1906,13 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         try {
             String[] selectionArg = new String[]{String.valueOf(2), String.valueOf(Favorites.CONTAINER_APPS)};
         } catch (Throwable th3) {
-            th2 = th3;
+            //th2 = th3;
             strArr = columns;
             sDb.endTransaction();
-            throw th2;
+            throw th3;
         }
         try {
-            c = sDb.query("favorites", columns, "itemType=? AND container=?", selectionArg, null, null, null);
+            c = sDb.query("favorites", columns, "itemType=? AND container=?", null, null, null, null);
             if (c != null) {
                 idIndex = c.getColumnIndexOrThrow("_id");
                 while (c.moveToNext()) {
@@ -2008,7 +2008,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         Log.d(TAG, "copyFavorites : homeApps layout -> homeOnly layout");
         sDb.beginTransaction();
         ArrayList<Long> folderIds = new ArrayList();
-        Cursor cursor;
+        Cursor cursor = null;
         try {
             String[] selectionArg = new String[]{String.valueOf(2), String.valueOf(-100), String.valueOf(Favorites.CONTAINER_HOTSEAT)};
             cursor = sDb.query("favorites", new String[]{"_id"}, "itemType=? AND (container=? OR container=?)", selectionArg, null, null, null);
@@ -2039,7 +2039,9 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 sDb.endTransaction();
             }
         } catch (Throwable th) {
-            cursor.close();
+            if(cursor != null) {
+                cursor.close();
+            }
         }
     }
 
@@ -2297,7 +2299,6 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                             }
                         } catch (Throwable e) {
                             Log.e(TAG, "Unable to parse intent during makeCopyItemList", e);
-                        } catch (Throwable th2) {
                             cursor.close();
                         }
                     } else {
@@ -2324,13 +2325,13 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     try {
-                        intentString = cursor.getString(1);
+                        String intentString = cursor.getString(1);
                         if (intentString != null) {
                             intent = Intent.parseUri(intentString, 0);
                             if (intent.getComponent() != null) {
-                                cmp = intent.getComponent();
-                                id = cursor.getLong(0);
-                                user = userManager.getUserForSerialNumber(cursor.getLong(3));
+                                ComponentName cmp = intent.getComponent();
+                                long id = cursor.getLong(0);
+                                UserHandleCompat user = userManager.getUserForSerialNumber(cursor.getLong(3));
                                 if (homeItems.contains(new ComponentKey(cmp, user))) {
                                     Log.d(TAG, "This item is already exist in home : " + cmp);
                                 } else {
@@ -2347,7 +2348,6 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         }
                     } catch (Throwable e2) {
                         Log.e(TAG, "Unable to parse intent during makeCopyItemList(folder child)", e2);
-                    } catch (Throwable th3) {
                         cursor.close();
                     }
                 }
@@ -2367,19 +2367,17 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 try {
-                    intentString = cursor.getString(1);
+                    String intentString = cursor.getString(1);
                     if (intentString != null) {
                         intent = Intent.parseUri(intentString, 0);
                         if (intent.getComponent() != null) {
-                            cmp = intent.getComponent();
-                            IconInfo info2 = new IconInfo(cursor.getLong(0), cmp, -100, -1, userManager.getUserForSerialNumber(cursor.getLong(2)));
+                            IconInfo info2 = new IconInfo(cursor.getLong(0), intent.getComponent(), -100, -1, userManager.getUserForSerialNumber(cursor.getLong(2)));
                             info2.hidden = cursor.getInt(3);
                             hiddenItems.add(info2);
                         }
                     }
                 } catch (Throwable e22) {
                     Log.e(TAG, "Unable to parse intent during makeCopyItemList", e22);
-                } catch (Throwable th4) {
                     cursor.close();
                 }
             }
@@ -2419,9 +2417,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         for (int i = 0; i < folderChildCount; i++) {
             ArrayList<ItemInfo> infoList = (ArrayList) folderChildList.get(folderChildList.keyAt(i));
             if (infoList != null) {
-                it = infoList.iterator();
-                while (it.hasNext()) {
-                    info = (ItemInfo) it.next();
+                for(ItemInfo info: infoList) {
                     if (info instanceof IconInfo) {
                         iconCache.updateTitleAndIcon((IconInfo) info);
                     }
@@ -2459,14 +2455,14 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
         ArrayList<Long> screenIds = new ArrayList();
         int count = parser.loadLayout(sDb, screenIds);
         if (!parser.isReloadPostPosition()) {
-            int cscScreenCount;
+            int cscScreenCount = 0;
             Collections.sort(screenIds);
             int defaultScreenCount = screenIds.size();
-            if (Utilities.isKnoxMode()) {
-                cscScreenCount = 0;
-            } else {
-                cscScreenCount = SemCscFeature.getInstance().getInt("CscFeature_Launcher_TotalPageCount");
-            }
+//            if (Utilities.isKnoxMode()) {
+//                cscScreenCount = 0;
+//            } else {
+//                cscScreenCount = SemCscFeature.getInstance().getInt("CscFeature_Launcher_TotalPageCount");
+//            }
             Log.i(TAG, "defaultScreenCount : " + defaultScreenCount + " cscScreenCount : " + cscScreenCount);
             if (defaultScreenCount < cscScreenCount) {
                 for (int i = 0; i < cscScreenCount; i++) {
@@ -2560,7 +2556,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     intentWithProfile.toUri(0);
                     new Intent(intentWithProfile).removeExtra(ItemInfo.EXTRA_PROFILE);
                     String selection = "itemType=? AND (intent=? OR intent=?)";
-                    String[] selectionArg = new String[]{String.valueOf(0), intentWithProfile.toUri(0), intentWithoutProfile.toUri(0)};
+                    String[] selectionArg = new String[]{String.valueOf(0), intentWithProfile.toUri(0)}; //, intentWithoutProfile.toUri(0)};
                     ContentValues values = new ContentValues();
                     values.put("intent", intentWithProfile.toUri(0));
                     values.put("title", "");
@@ -2741,49 +2737,51 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
     }
 
     public ArrayList<Long> loadScreensFromDb() {
-        Throwable th;
-        ArrayList<Long> screenIds = new ArrayList();
-        try {
-            Cursor sc = sDb.query("workspaceScreens", null, null, null, null, null, WorkspaceScreens.SCREEN_RANK);
-            Throwable th2 = null;
-            try {
-                int idIndex = sc.getColumnIndexOrThrow("_id");
-                while (sc.moveToNext()) {
-                    screenIds.add(sc.getLong(idIndex));
-                }
-                if (sc != null) {
-                    if (null != null) {
-                        try {
-                            sc.close();
-                        } catch (Throwable th3) {
-                            th2.addSuppressed(th3);
-                        }
-                    } else {
-                        sc.close();
-                    }
-                }
-                return screenIds;
-            } catch (Throwable th32) {
-                Throwable th4 = th32;
-                th32 = th2;
-                th2 = th4;
-            }
-            if (sc != null) {
-                if (th32 != null) {
-                    try {
-                        sc.close();
-                    } catch (Throwable th5) {
-                        th32.addSuppressed(th5);
-                    }
-                } else {
-                    sc.close();
-                }
-            }
-            throw th2;
-            throw th2;
-        } catch (Exception e) {
-            Launcher.addDumpLog(TAG, "Desktop items loading interrupted - invalid screens: " + e, true);
-        }
+        return null;
+        // TODO: Fix this code
+//        Throwable th;
+//        ArrayList<Long> screenIds = new ArrayList();
+//        try {
+//            Cursor sc = sDb.query("workspaceScreens", null, null, null, null, null, WorkspaceScreens.SCREEN_RANK);
+//            Throwable th2 = null;
+//            try {
+//                int idIndex = sc.getColumnIndexOrThrow("_id");
+//                while (sc.moveToNext()) {
+//                    screenIds.add(sc.getLong(idIndex));
+//                }
+//                if (sc != null) {
+//                    if (null != null) {
+//                        try {
+//                            sc.close();
+//                        } catch (Throwable th3) {
+//                            th2.addSuppressed(th3);
+//                        }
+//                    } else {
+//                        sc.close();
+//                    }
+//                }
+//                return screenIds;
+//            } catch (Throwable th32) {
+//                Throwable th4 = th32;
+//                th32 = th2;
+//                th2 = th4;
+//            }
+//            if (sc != null) {
+//                if (th != null) {
+//                    try {
+//                        sc.close();
+//                    } catch (Throwable th5) {
+//                        th32.addSuppressed(th5);
+//                    }
+//                } else {
+//                    sc.close();
+//                }
+//            }
+//            throw th2;
+//            throw th2;
+//        } catch (Exception e) {
+//            Launcher.addDumpLog(TAG, "Desktop items loading interrupted - invalid screens: " + e, true);
+//        }
     }
 
     /* JADX WARNING: inconsistent code. */
@@ -3201,8 +3199,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
     }
 
     public Cursor loadWorkspaceWithScreenRank(String favoriteTable, String screenTable) {
-        String escapedFavoriteTable = DatabaseUtils.sqlEscapeString(favoriteTable);
-        return sDb.rawQuery("SELECT f.*, screenRank from " + escapedFavoriteTable + " f join " + DatabaseUtils.sqlEscapeString(screenTable) + " w on f.screen = w._id where container = " + -100 + " and " + LauncherBnrHelper.getUserSelectionArg(sContext) + " order by " + WorkspaceScreens.SCREEN_RANK + ", " + "cellY" + ", " + "cellX", null);
+        return null;
+        // TODO: Fix this code
+        //String escapedFavoriteTable = DatabaseUtils.sqlEscapeString(favoriteTable);
+        //return sDb.rawQuery("SELECT f.*, screenRank from " + escapedFavoriteTable + " f join " + DatabaseUtils.sqlEscapeString(screenTable) + " w on f.screen = w._id where container = " + -100 + " and " + LauncherBnrHelper.getUserSelectionArg(sContext) + " order by " + WorkspaceScreens.SCREEN_RANK + ", " + "cellY" + ", " + "cellX", null);
     }
 
     public void clearFlagEmptyDbSwitched() {
@@ -3227,7 +3227,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 case 0:
                     Log.d(TAG, "apps favorites insert folder: " + update.id + ", " + update.screen + ", " + update.rank + ", " + update.title);
                     if (insertFolder == null) {
-                        insertFolder = sDb.compileStatement("INSERT into favorites (_id,screen,rank,title,color) values(?,?,?,?,?)");
+                        // TODO: Fix this code
+                        //insertFolder = sDb.compileStatement("INSERT into favorites (_id,screen,rank,title,color) values(?,?,?,?,?)");
                     }
                     insertFolder.bindLong(1, update.id);
                     insertFolder.bindLong(2, update.screen);
@@ -3246,7 +3247,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     try {
                         Log.d(TAG, "apps favorites update folder: " + update.id + ", " + update.screen + ", " + update.rank + ", " + update.title);
                         if (updateFolder == null) {
-                            updateFolder = sDb.compileStatement("UPDATE favorites set screen=?,rank=?,title=? where _id=?");
+                            // TODO: Fix this code
+                            //updateFolder = sDb.compileStatement("UPDATE favorites set screen=?,rank=?,title=? where _id=?");
                         }
                         updateFolder.bindLong(1, update.screen);
                         updateFolder.bindLong(2, (long) update.rank);
@@ -3286,7 +3288,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 case 2:
                     Log.d(TAG, "apps favorites update title: " + update.id + ", " + update.title);
                     if (updateTitle == null) {
-                        updateTitle = sDb.compileStatement("UPDATE favorites set title=? where _id=?");
+                        // TODO: Fix this code
+                        //updateTitle = sDb.compileStatement("UPDATE favorites set title=? where _id=?");
                     }
                     if (update.title == null) {
                         updateTitle.bindNull(1);
@@ -3308,7 +3311,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     update.getClass();
                     Log.d(str, append.append(false).append(", ").append(update.title).append(", ").append(flattenComponent).append(", ").append(update.itemtype).append(", ").append(update.modified).append(", ").append(update.status).toString());
                     if (insertApp == null) {
-                        insertApp = sDb.compileStatement("INSERT into favorites (_id,container,screen,rank,hidden,title,intent,profileId,itemtype,modified,restored) values(?,?,?,?,?,?,?,?,?,?,?)");
+                        // TODO: Fix this code
+                        //insertApp = sDb.compileStatement("INSERT into favorites (_id,container,screen,rank,hidden,title,intent,profileId,itemtype,modified,restored) values(?,?,?,?,?,?,?,?,?,?,?)");
                     }
                     insertApp.bindLong(1, update.id);
                     insertApp.bindLong(2, update.container);
@@ -3321,7 +3325,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     } else {
                         insertApp.bindString(6, update.title.toString());
                     }
-                    insertApp.bindString(7, new Intent("android.intent.action.MAIN", null).addCategory("android.intent.category.LAUNCHER").setComponent(update.component).setFlags(270532608).toUri(0));
+                    // TODO: Fix this code
+                    //insertApp.bindString(7, new Intent("android.intent.action.MAIN", null).addCategory("android.intent.category.LAUNCHER").setComponent(update.component).setFlags(270532608).toUri(0));
                     insertApp.bindLong(8, userManager.getSerialNumberForUser(update.user));
                     insertApp.bindLong(9, (long) update.itemtype);
                     insertApp.bindLong(10, update.modified);
@@ -3343,7 +3348,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     update.getClass();
                     Log.d(str, append.append(false).append(", ").append(update.title).toString());
                     if (updateApp == null) {
-                        updateApp = sDb.compileStatement("UPDATE favorites set container=?,screen=?,rank=?,hidden=?,title=?,profileId=? where _id=?");
+                        // TODO: Fix this code
+                        //updateApp = sDb.compileStatement("UPDATE favorites set container=?,screen=?,rank=?,hidden=?,title=?,profileId=? where _id=?");
                     }
                     updateApp.bindLong(1, update.container);
                     updateApp.bindLong(2, update.screen);
@@ -3366,7 +3372,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 case 5:
                     Log.d(TAG, "apps favorites delete item: " + update.id);
                     if (deleteItem == null) {
-                        deleteItem = sDb.compileStatement("DELETE from favorites where _id=?");
+                        // TODO: Fix this code
+                        //deleteItem = sDb.compileStatement("DELETE from favorites where _id=?");
                     }
                     deleteItem.bindLong(1, update.id);
                     deleteItem.execute();
@@ -3377,7 +3384,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     update.getClass();
                     Log.d(str, append.append(-1).toString());
                     if (updateColor == null) {
-                        updateColor = sDb.compileStatement("UPDATE favorites set color=? where _id=?");
+                        // TODO: Fix this code
+                        //updateColor = sDb.compileStatement("UPDATE favorites set color=? where _id=?");
                     }
                     update.getClass();
                     updateColor.bindLong(1, -1);
@@ -3387,7 +3395,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 case 7:
                     Log.d(TAG, "apps favorites update restored ID: " + update.id);
                     if (updateRestore == null) {
-                        updateRestore = sDb.compileStatement("UPDATE favorites set restored=? where _id=?");
+                        // TODO: Fix this code
+                        //updateRestore = sDb.compileStatement("UPDATE favorites set restored=? where _id=?");
                     }
                     updateRestore.bindLong(1, 0);
                     updateRestore.bindLong(2, update.id);

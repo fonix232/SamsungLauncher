@@ -18,7 +18,7 @@ import com.android.launcher3.LauncherModel;
 import com.android.launcher3.LauncherProvider;
 import com.android.launcher3.common.bnr.LauncherBnrListener.Result;
 import com.android.launcher3.common.bnr.extractor.LCExtractor;
-import com.android.launcher3.common.bnr.scloud.SCloudBnr;
+//import com.android.launcher3.common.bnr.scloud.SCloudBnr;
 import com.android.launcher3.common.bnr.smartswitch.SmartSwitchBnrService;
 import com.android.launcher3.common.compat.AppWidgetManagerCompat;
 import com.android.launcher3.common.compat.LauncherActivityInfoCompat;
@@ -466,129 +466,130 @@ public class LauncherBnrHelper {
     }
 
     private void restoreLayout(Context context, String path, File saveFile, int debugLevel, LauncherBnrListener listener) {
-        InputStream fis;
-        Exception e;
-        Exception e2;
-        InputStream inputStream = null;
-        InputStream newIs = null;
-        this.mRestoredTable.clear();
-        loadChangedComponentFromRes(context);
-        loadChangedComponentFromPath(context, path);
-        if (debugLevel == 1004) {
-            try {
-                fis = new FileInputStream(saveFile);
-            } catch (GeneralSecurityException e3) {
-                e = e3;
-            } catch (IOException e4) {
-                e = e4;
-            } catch (Exception e5) {
-                e2 = e5;
-            }
-            try {
-                newIs = listener.getDecryptStream(fis);
-                if (newIs != null) {
-                    makeDebugLayoutFile(path, fis, newIs);
-                    if (newIs != null) {
-                        close(newIs);
-                    }
-                    if (fis != null) {
-                        close(fis);
-                    }
-                    inputStream = fis;
-                    return;
-                }
-            } catch (GeneralSecurityException e6) {
-                e = e6;
-                inputStream = fis;
-            } catch (IOException e7) {
-                e = e7;
-                inputStream = fis;
-            } catch (Exception e8) {
-                e2 = e8;
-                inputStream = fis;
-            } catch (Throwable th) {
-                Throwable th2 = th;
-                inputStream = fis;
-            }
-        } else {
-            LauncherModel launcherModel = LauncherAppState.getInstance().getModel();
-            if (launcherModel != null) {
-                Log.d(TAG, "Stop loader before restore layout");
-                launcherModel.stopLoader();
-                launcherModel.setHasLoaderCompletedOnce(false);
-            }
-            Iterator it = sCallBack.iterator();
-            fis = null;
-            while (it.hasNext()) {
-                LauncherBnrCallBack bnrCallBack = (LauncherBnrCallBack) it.next();
-                inputStream = new FileInputStream(saveFile);
-                newIs = listener.getDecryptStream(inputStream);
-                if (newIs != null) {
-                    XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-                    parser.setInput(newIs, "utf-8");
-                    bnrCallBack.restoreLayout(context, parser, this.mRestoredTable, this.mBnrResult);
-                    close(newIs);
-                }
-                if (this.mBnrResult.result == 1) {
-                    this.mBnrResult.errorCode = 3;
-                }
-                close(inputStream);
-                fis = inputStream;
-            }
-        }
-        inputStream = fis;
-        if (newIs != null) {
-            close(newIs);
-        }
-        if (inputStream != null) {
-            close(inputStream);
-            return;
-        }
-        return;
-        e2 = e;
-        try {
-            this.mBnrResult.result = 1;
-            this.mBnrResult.errorCode = 1;
-            Log.e(TAG, "bnr fail, occur exception : " + e2);
-            if (newIs != null) {
-                close(newIs);
-            }
-            if (inputStream != null) {
-                close(inputStream);
-                return;
-            }
-            return;
-        } catch (Throwable th3) {
-            th2 = th3;
-            if (newIs != null) {
-                close(newIs);
-            }
-            if (inputStream != null) {
-                close(inputStream);
-            }
-            throw th2;
-        }
-        e2 = e;
-        this.mBnrResult.result = 1;
-        this.mBnrResult.errorCode = 1;
-        Log.e(TAG, "bnr fail, occur exception : " + e2);
-        if (newIs != null) {
-            close(newIs);
-        }
-        if (inputStream != null) {
-            close(inputStream);
-            return;
-        }
-        return;
-        this.mBnrResult.result = 1;
-        this.mBnrResult.errorCode = 2;
-        Log.e(TAG, "bnr fail, occur exception : " + e2);
-        if (newIs != null) {
-            close(newIs);
-        }
-        if (inputStream != null) {
-            close(inputStream);
-        }
+        // TODO: Fix this code
+//        InputStream fis;
+//        Exception e;
+//        Exception e2;
+//        InputStream inputStream = null;
+//        InputStream newIs = null;
+//        this.mRestoredTable.clear();
+//        loadChangedComponentFromRes(context);
+//        loadChangedComponentFromPath(context, path);
+//        if (debugLevel == 1004) {
+//            try {
+//                fis = new FileInputStream(saveFile);
+////            } catch (GeneralSecurityException e3) {
+////                e = e3;
+//            } catch (IOException e4) {
+//                e = e4;
+//            } catch (Exception e5) {
+//                e2 = e5;
+//            }
+//            try {
+//                newIs = listener.getDecryptStream(fis);
+//                if (newIs != null) {
+//                    makeDebugLayoutFile(path, fis, newIs);
+//                    if (newIs != null) {
+//                        close(newIs);
+//                    }
+//                    if (fis != null) {
+//                        close(fis);
+//                    }
+//                    inputStream = fis;
+//                    return;
+//                }
+//            } catch (GeneralSecurityException e6) {
+//                e = e6;
+//                inputStream = fis;
+//            } catch (IOException e7) {
+//                e = e7;
+//                inputStream = fis;
+//            } catch (Exception e8) {
+//                e2 = e8;
+//                inputStream = fis;
+//            } catch (Throwable th) {
+//                Throwable th2 = th;
+//                inputStream = fis;
+//            }
+//        } else {
+//            LauncherModel launcherModel = LauncherAppState.getInstance().getModel();
+//            if (launcherModel != null) {
+//                Log.d(TAG, "Stop loader before restore layout");
+//                launcherModel.stopLoader();
+//                launcherModel.setHasLoaderCompletedOnce(false);
+//            }
+//            Iterator it = sCallBack.iterator();
+//            fis = null;
+//            while (it.hasNext()) {
+//                LauncherBnrCallBack bnrCallBack = (LauncherBnrCallBack) it.next();
+//                inputStream = new FileInputStream(saveFile);
+//                newIs = listener.getDecryptStream(inputStream);
+//                if (newIs != null) {
+//                    XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+//                    parser.setInput(newIs, "utf-8");
+//                    bnrCallBack.restoreLayout(context, parser, this.mRestoredTable, this.mBnrResult);
+//                    close(newIs);
+//                }
+//                if (this.mBnrResult.result == 1) {
+//                    this.mBnrResult.errorCode = 3;
+//                }
+//                close(inputStream);
+//                fis = inputStream;
+//            }
+//        }
+//        inputStream = fis;
+//        if (newIs != null) {
+//            close(newIs);
+//        }
+//        if (inputStream != null) {
+//            close(inputStream);
+//            return;
+//        }
+//        return;
+//        e2 = e;
+//        try {
+//            this.mBnrResult.result = 1;
+//            this.mBnrResult.errorCode = 1;
+//            Log.e(TAG, "bnr fail, occur exception : " + e2);
+//            if (newIs != null) {
+//                close(newIs);
+//            }
+//            if (inputStream != null) {
+//                close(inputStream);
+//                return;
+//            }
+//            return;
+//        } catch (Throwable th3) {
+//            th2 = th3;
+//            if (newIs != null) {
+//                close(newIs);
+//            }
+//            if (inputStream != null) {
+//                close(inputStream);
+//            }
+//            throw th2;
+//        }
+//        e2 = e;
+//        this.mBnrResult.result = 1;
+//        this.mBnrResult.errorCode = 1;
+//        Log.e(TAG, "bnr fail, occur exception : " + e2);
+//        if (newIs != null) {
+//            close(newIs);
+//        }
+//        if (inputStream != null) {
+//            close(inputStream);
+//            return;
+//        }
+//        return;
+//        this.mBnrResult.result = 1;
+//        this.mBnrResult.errorCode = 2;
+//        Log.e(TAG, "bnr fail, occur exception : " + e2);
+//        if (newIs != null) {
+//            close(newIs);
+//        }
+//        if (inputStream != null) {
+//            close(inputStream);
+//        }
     }
 
     /* JADX WARNING: inconsistent code. */
@@ -960,18 +961,20 @@ public class LauncherBnrHelper {
                     return cn;
                 }
             }
-        } catch (NameNotFoundException e3) {
+        } catch (Exception e3) {
             Log.i(TAG, "invalid componentName : " + cn);
-            if ((restored & 4) != 0 || SCloudBnr.isWillRestored(context, cn)) {
-                if (sChangedComponent.containsKey(cn)) {
-                    return (ComponentName) sChangedComponent.get(cn);
-                }
-                return cn;
-            } else if (sChangedComponent.containsKey(cn)) {
-                return (ComponentName) sChangedComponent.get(cn);
-            } else {
-                return null;
-            }
+            // TODO: Samsung specific code
+//            if ((restored & 4) != 0 || SCloudBnr.isWillRestored(context, cn)) {
+//                if (sChangedComponent.containsKey(cn)) {
+//                    return (ComponentName) sChangedComponent.get(cn);
+//                }
+//                return cn;
+//            } else if (sChangedComponent.containsKey(cn)) {
+//                return (ComponentName) sChangedComponent.get(cn);
+//            } else {
+//                return null;
+//            }
+            return null;
         }
         return cn;
     }
@@ -1036,7 +1039,7 @@ public class LauncherBnrHelper {
                 if (outputStream != null) {
                     close(outputStream);
                 }
-                throw th;
+                //throw th;
             }
         }
     }
@@ -1106,7 +1109,7 @@ public class LauncherBnrHelper {
                     key = cmp2.split("\\|");
                     if (key.length == 2) {
                         key[0] = key[0].trim();
-                        before = ComponentName.unflattenFromString(key[0]);
+                        ComponentName before = ComponentName.unflattenFromString(key[0]);
                         key[1] = key[1].trim();
                         addChangedWidgetComponent(widgetsAll, before, ComponentName.unflattenFromString(key[1]));
                     }
@@ -1185,16 +1188,16 @@ public class LauncherBnrHelper {
                     }
                     return;
                 } catch (Exception e3) {
-                    e2 = e3;
+                    //e2 = e3;
                     fileInputStream = fis;
                 } catch (Throwable th2) {
                     th = th2;
                     fileInputStream = fis;
                 }
             } catch (Exception e4) {
-                e2 = e4;
+                //e2 = e4;
                 try {
-                    Log.e(TAG, "loadChangedComponentFromPath exception = " + e2);
+                    Log.e(TAG, "loadChangedComponentFromPath exception = " + e4);
                     if (fileInputStream != null) {
                         try {
                             fileInputStream.close();
@@ -1214,7 +1217,7 @@ public class LauncherBnrHelper {
                             Log.e(TAG, "loadChangedComponentFromPath exception = " + e222);
                         }
                     }
-                    throw th;
+                    //throw th;
                 }
             }
         }
@@ -1222,44 +1225,46 @@ public class LauncherBnrHelper {
     }
 
     private void loadChangedComponentForPackage(Context context, XmlPullParser parser) throws Exception {
-        int depth = parser.getDepth();
-        ArrayList<String> itemList = new ArrayList();
-        while (true) {
-            int type = parser.next();
-            if ((type != 3 || parser.getDepth() > depth) && type != 1) {
-                if (type == 2 && parser.next() == 4) {
-                    itemList.add(parser.getText());
-                }
-            }
-        }
-        int size = itemList.size();
-        Log.i(TAG, "loadChangedComponentForPackage item list size = " + size);
-        for (int i = 0; i < size - 1; i++) {
-            for (int j = i + 1; j < size; j++) {
-                addChangedComponent(context, ComponentName.unflattenFromString((String) itemList.get(i)), ComponentName.unflattenFromString((String) itemList.get(j)));
-            }
-        }
+        // TODO: Fix this code
+//        int depth = parser.getDepth();
+//        ArrayList<String> itemList = new ArrayList();
+//        while (true) {
+//            int type = parser.next();
+//            if ((type != 3 || parser.getDepth() > depth) && type != 1) {
+//                if (type == 2 && parser.next() == 4) {
+//                    itemList.add(parser.getText());
+//                }
+//            }
+//        }
+//        int size = itemList.size();
+//        Log.i(TAG, "loadChangedComponentForPackage item list size = " + size);
+//        for (int i = 0; i < size - 1; i++) {
+//            for (int j = i + 1; j < size; j++) {
+//                addChangedComponent(context, ComponentName.unflattenFromString((String) itemList.get(i)), ComponentName.unflattenFromString((String) itemList.get(j)));
+//            }
+//        }
     }
 
     private void loadChangedComponentForWidget(Context context, XmlPullParser parser) throws Exception {
-        int depth = parser.getDepth();
-        ArrayList<String> itemList = new ArrayList();
-        while (true) {
-            int type = parser.next();
-            if ((type != 3 || parser.getDepth() > depth) && type != 1) {
-                if (type == 2 && parser.next() == 4) {
-                    itemList.add(parser.getText());
-                }
-            }
-        }
-        int size = itemList.size();
-        Log.i(TAG, "loadChangedComponentForWidget item list size = " + size);
-        List<AppWidgetProviderInfo> widgetsAll = AppWidgetManagerCompat.getInstance(context).getAllProviders();
-        for (int i = 0; i < size - 1; i++) {
-            for (int j = i + 1; j < size; j++) {
-                addChangedWidgetComponent(widgetsAll, ComponentName.unflattenFromString((String) itemList.get(i)), ComponentName.unflattenFromString((String) itemList.get(j)));
-            }
-        }
+        // TODO: Fix this code
+//        int depth = parser.getDepth();
+//        ArrayList<String> itemList = new ArrayList();
+//        while (true) {
+//            int type = parser.next();
+//            if ((type != 3 || parser.getDepth() > depth) && type != 1) {
+//                if (type == 2 && parser.next() == 4) {
+//                    itemList.add(parser.getText());
+//                }
+//            }
+//        }
+//        int size = itemList.size();
+//        Log.i(TAG, "loadChangedComponentForWidget item list size = " + size);
+//        List<AppWidgetProviderInfo> widgetsAll = AppWidgetManagerCompat.getInstance(context).getAllProviders();
+//        for (int i = 0; i < size - 1; i++) {
+//            for (int j = i + 1; j < size; j++) {
+//                addChangedWidgetComponent(widgetsAll, ComponentName.unflattenFromString((String) itemList.get(i)), ComponentName.unflattenFromString((String) itemList.get(j)));
+//            }
+//        }
     }
 
     public static String getUserSelectionArg(Context context) {

@@ -1,1 +1,1 @@
-include ':app', ':bixbysdk', ':bixbyagent'
+include ':app', ':bixbysdk', ':bixbyagent', ':vcard'

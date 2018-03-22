@@ -13,6 +13,7 @@ import android.provider.ContactsContract.RawContactsEntity;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFeature;
 import com.android.launcher3.LauncherFiles;
@@ -22,7 +23,7 @@ import com.android.launcher3.common.bnr.LauncherBnrHelper;
 import com.android.launcher3.common.bnr.LauncherBnrListener.Result;
 import com.android.launcher3.common.bnr.LauncherBnrTag;
 import com.android.launcher3.common.bnr.extractor.LCExtractor;
-import com.android.launcher3.common.bnr.scloud.SCloudBnr;
+//import com.android.launcher3.common.bnr.scloud.SCloudBnr;
 import com.android.launcher3.common.model.CursorInfo;
 import com.android.launcher3.common.model.DefaultLayoutParser;
 import com.android.launcher3.common.model.FavoritesProvider;
@@ -33,9 +34,11 @@ import com.android.launcher3.util.ScreenGridUtilities;
 import com.android.vcard.VCardComposer;
 import com.android.vcard.VCardConfig;
 import com.sec.android.app.launcher.R;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -526,9 +529,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 serializer.attribute(null, attrPrefix + DefaultLayoutParser.ATTR_Y, cellY);
             }
         }
-        if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-            serializer.attribute(null, "restored", String.valueOf(4));
-        }
+        // TODO: Samsung specific code
+//        if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//            serializer.attribute(null, "restored", String.valueOf(4));
+//        }
         serializer.endTag(null, DefaultLayoutParser.TAG_FAVORITE);
     }
 
@@ -573,9 +577,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     serializer.attribute(null, attrPrefix + DefaultLayoutParser.ATTR_Y, cellY);
                 }
             }
-            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                serializer.attribute(null, "restored", String.valueOf(4));
-            }
+            // TODO: Samsung specific code
+//            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                serializer.attribute(null, "restored", String.valueOf(4));
+//            }
             if (!TextUtils.isEmpty(intent)) {
                 serializer.attribute(null, attrPrefix + "uri", intent);
             }
@@ -585,9 +590,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                     serializer.attribute(null, "icon", Base64.encodeToString(data, 2));
                 }
             }
-            if (!SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                backupContactShortcut(intent, serializer, result);
-            }
+            // TODO: Samsung specific code
+//            if (!SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                backupContactShortcut(intent, serializer, result);
+//            }
             serializer.endTag(null, tag);
         } else if (!isLCExtractor) {
             backupAppsButton(screen, serializer);
@@ -641,9 +647,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
             if (!isLCExtractor) {
                 serializer.attribute(null, "appWidgetID", String.valueOf(appWidgetId));
             }
-            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                serializer.attribute(null, "restored", String.valueOf(4));
-            }
+            // TODO: Samsung specific code
+//            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                serializer.attribute(null, "restored", String.valueOf(4));
+//            }
             serializer.endTag(null, DefaultLayoutParser.TAG_APPWIDGET);
         }
     }
@@ -706,10 +713,8 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                 ComponentName componentName = null;
                 if (!TextUtils.isEmpty(intent)) {
                     try {
-                    } catch (URISyntaxException e) {
-                    }
-                    try {
                         componentName = Intent.parseUri(intent, 0).getComponent();
+                    } catch (URISyntaxException e) {
                     } finally {
                         if (!cursor.isClosed()) {
                             cursor.close();
@@ -741,9 +746,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         if (!TextUtils.isEmpty(className)) {
                             serializer.attribute(null, attrPrefix + DefaultLayoutParser.ATTR_CLASS_NAME, className);
                         }
-                        if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                            serializer.attribute(null, "restored", String.valueOf(4));
-                        }
+                        // TODO: Samsung specific code
+//                        if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                            serializer.attribute(null, "restored", String.valueOf(4));
+//                        }
                         serializer.endTag(null, DefaultLayoutParser.TAG_FAVORITE);
                         break;
                     case 1:
@@ -771,9 +777,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                             if (!TextUtils.isEmpty(title)) {
                                 serializer.attribute(null, attrPrefix + "title", title);
                             }
-                            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                                serializer.attribute(null, "restored", String.valueOf(4));
-                            }
+                            // TODO: Samsung specific code
+//                            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                                serializer.attribute(null, "restored", String.valueOf(4));
+//                            }
                             if (!TextUtils.isEmpty(intent)) {
                                 serializer.attribute(null, attrPrefix + "uri", intent);
                             }
@@ -781,9 +788,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                             if (!(data == null || data.length <= 0 || isLCExtractor)) {
                                 serializer.attribute(null, "icon", Base64.encodeToString(data, 2));
                             }
-                            if (!SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                                backupContactShortcut(intent, serializer, result);
-                            }
+                            // TODO: Samsung specific code
+//                            if (!SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                                backupContactShortcut(intent, serializer, result);
+//                            }
                             serializer.endTag(null, tag);
                             break;
                         }
@@ -864,7 +872,7 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                         if (composer != null) {
                             composer.terminate();
                         }
-                        throw th;
+                        //throw th;
                     }
                 }
             }

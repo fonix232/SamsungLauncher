@@ -216,7 +216,7 @@ public abstract class DefaultLayoutParser {
             } else {
                 type = 0;
             }
-            return DefaultLayoutParser.this.addShortcut(tableName, title, new Intent("android.intent.action.MAIN", null).addCategory("android.intent.category.LAUNCHER").setComponent(cn).setFlags(270532608), type);
+            return DefaultLayoutParser.this.addShortcut(tableName, title, new Intent("android.intent.action.MAIN", null).addCategory("android.intent.category.LAUNCHER").setComponent(cn).setFlags(/* TODO: Fix intent flag 270532608*/ Intent.FLAG_FROM_BACKGROUND), type);
         }
 
         protected long invalidPackageOrClass(XmlPullParser parser, String tableName) {
@@ -610,7 +610,7 @@ public abstract class DefaultLayoutParser {
                 return -1;
             }
             DefaultLayoutParser.this.mValues.put("restored", Integer.valueOf(2));
-            return DefaultLayoutParser.this.addShortcut(tableName, "", new Intent("android.intent.action.MAIN", null).addCategory("android.intent.category.LAUNCHER").setComponent(new ComponentName(packageName, className)).setFlags(270532608), 0);
+            return DefaultLayoutParser.this.addShortcut(tableName, "", new Intent("android.intent.action.MAIN", null).addCategory("android.intent.category.LAUNCHER").setComponent(new ComponentName(packageName, className)).setFlags(/* TODO: Fix intent flag 270532608 */ Intent.FLAG_FROM_BACKGROUND), 0);
         }
     }
 
@@ -756,10 +756,11 @@ public abstract class DefaultLayoutParser {
             if (this.mIsCSC) {
                 String titleId = DefaultLayoutParser.getAttributeValue(parser, "title");
                 String imgId = DefaultLayoutParser.getAttributeValue(parser, "icon");
-                if (pm != null) {
-                    title = (String) DefaultLayoutParser.this.mContext.getPackageManager().semGetCscPackageItemText(titleId);
-                    icon = DefaultLayoutParser.this.mContext.getPackageManager().semGetCscPackageItemIcon(imgId);
-                }
+                // TODO: Samsung specific code
+//                if (pm != null) {
+//                    title = (String) DefaultLayoutParser.this.mContext.getPackageManager().semGetCscPackageItemText(titleId);
+//                    icon = DefaultLayoutParser.this.mContext.getPackageManager().semGetCscPackageItemIcon(imgId);
+//                }
                 if (title == null || title.isEmpty() || icon == null) {
                     Log.w(DefaultLayoutParser.TAG, "Shortcut is missing title or icon resource ID from csc resource");
                     return -1;
@@ -829,7 +830,8 @@ public abstract class DefaultLayoutParser {
             try {
                 uri = DefaultLayoutParser.getAttributeValue(parser, "uri");
                 Intent intent = Intent.parseUri(uri, 0);
-                intent.setFlags(270532608);
+                // TODO: Fix intent flag
+                //intent.setFlags(270532608);
                 return intent;
             } catch (URISyntaxException e) {
                 Log.w(DefaultLayoutParser.TAG, "Shortcut has malformed uri: " + uri);

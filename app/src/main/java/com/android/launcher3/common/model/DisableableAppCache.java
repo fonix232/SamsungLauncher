@@ -231,26 +231,27 @@ public class DisableableAppCache {
             } catch (IOException e2) {
                 e = e2;
                 e.printStackTrace();
-                for (eventType = parser.getEventType(); eventType != 1; eventType = parser.next()) {
-                    if (eventType == 4) {
-                        pkgName = parser.getText();
-                        if (!mDisableBlockedItems.contains(pkgName)) {
-                            mDisableBlockedItems.add(pkgName);
-                        }
-                    }
-                }
+                // TODO: Fix Cpde
+//                for (eventType = parser.getEventType(); eventType != 1; eventType = parser.next()) {
+//                    if (eventType == 4) {
+//                        pkgName = parser.getText();
+//                        if (!mDisableBlockedItems.contains(pkgName)) {
+//                            mDisableBlockedItems.add(pkgName);
+//                        }
+//                    }
+//                }
                 return;
             } catch (XmlPullParserException e3) {
                 e = e3;
                 e.printStackTrace();
-                for (eventType = parser.getEventType(); eventType != 1; eventType = parser.next()) {
-                    if (eventType == 4) {
-                        pkgName = parser.getText();
-                        if (mDisableBlockedItems.contains(pkgName)) {
-                            mDisableBlockedItems.add(pkgName);
-                        }
-                    }
-                }
+//                for (eventType = parser.getEventType(); eventType != 1; eventType = parser.next()) {
+//                    if (eventType == 4) {
+//                        pkgName = parser.getText();
+//                        if (mDisableBlockedItems.contains(pkgName)) {
+//                            mDisableBlockedItems.add(pkgName);
+//                        }
+//                    }
+//                }
                 return;
             }
             try {
@@ -367,22 +368,22 @@ public class DisableableAppCache {
     }
 
     private void addDisableAndUninstallBlockedAppToListFromSettingsCSC() {
-        if (!SemCscFeature.getInstance().getString("CscFeature_Setting_ConfigForbidAppDisableButton").isEmpty()) {
-            for (String pkgName : SemCscFeature.getInstance().getString("CscFeature_Setting_ConfigForbidAppDisableButton").split(",")) {
-                if (!mDisableBlockedItems.contains(pkgName)) {
-                    mDisableBlockedItems.add(pkgName);
-                }
-                if (!mUninstallBlockedItems.contains(pkgName)) {
-                    mUninstallBlockedItems.add(pkgName);
-                }
-            }
-        }
+//        if (!SemCscFeature.getInstance().getString("CscFeature_Setting_ConfigForbidAppDisableButton").isEmpty()) {
+//            for (String pkgName : SemCscFeature.getInstance().getString("CscFeature_Setting_ConfigForbidAppDisableButton").split(",")) {
+//                if (!mDisableBlockedItems.contains(pkgName)) {
+//                    mDisableBlockedItems.add(pkgName);
+//                }
+//                if (!mUninstallBlockedItems.contains(pkgName)) {
+//                    mUninstallBlockedItems.add(pkgName);
+//                }
+//            }
+//        }
     }
 
     private void getHomePackageList() {
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.addCategory("android.intent.category.HOME");
-        for (ResolveInfo resolveInfo : this.mPackageManager.queryIntentActivities(intent, 65600)) {
+        for (ResolveInfo resolveInfo : this.mPackageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY | PackageManager.GET_RESOLVED_FILTER )) {
             ActivityInfo activityInfo = resolveInfo.activityInfo;
             if (activityInfo.applicationInfo.enabled && (activityInfo.applicationInfo.flags & 1) != 0) {
                 String activityPkg = activityInfo.packageName;
@@ -403,7 +404,7 @@ public class DisableableAppCache {
             return false;
         }
         try {
-            if (this.mPackageManager.checkSignatures(pkg1, pkg2) >= 0) {
+            if (this.mPackageManager.checkSignatures(pkg1, pkg2) == PackageManager.SIGNATURE_MATCH || this.mPackageManager.checkSignatures(pkg1, pkg2) == PackageManager.SIGNATURE_NEITHER_SIGNED) {
                 return true;
             }
             return false;
@@ -416,7 +417,7 @@ public class DisableableAppCache {
     private void makeDisableableAppListFromMeta() {
         Intent mainIntent = new Intent("android.intent.action.MAIN", null);
         mainIntent.addCategory("android.intent.category.LAUNCHER");
-        List<ResolveInfo> appList = this.mPackageManager.queryIntentActivities(mainIntent, 131584);
+        List<ResolveInfo> appList = this.mPackageManager.queryIntentActivities(mainIntent, PackageManager.MATCH_ALL | PackageManager.MATCH_DISABLED_COMPONENTS);
         if (!appList.isEmpty()) {
             Stack<ResolveInfo> appsToMakeList = new Stack();
             appsToMakeList.addAll(appList);
@@ -433,7 +434,7 @@ public class DisableableAppCache {
     private boolean isSignedBySystemSignature(String packageName) {
         boolean z = false;
         try {
-            z = this.mPackageManager.getPackageInfo("android", 64).signatures[0].equals(this.mPackageManager.getPackageInfo(packageName, 64).signatures[0]);
+            z = this.mPackageManager.getPackageInfo("android", PackageManager.GET_SIGNATURES).signatures[0].equals(this.mPackageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES).signatures[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }

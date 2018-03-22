@@ -31,7 +31,7 @@ import com.android.launcher3.allapps.model.AppsModel.ModelListener;
 import com.android.launcher3.common.base.item.IconInfo;
 import com.android.launcher3.common.base.item.ItemInfo;
 import com.android.launcher3.common.bnr.LauncherBnrHelper;
-import com.android.launcher3.common.bnr.scloud.SCloudBnr;
+//import com.android.launcher3.common.bnr.scloud.SCloudBnr;
 import com.android.launcher3.common.compat.LauncherAppsCompat;
 import com.android.launcher3.common.compat.LauncherAppsCompat.OnAppsChangedCallbackCompat;
 import com.android.launcher3.common.compat.UserHandleCompat;
@@ -1515,9 +1515,10 @@ public class LauncherModel extends BroadcastReceiver implements OnAppsChangedCal
                 LauncherModel.this.mHomeLoader.removeUnRestoredItems(LauncherModel.this.mWorkspaceLoaded);
                 LauncherModel.this.mAppsModel.removeUnRestoredItems(LauncherModel.this.mAllAppsLoaded);
                 Log.d(LauncherModel.TAG, "delete S Cloud restore directory");
-                String dirPath = context.getFilesDir() + SCloudBnr.SCLOUD_DIR_PATH;
-                LauncherBnrHelper.deleteDir(dirPath + SCloudBnr.SCLOUD_RESTORE_PATH);
-                LauncherBnrHelper.deleteDir(dirPath);
+                // TODO: Samsung specific code
+//                String dirPath = context.getFilesDir() + SCloudBnr.SCLOUD_DIR_PATH;
+//                LauncherBnrHelper.deleteDir(dirPath + SCloudBnr.SCLOUD_RESTORE_PATH);
+//                LauncherBnrHelper.deleteDir(dirPath);
             }
         });
     }

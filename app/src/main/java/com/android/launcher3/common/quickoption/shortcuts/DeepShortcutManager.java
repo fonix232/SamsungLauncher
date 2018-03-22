@@ -29,12 +29,12 @@ import java.util.List;
 public class DeepShortcutManager {
     private static final int FLAG_GET_ALL = 11;
     private static final String TAG = "DeepShortcutManager";
-    private MultiHashMap<ComponentKey, String> mDeepShortcutMap = new MultiHashMap();
+    private MultiHashMap<ComponentKey, String> mDeepShortcutMap = new MultiHashMap(0);
     private final LauncherApps mLauncherApps;
     private boolean mWasLastCallSuccess;
 
     public DeepShortcutManager(Context context, ShortcutCache cache) {
-        this.mLauncherApps = (LauncherApps) context.getSystemService("launcherapps");
+        this.mLauncherApps = (LauncherApps) context.getSystemService(Context.LAUNCHER_APPS_SERVICE);
     }
 
     public static boolean supportsShortcuts(ItemInfo info) {
@@ -142,22 +142,15 @@ public class DeepShortcutManager {
 
     @TargetApi(25)
     public Drawable getShortcutIconDrawable(ShortcutInfoCompat shortcutInfo) {
-        RuntimeException e;
         if (Utilities.ATLEAST_N_MR1) {
             try {
                 Drawable icon = this.mLauncherApps.getShortcutIconDrawable(shortcutInfo.getShortcutInfo(), 640);
                 this.mWasLastCallSuccess = true;
                 return icon;
-            } catch (SecurityException e2) {
-                e = e2;
-            } catch (IllegalStateException e3) {
-                e = e3;
-            } catch (NullPointerException e4) {
-                e = e4;
+            } catch (SecurityException e) {
+                Log.e(TAG, "Failed to get shortcut icon", e);
             }
         }
-        return null;
-        Log.e(TAG, "Failed to get shortcut icon", e);
         this.mWasLastCallSuccess = false;
         return null;
     }
@@ -216,18 +209,20 @@ public class DeepShortcutManager {
                 return Collections.EMPTY_LIST;
             }
             shortcutInfoCompats = new ArrayList(list.size());
-            while (r5.hasNext()) {
-                shortcutInfoCompats.add(new ShortcutInfoCompat(shortcutInfo));
-            }
+            // TODO: Fix this code
+//            while (r5.hasNext()) {
+//                shortcutInfoCompats.add(new ShortcutInfoCompat(shortcutInfo));
+//            }
             return shortcutInfoCompats;
         }
         if (list != null) {
             return Collections.EMPTY_LIST;
         }
         shortcutInfoCompats = new ArrayList(list.size());
-        while (r5.hasNext()) {
-            shortcutInfoCompats.add(new ShortcutInfoCompat(shortcutInfo));
-        }
+        // TODO: Fix this code
+//        while (r5.hasNext()) {
+//            shortcutInfoCompats.add(new ShortcutInfoCompat(shortcutInfo));
+//        }
         return shortcutInfoCompats;
     }
 

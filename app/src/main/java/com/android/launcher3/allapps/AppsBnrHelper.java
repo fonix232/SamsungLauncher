@@ -18,7 +18,7 @@ import com.android.launcher3.common.bnr.LauncherBnrHelper;
 import com.android.launcher3.common.bnr.LauncherBnrListener.Result;
 import com.android.launcher3.common.bnr.LauncherBnrTag;
 import com.android.launcher3.common.bnr.extractor.LCExtractor;
-import com.android.launcher3.common.bnr.scloud.SCloudBnr;
+//import com.android.launcher3.common.bnr.scloud.SCloudBnr;
 import com.android.launcher3.common.model.CursorInfo;
 import com.android.launcher3.common.model.DefaultLayoutParser;
 import com.android.launcher3.common.model.FavoritesProvider;
@@ -269,9 +269,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                             if (!TextUtils.isEmpty(className)) {
                                 serializer.attribute(null, attrPrefix + DefaultLayoutParser.ATTR_CLASS_NAME, className);
                             }
-                            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                                serializer.attribute(null, "restored", String.valueOf(4));
-                            }
+                            // TODO: Samsung specific code
+//                            if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                                serializer.attribute(null, "restored", String.valueOf(4));
+//                            }
                             if (isLCExtractor && isVoiceSearch) {
                                 serializer.attribute(null, attrPrefix + "hidden", "true");
                             }
@@ -357,9 +358,10 @@ Error: jadx.core.utils.exceptions.JadxRuntimeException: Can't find block by offs
                                 if (!TextUtils.isEmpty(className)) {
                                     serializer.attribute(null, attrPrefix + DefaultLayoutParser.ATTR_CLASS_NAME, className);
                                 }
-                                if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
-                                    serializer.attribute(null, "restored", String.valueOf(4));
-                                }
+                                // TODO: Samsung specific code
+//                                if (SCloudBnr.SCLOUD_SOURCE.equals(source)) {
+//                                    serializer.attribute(null, "restored", String.valueOf(4));
+//                                }
                                 serializer.endTag(null, DefaultLayoutParser.TAG_FAVORITE);
                                 break;
                             }
